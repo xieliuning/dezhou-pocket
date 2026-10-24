@@ -1,0 +1,312 @@
+/* ============================================================
+   S12 · 孟菲斯 Memphis
+   近黑紫底 + 酸粉/酸青/柠檬黄撞色，八十年代贴纸几何件与 squiggle 波浪
+   装饰原则：几何件一律粗黑描边 + 硬阴影，像贴上去的
+   ============================================================ */
+
+.s-memphis {
+  --bg: #14101c;
+  --ink: #f7f3ff;
+  --muted: rgba(247, 243, 255, 0.62);
+  --panel: #241c34;
+  --line: rgba(255, 95, 162, 0.4);
+  --accent: #ff5fa2;
+  --accent-ink: #14101c;
+  --accent-soft: #35e0d0;
+  --card-bg: #fdf2fb;
+  --card-ink: #14101c;
+  --suit-red: #d81b4d;
+  --card-shadow: 3px 3px 0 #000;
+  --radius-card: 8px;
+  --radius-av: 10px;
+  --radius-seat: 10px;
+  --radius-btn: 10px;
+  --radius-chip: 8px;
+  --radius-sm: 10px;
+  --font-ui: "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --font-display: "Bungee", "Noto Sans SC", system-ui, sans-serif;
+  --font-num: "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --font-card: "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --seat-bg: #0c0816;
+  --seat-line: #000;
+  --seat-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55);
+  --av-bg: #ff5fa2;
+  --av-ink: #14101c;
+  --bet-bg: #ffd93d;
+  --bet-ink: #14101c;
+  --bet-dot: #ff5fa2;
+  --bet-dot-ring: #14101c;
+  --dealer-bg: #ffd93d;
+  --dealer-ink: #14101c;
+  --danger: #ff7a3d;
+  --turn-line: #ffd93d;
+  --turn-shadow: 0 0 0 3px #ffd93d, 4px 4px 0 #ffd93d;
+  --timer-track: rgba(247, 243, 255, 0.18);
+  --timer-fg: #35e0d0;
+  --actions-bg: #1b1526;
+  --btn-bg: #241c34;
+  --btn-ink: #f7f3ff;
+  --track: rgba(247, 243, 255, 0.22);
+  --thumb: #ffd93d;
+  --thumb-ring: #14101c;
+  --chip-bg: #241c34;
+  --chip-ink: #f7f3ff;
+  --toast-bg: #ffd93d;
+  --toast-ink: #14101c;
+  --result-bg: #0c0816;
+  --result-ink: #f7f3ff;
+  --result-line: #ff5fa2;
+}
+
+/* 底：一张无限平铺的酸粉波浪纸（squiggle 是孟菲斯的签名纹样） */
+.s-memphis {
+  background-color: #14101c;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60' viewBox='0 0 200 60'%3E%3Cpath d='M0 30 C25 0 50 0 75 30 S125 60 150 30 S200 0 200 30' fill='none' stroke='%23ff5fa2' stroke-width='6' stroke-linecap='round' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 200px 60px;
+  background-position: 0 118px;
+  background-repeat: repeat;
+}
+
+/* deco 层：贴纸与散落圆点都压在最底下，只从桌沿外透出来 */
+.s-memphis .deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+
+/* 左下角一块倾斜柠檬黄方块，粗黑边（压在桌沿外才看得见） */
+.s-memphis .deco::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 63%;
+  width: 46px;
+  height: 46px;
+  background: #ffd93d;
+  border: 3px solid #000;
+  transform: rotate(-14deg);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+}
+
+/* 散落的撞色小圆点，做手工撒落的密度感 */
+.s-memphis .deco::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 24% 65%, #35e0d0 0 5px, transparent 6px),
+    radial-gradient(circle at 42% 69%, #8b5cf6 0 6px, transparent 7px),
+    radial-gradient(circle at 64% 65%, #ff7a3d 0 4px, transparent 5px),
+    radial-gradient(circle at 33% 68%, #ff5fa2 0 4px, transparent 5px),
+    radial-gradient(circle at 55% 70%, #ffd93d 0 5px, transparent 6px);
+}
+
+/* 桌面：黑盘 + 一圈酸粉粗环（环在 box-shadow 外层，形成实心粗边） */
+.s-memphis .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 396px;
+  height: 396px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 34%, #221a36 0%, #120e1e 58%, #080510 100%);
+  box-shadow:
+    0 0 0 11px #000,
+    0 0 0 17px #ff5fa2,
+    0 22px 44px rgba(0, 0, 0, 0.6);
+}
+
+/* 桌内一圈酸青虚线，像贴纸的内框 */
+.s-memphis .table::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 292px;
+  height: 292px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px dashed rgba(53, 224, 208, 0.55);
+  pointer-events: none;
+}
+
+/* stage::before 压过桌面（z-index:1），一条酸青波浪斜穿过桌面下半 */
+.s-memphis .stage::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 62%;
+  width: 460px;
+  height: 66px;
+  transform: rotate(-8deg);
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='48' viewBox='0 0 160 48'%3E%3Cpath d='M0 24 C20 2 40 2 60 24 S100 46 120 24 S160 2 160 24' fill='none' stroke='%2335e0d0' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 160px 48px;
+  background-repeat: repeat;
+}
+
+/* stage::after 压在桌面上方、公共牌下方的橙圆几何件 */
+.s-memphis .stage::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  bottom: 26px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #ff7a3d;
+  border: 3px solid #000;
+  transform: rotate(10deg);
+  pointer-events: none;
+}
+.s-memphis .stage { z-index: 1; }
+
+/* 顶栏：黑底 + 酸粉分隔线 */
+.s-memphis .topbar {
+  border-bottom: 3px solid #000;
+  padding-bottom: 9px;
+  background: linear-gradient(180deg, #1b1526 0%, rgba(27, 21, 38, 0.2) 100%);
+}
+
+/* 标题与数字用 Bungee，硬阴影做出贴纸感 */
+.s-memphis .room-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: #ffd93d;
+  text-shadow: 2px 2px 0 #ff5fa2;
+}
+.s-memphis .room-meta { color: rgba(247, 243, 255, 0.5); letter-spacing: 0.08em; }
+.s-memphis .pot {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: #ff5fa2;
+  text-shadow: 2px 2px 0 #000;
+}
+.s-memphis .pot-label { color: #35e0d0; font-family: var(--font-ui); }
+.s-memphis .icon-btn {
+  background: #35e0d0;
+  color: #14101c;
+  border: 3px solid #000;
+  box-shadow: 3px 3px 0 #000;
+  font-family: var(--font-ui);
+}
+.s-memphis .icon-btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 #000; }
+
+/* 公共牌区 */
+.s-memphis .board-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: #35e0d0;
+  letter-spacing: 0.22em;
+}
+
+/* 牌：厚黑边 + 硬阴影，牌面文字保持纯黑高对比 */
+.s-memphis .card {
+  border: 3px solid #000;
+  box-shadow: var(--card-shadow);
+  background: var(--card-bg);
+}
+.s-memphis .card--lg { border-width: 4px; box-shadow: 4px 4px 0 #000; }
+.s-memphis .card--empty {
+  background: transparent;
+  border: 2px dashed rgba(255, 95, 162, 0.75);
+  box-shadow: none;
+}
+.s-memphis .card.is-red { color: var(--suit-red); }
+
+/* 席位：黑底白字名牌 + 撞色方头像 */
+.s-memphis .seat {
+  padding: 5px 12px 5px 6px;
+  border: 3px solid #000;
+  background: var(--seat-bg);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.6);
+}
+.s-memphis .seat-av {
+  border: 3px solid #000;
+  font-family: var(--font-display);
+  font-size: 13px;
+}
+.s-memphis .seat--a .seat-av { background: #ff5fa2; color: #14101c; }
+.s-memphis .seat--b .seat-av { background: #35e0d0; color: #14101c; }
+.s-memphis .seat--c .seat-av { background: #ffd93d; color: #14101c; }
+.s-memphis .seat--d .seat-av { background: #8b5cf6; color: #ffffff; }
+.s-memphis .seat--e .seat-av { background: #ff7a3d; color: #14101c; }
+.s-memphis .seat-name { color: #ffffff; font-family: var(--font-ui); letter-spacing: 0.03em; }
+.s-memphis .seat-stack { color: rgba(247, 243, 255, 0.62); }
+.s-memphis .seat.is-turn { animation: none; border-color: #ffd93d; }
+.s-memphis .seat.is-turn .seat-av { box-shadow: 0 0 0 3px #ffd93d; }
+.s-memphis .seat-bet {
+  border: 2px solid #000;
+  background: var(--bet-bg);
+  color: var(--bet-ink);
+}
+.s-memphis .seat-dealer { border: 2px solid #000; background: var(--dealer-bg); color: var(--dealer-ink); }
+
+/* 行动区 */
+.s-memphis .actions {
+  border-top: 3px solid #000;
+  background: linear-gradient(180deg, #221a33 0%, #1b1526 100%);
+  box-shadow: 0 -6px 0 rgba(255, 95, 162, 0.18);
+}
+.s-memphis .strength-label { color: #35e0d0; font-family: var(--font-ui); }
+.s-memphis .strength {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: #ffd93d;
+}
+.s-memphis .stack-line { color: rgba(247, 243, 255, 0.62); }
+.s-memphis .stack-line .js-stack { color: #ff5fa2; }
+.s-memphis .timer-num { color: #f7f3ff; }
+
+/* 按钮：粗黑描边小方块，按下硬位移 */
+.s-memphis .btn {
+  border: 3px solid #000;
+  box-shadow: 3px 3px 0 #000;
+  font-family: var(--font-ui);
+  letter-spacing: 0.05em;
+}
+.s-memphis .btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 #000; }
+.s-memphis .btn--primary { background: #ff5fa2; color: #14101c; }
+.s-memphis .btn--alt { background: #35e0d0; color: #14101c; }
+.s-memphis .btn--ghost {
+  background: #241c34;
+  color: #f7f3ff;
+  border-color: #f7f3ff;
+  box-shadow: 3px 3px 0 #000;
+}
+
+/* 快捷额度与滑杆 */
+.s-memphis .chip {
+  border: 3px solid #000;
+  box-shadow: 2px 2px 0 #000;
+  background: #241c34;
+  color: #f7f3ff;
+}
+.s-memphis .chip:active { transform: translate(2px, 2px); box-shadow: 0 0 0 #000; }
+.s-memphis .raise-amount { color: #ffd93d; font-family: var(--font-display); }
+.s-memphis .raise-range { background: rgba(247, 243, 255, 0.24); height: 6px; }
+.s-memphis .raise-range::-webkit-slider-thumb {
+  background: #ffd93d;
+  border: 3px solid #000;
+  border-radius: 4px;
+}
+.s-memphis .raise-range::-moz-range-thumb {
+  background: #ffd93d;
+  border: 3px solid #000;
+  border-radius: 4px;
+}
+
+/* 提示条与结算条 */
+.s-memphis .toast {
+  border: 3px solid #000;
+  box-shadow: 3px 3px 0 #000;
+  font-family: var(--font-ui);
+}
+.s-memphis .result {
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0 #ff5fa2;
+  background: #0c0816;
+}
+.s-memphis .result-title { font-family: var(--font-display); color: #ffd93d; }
+.s-memphis .result .btn { background: #ff5fa2; color: #14101c; border-color: #000; }

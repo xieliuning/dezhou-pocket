@@ -1,0 +1,261 @@
+/* ============================================================
+   S2 · 纸面印刷 Mono Press
+   瑞士编辑排版，账簿式玩家名单，朱红点缀，零圆角零阴影
+   ============================================================ */
+
+.s-mono {
+  --bg: #f4f1e8;
+  --ink: #16150f;
+  --muted: #7d7768;
+  --panel: transparent;
+  --line: #d3ccb9;
+  --accent: #16150f;
+  --accent-ink: #f4f1e8;
+  --accent-soft: transparent;
+  --card-bg: #fffdf6;
+  --card-ink: #16150f;
+  --suit-red: #c8321c;
+  --card-shadow: none;
+  --radius-card: 0;
+  --radius-av: 0;
+  --radius-seat: 0;
+  --radius-btn: 0;
+  --radius-chip: 0;
+  --radius-sm: 0;
+  --font-ui: "Archivo", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --font-display: "Archivo", "Noto Sans SC", sans-serif;
+  --font-num: "Archivo", "Noto Sans SC", sans-serif;
+  --font-card: "Archivo", "Noto Sans SC", sans-serif;
+  --seat-bg: transparent;
+  --seat-line: transparent;
+  --seat-shadow: none;
+  --av-bg: #16150f;
+  --av-ink: #f4f1e8;
+  --bet-bg: transparent;
+  --bet-ink: #c8321c;
+  --bet-dot: #c8321c;
+  --bet-dot-ring: transparent;
+  --dealer-bg: #16150f;
+  --dealer-ink: #f4f1e8;
+  --danger: #c8321c;
+  --turn-line: transparent;
+  --turn-shadow: none;
+  --timer-track: #d3ccb9;
+  --timer-fg: #16150f;
+  --actions-bg: #f4f1e8;
+  --btn-bg: transparent;
+  --btn-ink: #16150f;
+  --track: #16150f;
+  --thumb: #c8321c;
+  --thumb-ring: #f4f1e8;
+  --chip-bg: transparent;
+  --chip-ink: #16150f;
+  --toast-bg: #16150f;
+  --toast-ink: #f4f1e8;
+  --result-bg: #16150f;
+  --result-ink: #f4f1e8;
+  --result-line: transparent;
+}
+
+.s-mono .topbar {
+  border-bottom: 2px solid #16150f;
+  padding: 12px 16px 9px;
+}
+.s-mono .room-name {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.s-mono .room-meta { letter-spacing: 0.1em; text-transform: uppercase; }
+.s-mono .pot-label { color: #c8321c; letter-spacing: 0.22em; }
+.s-mono .pot { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+.s-mono .icon-btn { background: transparent; font-weight: 700; }
+
+.s-mono .icon-btn::after {
+  content: "";
+  position: absolute;
+}
+
+/* ---- 版面：顶部牌面 + 下方账簿名单 ---- */
+.s-mono .stage { padding: 0 16px; }
+
+.s-mono .table {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.s-mono .board {
+  position: static;
+  transform: none;
+  align-items: flex-start;
+  gap: 7px;
+  padding-top: 14px;
+  border-bottom: 1px solid #16150f;
+}
+.s-mono .board-label { color: #7d7768; }
+.s-mono .board-cards { gap: 7px; }
+
+.s-mono .card {
+  border: 1px solid #16150f;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 4px 5px;
+  position: relative;
+}
+.s-mono .c-rank { font-size: 19px; }
+.s-mono .c-suit {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  font-size: 12px;
+}
+.s-mono .card--empty { border-style: dashed; opacity: 0.35; }
+.s-mono .card--empty::after { display: none; }
+.s-mono .card--lg { width: 50px; height: 70px; }
+.s-mono .card--lg .c-rank { font-size: 22px; }
+
+.s-mono .seats {
+  position: static;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 0;
+  align-content: start;
+  flex: 1;
+  padding: 12px 0 0;
+}
+
+.s-mono .seats::before {
+  content: "玩家 PLAYER　　筹码 STACK　　下注 BET";
+  grid-column: 1 / -1;
+  display: block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7d7768;
+  padding-bottom: 7px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid #16150f;
+}
+
+.s-mono .seat {
+  position: static;
+  transform: none;
+  display: grid;
+  grid-template-columns: 20px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+}
+.s-mono .seat--e { grid-column: auto; }
+.s-mono .seat.is-turn { animation: none; }
+.s-mono .seat.is-turn .seat-name { color: #c8321c; }
+.s-mono .seat.is-turn::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  transform: translateY(-50%);
+  background: #c8321c;
+}
+
+/* 版面底部的大号页码，用留白把版面撑住 */
+.s-mono .stage::after {
+  content: "5/10";
+  position: absolute;
+  right: 16px;
+  bottom: 2px;
+  font-family: var(--font-display);
+  font-size: 74px;
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  color: #e8e2d2;
+}
+.s-mono .seat-av {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.s-mono .seat-name { font-size: 12px; font-weight: 700; }
+.s-mono .seat-stack { font-size: 12px; color: #16150f; font-weight: 600; }
+.s-mono .seat-bet {
+  position: static;
+  transform: none;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #c8321c;
+}
+.s-mono .seat-bet::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 0;
+  box-shadow: none;
+  background: #c8321c;
+}
+.s-mono .seat-dealer {
+  position: static;
+  width: 15px;
+  height: 15px;
+  border-radius: 0;
+  font-size: 8px;
+}
+.s-mono .seat[data-state="folded"] { opacity: 0.45; filter: none; }
+.s-mono .seat[data-state="folded"] .seat-name { text-decoration: line-through; }
+
+/* ---- 行动区 ---- */
+.s-mono .actions {
+  border-top: 2px solid #16150f;
+  padding: 12px 16px calc(14px + env(safe-area-inset-bottom));
+  gap: 11px;
+}
+.s-mono .strength-label { color: #7d7768; }
+.s-mono .strength { font-size: 12px; }
+.s-mono .timer-track { stroke: #d3ccb9; }
+.s-mono .timer-fg { stroke: #16150f; }
+
+.s-mono .btn {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 14px 6px;
+}
+.s-mono .btn--primary { background: #16150f; color: #f4f1e8; }
+.s-mono .btn--ghost { box-shadow: inset 0 0 0 1px #16150f; color: #16150f; }
+.s-mono .btn--alt { box-shadow: inset 0 0 0 1px #c8321c; color: #c8321c; }
+
+.s-mono .raise-head { border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.s-mono .raise-label { text-transform: uppercase; letter-spacing: 0.14em; }
+.s-mono .raise-amount { font-size: 19px; font-weight: 700; }
+.s-mono .raise-range { border-radius: 0; height: 2px; }
+.s-mono .raise-range::-webkit-slider-thumb {
+  border-radius: 0;
+  width: 4px;
+  height: 18px;
+  background: #c8321c;
+  border: 0;
+}
+.s-mono .raise-range::-moz-range-thumb {
+  border-radius: 0;
+  width: 4px;
+  height: 18px;
+  background: #c8321c;
+  border: 0;
+}
+.s-mono .chip { box-shadow: inset 0 0 0 1px #16150f; font-size: 10px; letter-spacing: 0.08em; }
+.s-mono .chip:hover { background: #16150f; color: #f4f1e8; }
+
+.s-mono .result { background: #16150f; color: #f4f1e8; }

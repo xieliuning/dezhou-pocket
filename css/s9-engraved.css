@@ -1,0 +1,142 @@
+/* ============================================================
+   S9 · 雕版蚀刻 Engraved
+   羊皮纸 + 棕褐墨线，机刻底纹，席位以甲乙丙丁编号
+   ============================================================ */
+
+.s-engraved {
+  --bg: #ece0c4;
+  --ink: #2e2417;
+  --muted: rgba(46, 36, 23, 0.62);
+  --panel: rgba(46, 36, 23, 0.07);
+  --line: rgba(46, 36, 23, 0.42);
+  --accent: #9c3b2c;
+  --accent-ink: #f4ead2;
+  --accent-soft: rgba(46, 36, 23, 0.1);
+  --card-bg: #f6edd8;
+  --card-ink: #2e2417;
+  --suit-red: #9c3b2c;
+  --card-shadow: 0 1px 0 rgba(46, 36, 23, 0.35);
+  --radius-card: 1px;
+  --radius-av: 1px;
+  --radius-seat: 1px;
+  --radius-btn: 1px;
+  --radius-chip: 1px;
+  --radius-sm: 1px;
+  --font-ui: "Noto Serif SC", "Cormorant Garamond", Georgia, serif;
+  --font-display: "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  --font-num: "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  --font-card: "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  --seat-bg: rgba(246, 237, 216, 0.9);
+  --seat-line: rgba(46, 36, 23, 0.5);
+  --seat-shadow: 0 1px 0 rgba(46, 36, 23, 0.3);
+  --av-bg: transparent;
+  --av-ink: #2e2417;
+  --bet-bg: #2e2417;
+  --bet-ink: #f4ead2;
+  --bet-dot: #9c3b2c;
+  --bet-dot-ring: #f4ead2;
+  --dealer-bg: #9c3b2c;
+  --dealer-ink: #f4ead2;
+  --danger: #9c3b2c;
+  --turn-line: #9c3b2c;
+  --turn-shadow: 0 0 0 1px #9c3b2c;
+  --timer-track: rgba(46, 36, 23, 0.2);
+  --timer-fg: #9c3b2c;
+  --actions-bg: #f2e7ce;
+  --btn-bg: #f6edd8;
+  --btn-ink: #2e2417;
+  --track: rgba(46, 36, 23, 0.22);
+  --thumb: #9c3b2c;
+  --thumb-ring: #f6edd8;
+  --chip-bg: transparent;
+  --chip-ink: #2e2417;
+  --toast-bg: #2e2417;
+  --toast-ink: #f4ead2;
+  --result-bg: #f6edd8;
+  --result-ink: #2e2417;
+  --result-line: rgba(46, 36, 23, 0.5);
+}
+
+/* 羊皮纸 + 机刻花纹 */
+.s-engraved {
+  background-color: #ece0c4;
+  background-image:
+    repeating-radial-gradient(circle at 22% 32%, transparent 0 7px, rgba(107, 74, 38, 0.075) 7px 8px),
+    repeating-radial-gradient(circle at 78% 66%, transparent 0 7px, rgba(107, 74, 38, 0.06) 7px 8px),
+    radial-gradient(120% 80% at 50% 10%, rgba(255, 250, 235, 0.6) 0%, transparent 60%);
+}
+
+/* 雕版徽记：双线圆 */
+.s-engraved .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 430px;
+  height: 430px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(46, 36, 23, 0.35);
+  box-shadow:
+    inset 0 0 0 7px rgba(236, 224, 196, 0.55),
+    inset 0 0 0 8px rgba(46, 36, 23, 0.22);
+}
+.s-engraved .deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.s-engraved .deco::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 366px;
+  height: 366px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(107, 74, 38, 0.3);
+}
+.s-engraved .deco::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 306px;
+  height: 306px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(107, 74, 38, 0.22);
+}
+.s-engraved .stage { z-index: 1; }
+
+.s-engraved .topbar { border-bottom: 3px double rgba(46, 36, 23, 0.6); padding-bottom: 10px; }
+.s-engraved .room-name { font-family: var(--font-display); font-size: 16px; font-weight: 600; letter-spacing: 0.04em; }
+.s-engraved .pot { font-size: 26px; font-weight: 700; color: #9c3b2c; }
+.s-engraved .pot-label { letter-spacing: 0.3em; }
+.s-engraved .icon-btn { background: transparent; box-shadow: inset 0 0 0 1px rgba(46, 36, 23, 0.5); }
+.s-engraved .board-label { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.28em; color: rgba(46, 36, 23, 0.7); }
+.s-engraved .card { border: 1px solid rgba(46, 36, 23, 0.7); box-shadow: inset 0 0 0 2px rgba(246, 237, 216, 0.9), inset 0 0 0 3px rgba(46, 36, 23, 0.35); }
+.s-engraved .card--lg { box-shadow: inset 0 0 0 2px rgba(246, 237, 216, 0.9), inset 0 0 0 3px rgba(46, 36, 23, 0.35), 0 2px 0 rgba(46, 36, 23, 0.25); }
+.s-engraved .card--empty { background: transparent; box-shadow: none; border: 1px dashed rgba(46, 36, 23, 0.5); }
+.s-engraved .c-rank { font-weight: 600; letter-spacing: 0.02em; }
+.s-engraved .c-suit { font-size: 12px; }
+
+.s-engraved .seat { padding: 4px 12px 4px 4px; }
+.s-engraved .seat-av { background: transparent; box-shadow: inset 0 0 0 1px rgba(46, 36, 23, 0.6); font-family: var(--font-display); font-size: 15px; font-weight: 600; }
+.s-engraved .seat-name { font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; }
+.s-engraved .seat-stack { letter-spacing: 0.04em; }
+.s-engraved .seat.is-turn { animation: none; }
+.s-engraved .seat.is-turn .seat-av { box-shadow: inset 0 0 0 1px #9c3b2c, 0 0 0 1px #9c3b2c; color: #9c3b2c; }
+.s-engraved .seat-bet { border-radius: 1px; }
+.s-engraved .seat-dealer { border-radius: 1px; }
+
+.s-engraved .actions { border-top: 3px double rgba(46, 36, 23, 0.6); }
+.s-engraved .btn { box-shadow: inset 0 0 0 1px rgba(46, 36, 23, 0.7); font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 0.08em; }
+.s-engraved .btn--primary { background: #2e2417; color: #f4ead2; }
+.s-engraved .btn--alt { background: #9c3b2c; color: #f4ead2; }
+.s-engraved .btn--ghost { background: transparent; color: rgba(46, 36, 23, 0.78); }
+.s-engraved .chip { box-shadow: inset 0 0 0 1px rgba(46, 36, 23, 0.55); font-family: var(--font-display); letter-spacing: 0.08em; }
+.s-engraved .raise-range { border-radius: 0; height: 3px; background: rgba(46, 36, 23, 0.3); }
+.s-engraved .raise-range::-webkit-slider-thumb { border-radius: 50%; background: #9c3b2c; border: 1px solid #2e2417; }
+.s-engraved .raise-range::-moz-range-thumb { border-radius: 50%; background: #9c3b2c; border: 1px solid #2e2417; }
+.s-engraved .raise-amount { color: #9c3b2c; font-size: 19px; }
+.s-engraved .toast { border-radius: 1px; }
+.s-engraved .result { box-shadow: inset 0 0 0 1px rgba(46, 36, 23, 0.6); }
+.s-engraved .result .btn { background: #2e2417; color: #f4ead2; }

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#08080a">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="夜航俱乐部联机德州扑克：创建房间，把链接发给微信里的朋友，同桌对博。每人自己的底牌，轮流行动，断线可重连。">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" type="image/png" href="assets/share-thumb.png">
+<title>夜航俱乐部 · 联机德州扑克</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/s1-felt.css">
+<link rel="stylesheet" href="css/s2-mono.css">
+<link rel="stylesheet" href="css/s3-neon.css">
+<link rel="stylesheet" href="css/s4-pixel.css">
+<link rel="stylesheet" href="css/s5-deco.css">
+<link rel="stylesheet" href="css/s6-bauhaus.css">
+<link rel="stylesheet" href="css/s7-toy.css">
+<link rel="stylesheet" href="css/s8-story.css">
+<link rel="stylesheet" href="css/s9-engraved.css">
+<link rel="stylesheet" href="css/s10-lacquer.css">
+<link rel="stylesheet" href="css/s11-ink.css">
+<link rel="stylesheet" href="css/s12-memphis.css">
+<link rel="stylesheet" href="css/s13-pop.css">
+<link rel="stylesheet" href="css/s14-construct.css">
+<link rel="stylesheet" href="css/s15-term.css">
+<link rel="stylesheet" href="css/s16-cyber.css">
+<link rel="stylesheet" href="css/s17-crt.css">
+<link rel="stylesheet" href="css/s18-steam.css">
+<link rel="stylesheet" href="css/s19-clay.css">
+<link rel="stylesheet" href="css/s20-zen.css">
+<link rel="stylesheet" href="css/play.css">
+<link rel="stylesheet" href="css/room.css">
+</head>
+<body class="play">
+
+<img class="wx-share-thumb" src="assets/share-thumb.png" width="300" height="300" alt="">
+
+<div class="rotate-hint" aria-hidden="true">
+  <b>▭</b>
+  请将手机竖屏使用
+  <span>牌桌按竖屏设计，转回竖屏即可继续牌局</span>
+</div>
+
+<div class="lobby js-lobby">
+  <div class="lobby-card">
+    <p class="lobby-eyebrow">Texas Hold'em · 同桌联机</p>
+    <h1 class="lobby-title">夜航俱乐部</h1>
+    <p class="lobby-sub">建一个房间，把链接发到微信群，朋友点开就能上桌。每人自己的底牌，轮流行动，九个座位随便挑。</p>
+
+    <div class="lobby-field">
+      <label for="nick">你的昵称</label>
+      <input id="nick" class="lobby-input js-nick" type="text" maxlength="8" placeholder="最多 8 个字" autocomplete="off">
+    </div>
+
+    <div class="lobby-field">
+      <label>选个头像</label>
+      <div class="lobby-avatars js-avatars"></div>
+    </div>
+
+    <div class="lobby-field">
+      <label>开局设置<span class="lobby-field-note">（创建房间时生效）</span></label>
+      <div class="lobby-cfg-grid">
+        <div class="lobby-cfg-item">
+          <span class="lobby-cfg-name">小盲</span>
+          <input class="lobby-input js-sb" type="number" inputmode="numeric" min="10" max="1000" step="10" value="20" placeholder="10 的倍数">
+          <span class="lobby-cfg-hint lobby-sb-hint js-bb-link">大盲 40</span>
+        </div>
+        <div class="lobby-cfg-item">
+          <span class="lobby-cfg-name">升盲时间</span>
+          <select class="lobby-input js-blind-mins">
+            <option value="1">1 分钟</option>
+            <option value="2" selected>2 分钟</option>
+            <option value="3">3 分钟</option>
+            <option value="5">5 分钟</option>
+            <option value="10">10 分钟</option>
+          </select>
+          <span class="lobby-cfg-hint">到点盲注翻倍</span>
+        </div>
+        <div class="lobby-cfg-item">
+          <span class="lobby-cfg-name">初始筹码</span>
+          <input class="lobby-input js-stack" type="number" inputmode="numeric" min="100" max="100000" step="1000" value="60000" placeholder="如 60000">
+          <span class="lobby-cfg-hint">100 ～ 100,000</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lobby-field">
+      <label for="code">房间号（加入已有房间填这里）</label>
+      <input id="code" class="lobby-input lobby-input--code js-code-input" type="text" maxlength="4" placeholder="4 位数字，如 4832" autocomplete="off" inputmode="numeric">
+    </div>
+
+    <p class="lobby-err js-lobby-err" hidden></p>
+
+    <div class="lobby-actions">
+      <button class="btn btn--ghost js-join" type="button">加入房间</button>
+      <button class="btn btn--primary js-create" type="button">创建房间</button>
+    </div>
+    <a class="btn btn--ghost lobby-solo js-solo" href="play.html">个人游戏 · 跟 8 位 AI 打一桌</a>
+    <p class="lobby-note">进入房间默认入座，点空位自由换座；结算间隙可去围观，随时再上桌。创建后把 <b>?room=房间号</b> 链接发到群里即可。</p>
+  </div>
+</div>
+
+<div class="gamewrap js-gamewrap" hidden>
+<header class="play-top">
+  <a class="play-back" href="index.html">← 风格画廊</a>
+  <span class="play-brand">Texas Hold'em · 同桌联机</span>
+</header>
+
+<main class="play-main">
+  <div class="play-stage">
+
+    <div class="phone-frame"><div class="screen">
+      <div class="app s-felt" id="app">
+        <div class="deco" aria-hidden="true"></div>
+
+        <header class="topbar">
+          <button class="icon-btn js-menu" type="button" aria-label="切换界面风格" title="切换界面风格">☰</button>
+          <div class="room">
+            <div class="room-name js-room">房间 ····</div>
+            <div class="room-meta js-meta">等待连接</div>
+          </div>
+          <div class="blind-clock" aria-label="距离升盲">
+            <span class="bc-label">升盲</span>
+            <span class="bc-time js-blind-time">02:00</span>
+          </div>
+          <div class="pot-box">
+            <span class="pot-label">底池</span>
+            <span class="pot js-pot">0</span>
+          </div>
+        </header>
+
+        <main class="stage">
+          <div class="table">
+            <div class="board">
+              <div class="board-label js-board-label">等待连接</div>
+              <div class="board-cards js-board"></div>
+            </div>
+            <div class="seats js-seats"></div>
+          </div>
+        </main>
+
+        <footer class="actions">
+          <div class="hero">
+            <div class="hand js-hand"></div>
+            <span class="hero-pos js-hero-pos is-hidden">D</span>
+            <div class="hand-meta">
+              <div class="strength-label js-strength-label">牌力</div>
+              <div class="strength js-strength">—</div>
+              <div class="stack-line js-stack-line">筹码 <b class="js-stack">—</b></div>
+            </div>
+            <div class="timer">
+              <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+              <span class="timer-num js-timer-num">·</span>
+            </div>
+          </div>
+
+          <div class="raise-panel">
+            <div class="raise-head">
+              <span class="raise-label">加注到</span>
+              <span class="raise-amount js-raise-amt">0</span>
+              <span class="raise-pot">底池将变 <span class="js-pot-final">0</span></span>
+            </div>
+            <input class="raise-range js-raise-range" type="range" min="0" max="100" step="10" value="0" aria-label="加注额">
+            <div class="quick-bets">
+              <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+              <button class="chip js-quick" type="button" data-q="pot">底池</button>
+              <button class="chip js-quick" type="button" data-q="three">⅔池</button>
+              <button class="chip js-quick" type="button" data-q="half">½池</button>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+            <button class="btn btn--primary js-call" type="button">跟注</button>
+            <button class="btn btn--alt js-raise-btn" type="button">加注</button>
+          </div>
+
+          <div class="result">
+            <div class="result-main">
+              <div class="result-title js-result-title">等待连接</div>
+              <div class="result-sub js-result-sub"></div>
+            </div>
+            <button class="btn btn--ghost js-rebuy is-hidden" type="button">重新买入</button>
+            <button class="btn btn--ghost js-stand is-hidden" type="button">去围观</button>
+            <button class="btn btn--ghost js-copy" type="button">复制战绩</button>
+            <button class="btn btn--primary js-next" type="button">开始牌局</button>
+          </div>
+        </footer>
+
+        <div class="sticker-layer js-stickers" aria-hidden="true"></div>
+        <div class="toast js-toast"></div>
+      </div>
+    </div></div>
+
+    <aside class="play-side">
+      <p class="play-side-tag">Texas Hold'em · 同桌联机</p>
+      <h1>房间 <span class="js-code">····</span></h1>
+      <p>把这局分享给朋友：<button class="style-btn js-invite" type="button">复制邀请链接</button></p>
+      <div class="roster js-roster"></div>
+      <p class="play-side-note js-spec"></p>
+      <button class="style-btn js-open-picker" type="button">切换界面风格 <span class="js-style-now">皇家绒毡</span></button>
+      <p class="play-side-note">每手 60 秒思考时间，超时自动过牌或弃牌。筹码打光可以在一手结束后重新买入。掉线后重进本页会自动回到原座位。</p>
+    </aside>
+
+  </div>
+</main>
+
+<div class="picker js-picker" role="dialog" aria-modal="true" aria-label="切换界面风格">
+  <div class="picker-card">
+    <header class="picker-head">
+      <h2>界面风格</h2>
+      <p>切换即时生效，牌局继续</p>
+      <button class="picker-close js-picker-close" type="button" aria-label="关闭">×</button>
+    </header>
+    <div class="picker-grid js-picker-grid"></div>
+    <footer class="picker-foot">
+      <a class="picker-link" href="index.html">← 看全部二十套原型</a>
+      <button class="picker-reset js-reset" type="button">退出房间</button>
+    </footer>
+  </div>
+</div>
+</div>
+
+<script>
+  try {
+    var saved = localStorage.getItem("holdem.style");
+    var root = document.querySelector(".app");
+    if (saved && /^s-[a-z0-9-]+$/.test(saved) && root) {
+      root.classList.remove("s-felt");
+      root.classList.add(saved);
+    }
+  } catch (e) {}
+</script>
+<script src="js/poker.js"></script>
+<script src="js/room.js"></script>
+</body>
+</html>

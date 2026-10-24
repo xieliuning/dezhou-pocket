@@ -1,0 +1,207 @@
+/* ============================================================
+   S3 · 霓虹网格 Neon Grid
+   HUD 遥测界面，荧光青 + 品红，扫描线与切角仪表
+   ============================================================ */
+
+.s-neon {
+  --bg: #04060c;
+  --ink: #d6f4ff;
+  --muted: #5c7f8e;
+  --panel: rgba(34, 240, 255, 0.08);
+  --line: rgba(34, 240, 255, 0.22);
+  --accent: #22f0ff;
+  --accent-ink: #02171c;
+  --accent-soft: rgba(34, 240, 255, 0.12);
+  --card-bg: linear-gradient(170deg, #0e1e28 0%, #070f17 100%);
+  --card-ink: #a9ecf8;
+  --suit-red: #ff2f7a;
+  --card-shadow: 0 0 0 1px rgba(34, 240, 255, 0.4), 0 0 18px rgba(34, 240, 255, 0.12);
+  --radius-card: 2px;
+  --radius-av: 2px;
+  --radius-seat: 2px;
+  --radius-btn: 2px;
+  --radius-chip: 2px;
+  --radius-sm: 2px;
+  --font-ui: "Space Grotesk", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Noto Sans SC", sans-serif;
+  --font-num: "JetBrains Mono", "Noto Sans SC", monospace;
+  --font-card: "JetBrains Mono", monospace;
+  --seat-bg: rgba(5, 14, 20, 0.86);
+  --seat-line: rgba(34, 240, 255, 0.3);
+  --seat-shadow: 0 0 22px rgba(0, 0, 0, 0.6);
+  --av-bg: rgba(34, 240, 255, 0.14);
+  --av-ink: #22f0ff;
+  --bet-bg: rgba(255, 47, 122, 0.14);
+  --bet-ink: #ff8bb5;
+  --bet-dot: #ff2f7a;
+  --bet-dot-ring: rgba(255, 47, 122, 0.3);
+  --dealer-bg: #22f0ff;
+  --dealer-ink: #02171c;
+  --danger: #ff2f7a;
+  --turn-line: #22f0ff;
+  --turn-shadow: 0 0 0 1px rgba(34, 240, 255, 0.85), 0 0 26px rgba(34, 240, 255, 0.35);
+  --timer-track: rgba(34, 240, 255, 0.16);
+  --timer-fg: #22f0ff;
+  --actions-bg: linear-gradient(180deg, rgba(4, 10, 16, 0.5), #04060c 40%);
+  --btn-bg: transparent;
+  --btn-ink: #9fdcea;
+  --track: rgba(34, 240, 255, 0.18);
+  --thumb: #22f0ff;
+  --thumb-ring: #04060c;
+  --chip-bg: transparent;
+  --chip-ink: #7fd0e2;
+  --toast-bg: #22f0ff;
+  --toast-ink: #02171c;
+  --result-bg: rgba(5, 14, 20, 0.94);
+  --result-ink: #d6f4ff;
+  --result-line: rgba(34, 240, 255, 0.45);
+}
+
+/* 网格底 + 扫描线 */
+.s-neon {
+  background-color: #04060c;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.32) 0 1px, transparent 1px 3px),
+    linear-gradient(rgba(34, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 240, 255, 0.05) 1px, transparent 1px),
+    radial-gradient(90% 58% at 50% 30%, #0b1a26 0%, #050a12 62%, #03050a 100%);
+  background-size: auto, 26px 26px, 26px 26px, auto;
+}
+
+/* 圆形遥测台 */
+.s-neon .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 468px;
+  height: 468px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(34, 240, 255, 0.26);
+  background: radial-gradient(circle at 50% 34%, rgba(34, 240, 255, 0.07) 0%, transparent 58%);
+  box-shadow: inset 0 0 70px rgba(34, 240, 255, 0.06);
+  pointer-events: none;
+}
+
+/* 瞄准准星 */
+.s-neon .deco { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.s-neon .deco::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(34, 240, 255, 0.3) 26%, rgba(34, 240, 255, 0.3) 74%, transparent);
+}
+.s-neon .deco::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 47, 122, 0.35), transparent);
+}
+
+.s-neon .topbar {
+  border-bottom: 1px solid rgba(34, 240, 255, 0.16);
+  padding-bottom: 10px;
+}
+.s-neon .room-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.s-neon .room-meta {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-num);
+  font-size: 9.5px;
+}
+.s-neon .pot {
+  font-family: var(--font-num);
+  font-size: 22px;
+  color: #ff2f7a;
+  text-shadow: 0 0 14px rgba(255, 47, 122, 0.55);
+}
+.s-neon .pot-label { color: #5c7f8e; }
+.s-neon .icon-btn {
+  background: rgba(34, 240, 255, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(34, 240, 255, 0.3);
+  clip-path: polygon(0 0, 100% 0, 100% 66%, 66% 100%, 0 100%);
+}
+
+.s-neon .board-label { color: #5c7f8e; letter-spacing: 0.3em; }
+
+.s-neon .card {
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+}
+.s-neon .c-rank {
+  color: #d6f4ff;
+  text-shadow: 0 0 10px rgba(34, 240, 255, 0.55);
+  font-family: var(--font-num);
+  font-weight: 600;
+}
+.s-neon .card.is-red .c-rank { color: #ff8bb5; text-shadow: 0 0 10px rgba(255, 47, 122, 0.6); }
+.s-neon .card.is-red .c-suit { color: #ff2f7a; }
+.s-neon .card--empty { clip-path: none; border-color: rgba(34, 240, 255, 0.45); opacity: 0.9; }
+.s-neon .card--empty::after { border-color: rgba(34, 240, 255, 0.55); }
+
+/* 切角只作用在座位底板上，下注筹码要能探出座位外 */
+.s-neon .seat {
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
+  padding: 5px 11px 5px 6px;
+}
+.s-neon .seat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--seat-bg);
+  border: 1px solid var(--seat-line);
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+}
+.s-neon .seat > .seat-av,
+.s-neon .seat > .seat-info { position: relative; z-index: 1; }
+.s-neon .seat > .seat-bet,
+.s-neon .seat > .seat-dealer { z-index: 1; }
+.s-neon .seat-av { clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px)); }
+.s-neon .seat-name { letter-spacing: 0.04em; }
+.s-neon .seat-stack { font-family: var(--font-num); font-size: 10px; }
+.s-neon .seat-bet { border-radius: 2px; font-family: var(--font-num); }
+.s-neon .seat-dealer { border-radius: 2px; font-family: var(--font-num); }
+.s-neon .seat.is-turn { animation: neon-pulse 1.8s ease-in-out infinite; }
+.s-neon .seat.is-turn::before { box-shadow: 0 0 0 1px rgba(34, 240, 255, 0.85), 0 0 22px rgba(34, 240, 255, 0.3); }
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(34, 240, 255, 0.85), 0 0 18px rgba(34, 240, 255, 0.25); }
+  50% { box-shadow: 0 0 0 1px rgba(34, 240, 255, 1), 0 0 32px rgba(34, 240, 255, 0.5); }
+}
+
+.s-neon .actions { border-top: 1px solid rgba(34, 240, 255, 0.18); }
+.s-neon .btn {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  font-family: var(--font-num);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.s-neon .btn--primary {
+  background: #22f0ff;
+  color: #02171c;
+  box-shadow: 0 0 20px rgba(34, 240, 255, 0.4);
+}
+.s-neon .btn--ghost { box-shadow: inset 0 0 0 1px rgba(34, 240, 255, 0.35); }
+.s-neon .btn--alt { box-shadow: inset 0 0 0 1px rgba(255, 47, 122, 0.5); color: #ff8bb5; }
+
+.s-neon .raise-amount { color: #22f0ff; font-family: var(--font-num); }
+.s-neon .chip { box-shadow: inset 0 0 0 1px rgba(34, 240, 255, 0.22); font-family: var(--font-num); }
+.s-neon .raise-range::-webkit-slider-thumb { box-shadow: 0 0 12px rgba(34, 240, 255, 0.7); }
+.s-neon .timer-fg { filter: drop-shadow(0 0 5px rgba(34, 240, 255, 0.6)); }
+.s-neon .toast { box-shadow: 0 0 24px rgba(34, 240, 255, 0.45); }
+.s-neon .result { box-shadow: 0 0 30px rgba(34, 240, 255, 0.2); }
+.s-neon .result .btn--primary { color: #02171c; }

@@ -1,0 +1,142 @@
+/* ============================================================
+   S7 · 立体玩具 Toy 3D
+   深青底上的糖果塑料：牌有厚度、筹码是圆柱、按钮按下会陷下去
+   ============================================================ */
+
+.s-toy {
+  --bg: #0e2b30;
+  --ink: #fdf6ea;
+  --muted: rgba(253, 246, 234, 0.58);
+  --panel: rgba(253, 246, 234, 0.1);
+  --line: rgba(253, 246, 234, 0.16);
+  --accent: #ff6b5a;
+  --accent-ink: #33110d;
+  --accent-soft: #ffd23f;
+  --card-bg: #fffdf6;
+  --card-ink: #12333a;
+  --suit-red: #e23a45;
+  --card-shadow: 0 4px 0 #d9d2bf, 0 8px 0 #bdb49d, 0 12px 18px rgba(0, 0, 0, 0.45);
+  --radius-card: 12px;
+  --radius-av: 50%;
+  --radius-seat: 22px;
+  --radius-btn: 16px;
+  --radius-chip: 12px;
+  --radius-sm: 12px;
+  --font-ui: "Fredoka", "Noto Sans SC", system-ui, sans-serif;
+  --font-display: "Fredoka", "Noto Sans SC", system-ui, sans-serif;
+  --font-num: "Fredoka", "Noto Sans SC", system-ui, sans-serif;
+  --font-card: "Fredoka", "Noto Sans SC", system-ui, sans-serif;
+  --seat-bg: linear-gradient(180deg, #fdf6ea 0%, #f0e6d2 100%);
+  --seat-line: rgba(0, 0, 0, 0.08);
+  --seat-shadow: 0 4px 0 #c9bda2, 0 9px 16px rgba(0, 0, 0, 0.4);
+  --av-bg: #4ecdc4;
+  --av-ink: #0e2b30;
+  --bet-bg: #ffd23f;
+  --bet-ink: #3a2a06;
+  --bet-dot: #e23a45;
+  --bet-dot-ring: #fffdf6;
+  --dealer-bg: #ff6b5a;
+  --dealer-ink: #fffdf6;
+  --danger: #ff6b5a;
+  --turn-line: #ffd23f;
+  --turn-shadow: 0 0 0 3px #ffd23f, 0 10px 24px rgba(255, 210, 63, 0.28);
+  --timer-track: rgba(253, 246, 234, 0.2);
+  --timer-fg: #4ecdc4;
+  --actions-bg: linear-gradient(180deg, #143a40 0%, #0b2126 100%);
+  --btn-bg: #fdf6ea;
+  --btn-ink: #12333a;
+  --track: rgba(253, 246, 234, 0.18);
+  --thumb: #4ecdc4;
+  --thumb-ring: #0e2b30;
+  --chip-bg: rgba(253, 246, 234, 0.12);
+  --chip-ink: #fdf6ea;
+  --toast-bg: #4ecdc4;
+  --toast-ink: #0e2b30;
+  --result-bg: #fdf6ea;
+  --result-ink: #12333a;
+  --result-line: rgba(0, 0, 0, 0.1);
+}
+
+/* 桌垫：一块柔软的圆角绿绒 */
+.s-toy .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 430px;
+  height: 430px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 30%, #2f6f6a 0%, #215952 44%, #16403c 72%, #0e2b30 100%);
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.45), 0 0 0 10px rgba(255, 210, 63, 0.1);
+}
+
+/* 散落的糖豆：压在桌垫下沿的两角 */
+.s-toy .stage::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  bottom: 16px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ff9a8f 0%, #ff6b5a 58%, #d94b3c 100%);
+  box-shadow: 0 5px 0 #a63a2f, 0 10px 16px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  pointer-events: none;
+}
+.s-toy .stage::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #7ee8e0 0%, #4ecdc4 58%, #2ba79e 100%);
+  box-shadow: 0 5px 0 #23867e, 0 10px 16px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+.s-toy .stage { z-index: 1; }
+
+.s-toy .topbar { border-bottom: 2px solid rgba(253, 246, 234, 0.1); padding-bottom: 10px; }
+.s-toy .room-name { font-weight: 600; letter-spacing: 0.01em; }
+.s-toy .pot { color: #ffd23f; font-size: 25px; }
+.s-toy .icon-btn { background: #4ecdc4; color: #0e2b30; font-weight: 700; box-shadow: 0 3px 0 #2ba79e; }
+.s-toy .icon-btn:active { transform: translateY(3px); box-shadow: 0 0 0 #2ba79e; }
+.s-toy .board-label { color: rgba(253, 246, 234, 0.45); font-weight: 600; }
+
+/* 牌：厚塑料 */
+.s-toy .card { border: 0; }
+.s-toy .card--lg { box-shadow: 0 6px 0 #d9d2bf, 0 12px 0 #bdb49d, 0 18px 26px rgba(0, 0, 0, 0.5); }
+.s-toy .card--empty { box-shadow: none; border: 2px dashed rgba(253, 246, 234, 0.35); }
+
+/* 席位：糖果铭牌 */
+.s-toy .seat { padding: 6px 14px 6px 6px; }
+.s-toy .seat-av { box-shadow: 0 3px 0 rgba(0, 0, 0, 0.18); }
+.s-toy .seat--a .seat-av { background: #ffd23f; color: #3a2a06; }
+.s-toy .seat--b .seat-av { background: #ff6b5a; color: #fffdf6; }
+.s-toy .seat--c .seat-av { background: #9d7bff; color: #fffdf6; }
+.s-toy .seat--d .seat-av { background: #4ecdc4; color: #0e2b30; }
+.s-toy .seat--e .seat-av { background: #ff9d5c; color: #3a1f06; }
+.s-toy .seat-name { color: #12333a; font-weight: 600; }
+.s-toy .seat-stack { color: rgba(18, 51, 58, 0.66); }
+.s-toy .seat.is-turn { animation: none; }
+.s-toy .seat.is-turn .seat-av { box-shadow: 0 0 0 3px #ffd23f, 0 3px 0 rgba(0, 0, 0, 0.18); }
+.s-toy .seat-bet { border-radius: 10px; box-shadow: 0 3px 0 #c9a20f, 0 6px 10px rgba(0, 0, 0, 0.35); }
+.s-toy .seat-dealer { box-shadow: 0 2px 0 #c0463a; }
+
+/* 按钮：按下去会陷 */
+.s-toy .btn { box-shadow: 0 4px 0 rgba(0, 0, 0, 0.28); }
+.s-toy .btn:active { transform: translateY(4px); box-shadow: 0 0 0 rgba(0, 0, 0, 0.28); }
+.s-toy .btn--primary { background: #ff6b5a; color: #fffdf6; }
+.s-toy .btn--alt { background: #ffd23f; color: #3a2a06; }
+.s-toy .btn--ghost { background: rgba(253, 246, 234, 0.1); color: #fdf6ea; box-shadow: inset 0 0 0 2px rgba(253, 246, 234, 0.25); }
+.s-toy .chip { box-shadow: inset 0 0 0 2px rgba(253, 246, 234, 0.22); border-radius: 12px; }
+.s-toy .raise-range::-webkit-slider-thumb { border: 0; background: #4ecdc4; box-shadow: 0 2px 0 #2ba79e; }
+.s-toy .raise-range::-moz-range-thumb { border: 0; background: #4ecdc4; box-shadow: 0 2px 0 #2ba79e; }
+.s-toy .raise-amount { color: #ffd23f; }
+.s-toy .toast { border-radius: 14px; box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25); }
+.s-toy .result { border-radius: 20px; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.3); }
+.s-toy .result .btn { background: #4ecdc4; color: #0e2b30; }

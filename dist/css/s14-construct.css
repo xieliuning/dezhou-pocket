@@ -1,0 +1,357 @@
+/* ============================================================
+   S14 · 苏联构成主义 Constructivism
+   纸白 + 墨黑 + 正红。45° 斜切、圆、粗黑横线，零圆角零装饰。
+   母题全部来自构成主义基本元素：斜切矩形 / 圆 / 半圆 / 斜线。
+   ============================================================ */
+
+.s-construct {
+  --bg: #f0eee4;
+  --ink: #121212;
+  --muted: rgba(18, 18, 18, 0.6);
+  --panel: #121212;
+  --line: #121212;
+  --accent: #d8232a;
+  --accent-ink: #f6f4ea;
+  --accent-soft: #121212;
+  --card-bg: #f8f6ec;
+  --card-ink: #121212;
+  --suit-red: #d8232a;
+  --card-shadow: 4px 4px 0 #121212;
+  --radius-card: 0;
+  --radius-av: 0;
+  --radius-seat: 0;
+  --radius-btn: 0;
+  --radius-chip: 0;
+  --radius-sm: 0;
+  --font-ui: "Noto Sans SC", sans-serif;
+  --font-display: "Oswald", "Noto Sans SC", sans-serif;
+  --font-num: "Oswald", "Noto Sans SC", sans-serif;
+  --font-card: "Oswald", "Noto Sans SC", sans-serif;
+  --seat-bg: #f8f6ec;
+  --seat-line: #121212;
+  --seat-shadow: 4px 4px 0 #121212;
+  --av-bg: #f8f6ec;
+  --av-ink: #121212;
+  --bet-bg: #d8232a;
+  --bet-ink: #f6f4ea;
+  --bet-dot: #121212;
+  --bet-dot-ring: #f6f4ea;
+  --dealer-bg: #121212;
+  --dealer-ink: #f6f4ea;
+  --danger: #d8232a;
+  --turn-line: #d8232a;
+  --turn-shadow: 5px 5px 0 #d8232a;
+  --timer-track: rgba(18, 18, 18, 0.2);
+  --timer-fg: #d8232a;
+  --actions-bg: #f0eee4;
+  --btn-bg: #f8f6ec;
+  --btn-ink: #121212;
+  --track: #b9b5a6;
+  --thumb: #d8232a;
+  --thumb-ring: #121212;
+  --chip-bg: #f8f6ec;
+  --chip-ink: #121212;
+  --toast-bg: #121212;
+  --toast-ink: #f6f4ea;
+  --result-bg: #121212;
+  --result-ink: #f6f4ea;
+  --result-line: #121212;
+}
+
+/* ---------- 桌面：巨大红色 45° 斜切块 + 黑圆压角 ---------- */
+
+/* 斜切块铺满舞台的右上半，构图往右上方走 */
+.s-construct .table::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #d8232a;
+  clip-path: polygon(46% 0, 100% 0, 100% 62%, 0 100%, 0 74%);
+  opacity: 0.9;
+}
+
+/* 桌面上的黑圆：压在斜块的左上角，是构成主义的"圆"母题 */
+.s-construct .table::after {
+  content: "";
+  position: absolute;
+  right: -58px;
+  top: 10px;
+  width: 214px;
+  height: 214px;
+  border-radius: 50%;
+  background: #121212;
+}
+
+/* 舞台层的半圆 + 斜线切割，压在桌面之上、席位之下 */
+.s-construct .stage::before {
+  content: "";
+  position: absolute;
+  left: -46px;
+  bottom: 96px;
+  width: 188px;
+  height: 188px;
+  z-index: 1;
+  border-radius: 50% 50% 0 0;
+  background: #121212;
+  pointer-events: none;
+}
+.s-construct .stage::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 26px;
+  width: 150px;
+  height: 5px;
+  z-index: 1;
+  background: #121212;
+  box-shadow: 0 -11px 0 #121212, 0 11px 0 #121212;
+  transform: rotate(-45deg);
+  transform-origin: 100% 50%;
+  pointer-events: none;
+}
+
+/* 底层装饰：斜向排布的细黑线，暗示印刷网线 */
+.s-construct .deco {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0 22px,
+    rgba(18, 18, 18, 0.06) 22px 25px
+  );
+}
+
+/* ---------- 顶栏 ---------- */
+
+.s-construct .topbar {
+  border-bottom: 4px solid #121212;
+  padding-bottom: 9px;
+}
+.s-construct .room-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.s-construct .room-meta {
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.s-construct .pot {
+  font-family: var(--font-display);
+  color: #d8232a;
+  font-size: 25px;
+  letter-spacing: 0.01em;
+}
+.s-construct .pot-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #121212;
+  letter-spacing: 0.26em;
+}
+/* ≡ 做成黑块，和海报里的粗黑标签一致 */
+.s-construct .icon-btn {
+  background: #121212;
+  color: #f6f4ea;
+  border-radius: 0;
+}
+.s-construct .board-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: #f6f4ea;
+  background: #121212;
+  padding: 3px 9px 2px;
+}
+
+/* ---------- 牌 ---------- */
+
+/* 牌面：白纸黑框黑字，红色只给花色 */
+.s-construct .card {
+  background: #f8f6ec;
+  color: #121212;
+  box-shadow: 4px 4px 0 #121212;
+}
+.s-construct .card.is-red { color: #d8232a; }
+.s-construct .card--lg { box-shadow: 5px 5px 0 #121212; }
+.s-construct .card--lg .c-rank { font-size: 25px; }
+/* 空位：虚线框，不给底色 */
+.s-construct .card--empty {
+  background: transparent;
+  border: 2px dashed rgba(18, 18, 18, 0.55);
+  box-shadow: none;
+}
+.s-construct .c-rank {
+  font-family: var(--font-card);
+  letter-spacing: -0.01em;
+}
+
+/* ---------- 席位：黑框白底方形头像 + 粗黑汉字序号 ---------- */
+
+.s-construct .seat {
+  padding: 5px 11px 5px 5px;
+  background: #f8f6ec;
+  border: 3px solid #121212;
+  box-shadow: 4px 4px 0 #121212;
+}
+/* 头像 = 黑框白底方块，序号本身就是构图 */
+.s-construct .seat-av {
+  width: 32px;
+  height: 32px;
+  background: #f8f6ec;
+  color: #121212;
+  border: 3px solid #121212;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+/* 不同席位给不同底的方块，形成红黑交错 */
+.s-construct .seat--b .seat-av { background: #d8232a; color: #f6f4ea; border-color: #121212; }
+.s-construct .seat--c .seat-av { background: #121212; color: #f6f4ea; border-color: #121212; }
+.s-construct .seat--e .seat-av { background: #d8232a; color: #f6f4ea; border-color: #121212; }
+.s-construct .seat-name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.s-construct .seat-stack {
+  font-family: var(--font-num);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.s-construct .seat-bet {
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #121212;
+}
+.s-construct .seat-dealer {
+  border-radius: 0;
+  font-family: var(--font-display);
+}
+/* 当前行动者：红框红块，不做呼吸发光 */
+.s-construct .seat.is-turn {
+  animation: none;
+  border-color: #d8232a;
+  box-shadow: 5px 5px 0 #d8232a;
+}
+.s-construct .seat.is-turn .seat-av {
+  background: #121212;
+  color: #f6f4ea;
+}
+.s-construct .seat[data-state="allin"] .seat-av { box-shadow: 0 0 0 3px #d8232a; }
+.s-construct .seat[data-state="folded"] { opacity: 0.45; }
+
+/* ---------- 行动区 ---------- */
+
+.s-construct .actions {
+  border-top: 4px solid #121212;
+}
+.s-construct .strength-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.26em;
+}
+.s-construct .strength {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.s-construct .stack-line { font-family: var(--font-num); letter-spacing: 0.05em; }
+.s-construct .timer circle { stroke-width: 4; }
+.s-construct .timer-num { font-family: var(--font-num); }
+
+/* 按钮：直角 + 粗黑描边，主按钮正红、备选纯黑 */
+.s-construct .btn {
+  border: 3px solid #121212;
+  box-shadow: 4px 4px 0 #121212;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.s-construct .btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #121212;
+}
+.s-construct .btn--primary {
+  background: #d8232a;
+  color: #f6f4ea;
+  border-color: #121212;
+}
+.s-construct .btn--alt {
+  background: #121212;
+  color: #f6f4ea;
+  border-color: #121212;
+}
+.s-construct .btn--ghost {
+  background: #f8f6ec;
+  color: #121212;
+  box-shadow: 4px 4px 0 #121212;
+}
+
+/* 加注区 */
+.s-construct .raise-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+.s-construct .raise-amount {
+  font-family: var(--font-num);
+  font-size: 19px;
+  color: #d8232a;
+}
+.s-construct .raise-pot {
+  font-family: var(--font-display);
+  letter-spacing: 0.14em;
+}
+.s-construct .raise-range {
+  border-radius: 0;
+  height: 6px;
+  background: #b9b5a6;
+}
+.s-construct .raise-range::-webkit-slider-thumb {
+  border-radius: 0;
+  background: #d8232a;
+  border: 3px solid #121212;
+}
+.s-construct .raise-range::-moz-range-thumb {
+  border-radius: 0;
+  background: #d8232a;
+  border: 3px solid #121212;
+}
+.s-construct .chip {
+  border: 2px solid #121212;
+  background: #f8f6ec;
+  color: #121212;
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+}
+
+/* ---------- 结算 / 提示 ---------- */
+
+.s-construct .result {
+  border-radius: 0;
+  background: #121212;
+  color: #f6f4ea;
+  border: 3px solid #121212;
+  box-shadow: 5px 5px 0 #d8232a;
+}
+.s-construct .result-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.s-construct .result-sub { font-family: var(--font-num); }
+.s-construct .result .btn {
+  background: #d8232a;
+  color: #f6f4ea;
+  box-shadow: none;
+  border-color: #f6f4ea;
+}
+.s-construct .toast {
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #d8232a;
+}

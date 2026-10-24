@@ -1,0 +1,13 @@
+{
+  "name": "yehang-poker",
+  "version": "1.8.0",
+  "private": true,
+  "description": "夜航俱乐部 · 德州扑克（单机 H5 + WebSocket 同桌联机）",
+  "scripts": {
+    "start": "node server/server.js",
+    "test:server": "node tools/test-server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#08080a">
+<meta name="description" content="二十套移动端德州扑克牌桌界面风格画廊：同一套牌桌逻辑，二十种视觉语言，可交互对比，微信里点开即看。">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" type="image/png" href="assets/share-thumb.png">
+<title>德州扑克 · 二十套移动端界面风格</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/s1-felt.css">
+<link rel="stylesheet" href="css/s2-mono.css">
+<link rel="stylesheet" href="css/s3-neon.css">
+<link rel="stylesheet" href="css/s4-pixel.css">
+<link rel="stylesheet" href="css/s5-deco.css">
+<link rel="stylesheet" href="css/s6-bauhaus.css">
+<link rel="stylesheet" href="css/s7-toy.css">
+<link rel="stylesheet" href="css/s8-story.css">
+<link rel="stylesheet" href="css/s9-engraved.css">
+<link rel="stylesheet" href="css/s10-lacquer.css">
+<link rel="stylesheet" href="css/s11-ink.css">
+<link rel="stylesheet" href="css/s12-memphis.css">
+<link rel="stylesheet" href="css/s13-pop.css">
+<link rel="stylesheet" href="css/s14-construct.css">
+<link rel="stylesheet" href="css/s15-term.css">
+<link rel="stylesheet" href="css/s16-cyber.css">
+<link rel="stylesheet" href="css/s17-crt.css">
+<link rel="stylesheet" href="css/s18-steam.css">
+<link rel="stylesheet" href="css/s19-clay.css">
+<link rel="stylesheet" href="css/s20-zen.css">
+</head>
+<body>
+
+<img class="wx-share-thumb" src="assets/share-thumb.png" width="300" height="300" alt="">
+
+<header class="gallery-head">
+  <p class="gallery-eyebrow">Texas Hold'em · Mobile UI Exploration</p>
+  <h1 class="gallery-title">德州扑克 · 二十套移动端界面风格</h1>
+  <p class="gallery-sub">
+    同一份信息架构（牌桌 / 公共牌 / 玩家席位 / 底池 / 行动区），二十种截然不同的视觉语言。
+    每套都是可交互原型：拖动加注滑杆、点快捷额度、跟注或加注后会翻出河牌并进入结算，底部计时器到点会自动弃牌。
+    横向滑动可对比全部二十套，手机端请用上方标签跳转。
+  </p>
+  <div class="gallery-cta">
+    <a class="play-link" href="play.html">开始单机对局<span>9 人桌 · 8 位 AI · 随时换风格</span></a>
+    <p class="gallery-cta-note">只想上手打两把？直接开桌，牌局进行中也能切换风格。</p>
+  </div>
+  <div class="legend">
+    <button type="button" data-target="s-felt">01 皇家绒毡</button>
+    <button type="button" data-target="s-mono">02 纸面印刷</button>
+    <button type="button" data-target="s-neon">03 霓虹网格</button>
+    <button type="button" data-target="s-pixel">04 像素街机</button>
+    <button type="button" data-target="s-deco">05 装饰艺术</button>
+    <button type="button" data-target="s-bauhaus">06 包豪斯</button>
+    <button type="button" data-target="s-toy">07 立体玩具</button>
+    <button type="button" data-target="s-story">08 绘本插画</button>
+    <button type="button" data-target="s-engraved">09 雕版蚀刻</button>
+    <button type="button" data-target="s-lacquer">10 漆器大漆</button>
+    <button type="button" data-target="s-ink">11 水墨留白</button>
+    <button type="button" data-target="s-memphis">12 孟菲斯</button>
+    <button type="button" data-target="s-pop">13 波普艺术</button>
+    <button type="button" data-target="s-construct">14 构成主义</button>
+    <button type="button" data-target="s-term">15 终端命令行</button>
+    <button type="button" data-target="s-cyber">16 赛博朋克</button>
+    <button type="button" data-target="s-crt">17 复古录像带</button>
+    <button type="button" data-target="s-steam">18 蒸汽朋克</button>
+    <button type="button" data-target="s-clay">19 陶土黏土</button>
+    <button type="button" data-target="s-zen">20 禅意留白</button>
+  </div>
+</header>
+
+<main class="phones">
+
+<!-- ══════════════ 01 皇家绒毡 ══════════════ -->
+<section class="phone" id="s-felt">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-felt"
+         data-pot="485" data-stack="2480" data-tocall="120"
+         data-strength="一对 A" data-final="一对 A · K 踢脚" data-river="2" data-river-suit="♥">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">☰</button>
+        <div class="room">
+          <div class="room-name">夜航俱乐部</div>
+          <div class="room-meta">盲注 10 / 20 · 第 12 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">485</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card is-red"><span class="c-rank">A</span><span class="c-suit">♥</span></div>
+              <div class="card"><span class="c-rank">9</span><span class="c-suit">♣</span></div>
+              <div class="card is-red"><span class="c-rank">4</span><span class="c-suit">♦</span></div>
+              <div class="card"><span class="c-rank">8</span><span class="c-suit">♠</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded">
+              <div class="seat-av"><img src="assets/avatars/long.webp" alt="" draggable="false"></div>
+              <div class="seat-info"><div class="seat-name">龙哥</div><div class="seat-stack">3,120</div></div>
+            </div>
+            <div class="seat seat--b" data-state="active">
+              <div class="seat-av"><img src="assets/avatars/fa.webp" alt="" draggable="false"></div>
+              <div class="seat-info"><div class="seat-name">发条</div><div class="seat-stack">2,760</div></div>
+              <div class="seat-bet">20</div>
+              <div class="seat-dealer">D</div>
+            </div>
+            <div class="seat seat--c" data-state="allin">
+              <div class="seat-av"><img src="assets/avatars/white.webp" alt="" draggable="false"></div>
+              <div class="seat-info"><div class="seat-name">白噪音</div><div class="seat-stack">1,120</div></div>
+            </div>
+            <div class="seat seat--d is-turn" data-state="active">
+              <div class="seat-av"><img src="assets/avatars/lin.webp" alt="" draggable="false"></div>
+              <div class="seat-info"><div class="seat-name">林深</div><div class="seat-stack">4,500</div></div>
+              <div class="seat-bet">120</div>
+            </div>
+            <div class="seat seat--e" data-state="folded">
+              <div class="seat-av"><img src="assets/avatars/k.webp" alt="" draggable="false"></div>
+              <div class="seat-info"><div class="seat-name">K先生</div><div class="seat-stack">890</div></div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">A</span><span class="c-suit">♠</span></div>
+            <div class="card card--lg is-red"><span class="c-rank">K</span><span class="c-suit">♦</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力</div>
+            <div class="strength js-strength">一对 A</div>
+            <div class="stack-line">筹码 <span class="js-stack">2,480</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">120</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">240</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入</span>
+            <span class="raise-amount js-raise-amt">240</span>
+            <span class="raise-pot">底池将变 <span class="js-pot-final">725</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">½ 池</button>
+            <button class="chip js-quick" type="button" data-q="three">⅔ 池</button>
+            <button class="chip js-quick" type="button" data-q="pot">底池</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">本手结束</div>
+            <div class="result-sub js-result-sub">底池 725</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">下一手</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 01 · 深色</span>
+    <h3>皇家绒毡 Royal Felt</h3>
+    <p>墨绿台呢、烫金滚边、皮革名牌。牌面是全场唯一的暖白，视线自然先落在自己的两张牌上；底池用金箔渐变做视觉锚点。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 02 纸面印刷 ══════════════ -->
+<section class="phone" id="s-mono">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-mono"
+         data-pot="1240" data-stack="6030" data-tocall="250"
+         data-strength="一对 A · K 踢脚" data-final="两对 · A 和 K" data-river="K" data-river-suit="♥">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">☰</button>
+        <div class="room">
+          <div class="room-name">纸牌考据</div>
+          <div class="room-meta">盲注 5 / 10 · 第 34 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">1,240</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌 / COMMUNITY</div>
+            <div class="board-cards js-board">
+              <div class="card is-red"><span class="c-rank">A</span><span class="c-suit">♥</span></div>
+              <div class="card"><span class="c-rank">9</span><span class="c-suit">♣</span></div>
+              <div class="card is-red"><span class="c-rank">4</span><span class="c-suit">♦</span></div>
+              <div class="card"><span class="c-rank">8</span><span class="c-suit">♠</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded">
+              <div class="seat-av">铁</div>
+              <div class="seat-info"><div class="seat-name">铁手</div><div class="seat-stack">1,850</div></div>
+              <div class="seat-bet">10</div>
+            </div>
+            <div class="seat seat--b" data-state="active">
+              <div class="seat-av">冷</div>
+              <div class="seat-info"><div class="seat-name">冷面</div><div class="seat-stack">3,400</div></div>
+              <div class="seat-bet">10</div>
+              <div class="seat-dealer">D</div>
+            </div>
+            <div class="seat seat--c" data-state="allin">
+              <div class="seat-av">算</div>
+              <div class="seat-info"><div class="seat-name">算子</div><div class="seat-stack">720</div></div>
+            </div>
+            <div class="seat seat--d is-turn" data-state="active">
+              <div class="seat-av">宋</div>
+              <div class="seat-info"><div class="seat-name">老宋</div><div class="seat-stack">5,150</div></div>
+              <div class="seat-bet">250</div>
+            </div>
+            <div class="seat seat--e" data-state="folded">
+              <div class="seat-av">阿</div>
+              <div class="seat-info"><div class="seat-name">阿喜</div><div class="seat-stack">1,060</div></div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">A</span><span class="c-suit">♠</span></div>
+            <div class="card card--lg is-red"><span class="c-rank">K</span><span class="c-suit">♥</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力 / VALUE</div>
+            <div class="strength js-strength">一对 A · K 踢脚</div>
+            <div class="stack-line">筹码 <span class="js-stack">6,030</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">FOLD</button>
+          <button class="btn btn--primary js-call" type="button">CALL <span class="js-call-amt">250</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">RAISE <span class="js-raise-amt">500</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入 / TOTAL BET</span>
+            <span class="raise-amount js-raise-amt">500</span>
+            <span class="raise-pot">底池 <span class="js-pot-final">1,740</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="38" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">1/2 POT</button>
+            <button class="chip js-quick" type="button" data-q="three">2/3 POT</button>
+            <button class="chip js-quick" type="button" data-q="pot">POT</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">本手结束 / SHOWDOWN</div>
+            <div class="result-sub js-result-sub">底池 1,740</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">NEXT HAND</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 02 · 浅色</span>
+    <h3>纸面印刷 Mono Press</h3>
+    <p>瑞士编辑排版：零圆角、零阴影、细横线分栏。玩家不是头像气泡，而是一份带下注列的账簿名单；朱红只用在需要你做决定的地方。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 03 霓虹网格 ══════════════ -->
+<section class="phone" id="s-neon">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-neon"
+         data-pot="2760" data-stack="12400" data-tocall="400"
+         data-strength="同花听牌 · 4 张" data-final="同花 · J 高" data-river="6" data-river-suit="♠">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">☰</button>
+        <div class="room">
+          <div class="room-name">深空牌局</div>
+          <div class="room-meta">BLIND 25/50 · ROUND 03</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">POT</span>
+          <span class="pot js-pot">2,760</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">BOARD</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">Q</span><span class="c-suit">♠</span></div>
+              <div class="card"><span class="c-rank">8</span><span class="c-suit">♠</span></div>
+              <div class="card is-red"><span class="c-rank">3</span><span class="c-suit">♦</span></div>
+              <div class="card"><span class="c-rank">2</span><span class="c-suit">♣</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded">
+              <div class="seat-av">零</div>
+              <div class="seat-info"><div class="seat-name">零号</div><div class="seat-stack">8,400</div></div>
+            </div>
+            <div class="seat seat--b" data-state="active">
+              <div class="seat-av">铁</div>
+              <div class="seat-info"><div class="seat-name">铁翼</div><div class="seat-stack">15,200</div></div>
+              <div class="seat-bet">50</div>
+              <div class="seat-dealer">D</div>
+            </div>
+            <div class="seat seat--c" data-state="active">
+              <div class="seat-av">夜</div>
+              <div class="seat-info"><div class="seat-name">夜莺</div><div class="seat-stack">4,100</div></div>
+              <div class="seat-bet">200</div>
+            </div>
+            <div class="seat seat--d is-turn" data-state="active">
+              <div class="seat-av">冷</div>
+              <div class="seat-info"><div class="seat-name">冷光</div><div class="seat-stack">9,640</div></div>
+              <div class="seat-bet">400</div>
+            </div>
+            <div class="seat seat--e" data-state="folded">
+              <div class="seat-av">灰</div>
+              <div class="seat-info"><div class="seat-name">灰鸽</div><div class="seat-stack">6,300</div></div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">J</span><span class="c-suit">♠</span></div>
+            <div class="card card--lg"><span class="c-rank">T</span><span class="c-suit">♠</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">HAND STRENGTH</div>
+            <div class="strength js-strength">同花听牌 · 4 张</div>
+            <div class="stack-line">STACK <span class="js-stack">12,400</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">FOLD</button>
+          <button class="btn btn--primary js-call" type="button">CALL <span class="js-call-amt">400</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">RAISE <span class="js-raise-amt">800</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">TOTAL BET</span>
+            <span class="raise-amount js-raise-amt">800</span>
+            <span class="raise-pot">POT → <span class="js-pot-final">3,560</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="34" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">1/2</button>
+            <button class="chip js-quick" type="button" data-q="three">2/3</button>
+            <button class="chip js-quick" type="button" data-q="pot">POT</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">SHOWDOWN COMPLETE</div>
+            <div class="result-sub js-result-sub">POT 3,560</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">NEXT</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 03 · 深色</span>
+    <h3>霓虹网格 Neon Grid</h3>
+    <p>把牌桌当成一块遥测屏幕：网格、准星、切角面板、扫描线。荧光青代表"可操作"，品红代表"代价"，颜色即状态，不再需要图例说明。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 04 像素街机 ══════════════ -->
+<section class="phone" id="s-pixel">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-pixel"
+         data-pot="96" data-stack="240" data-tocall="24"
+         data-strength="高牌 A" data-final="一对 A · 7 踢脚" data-river="A" data-river-suit="♣">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">☰</button>
+        <div class="room">
+          <div class="room-name">街机高能</div>
+          <div class="room-meta">BLIND 1/2 · ROUND 07</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">POT</span>
+          <span class="pot js-pot">96</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">BOARD</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">K</span><span class="c-suit">♣</span></div>
+              <div class="card"><span class="c-rank">9</span><span class="c-suit">♣</span></div>
+              <div class="card is-red"><span class="c-rank">3</span><span class="c-suit">♥</span></div>
+              <div class="card is-red"><span class="c-rank">5</span><span class="c-suit">♦</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded">
+              <div class="seat-av"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect width="16" height="16" fill="#2b2b4a"/><rect x="1" y="7" width="3" height="3" fill="#6aa5e0"/><rect x="4" y="5" width="8" height="6" fill="#9ecbff"/><rect x="5" y="4" width="4" height="1" fill="#6aa5e0"/><rect x="4" y="11" width="6" height="1" fill="#6aa5e0"/><rect x="6" y="7" width="1" height="1" fill="#12121f"/></svg></div>
+              <div class="seat-info"><div class="seat-name">咸鱼</div><div class="seat-stack">240</div></div>
+            </div>
+            <div class="seat seat--b" data-state="active">
+              <div class="seat-av"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect width="16" height="16" fill="#3b3b6e"/><rect x="3" y="3" width="3" height="3" fill="#7a4a20"/><rect x="10" y="3" width="3" height="3" fill="#7a4a20"/><rect x="3" y="5" width="10" height="8" fill="#a9743f"/><rect x="4" y="5" width="8" height="2" fill="#c08a52"/><rect x="5" y="8" width="2" height="2" fill="#12121f"/><rect x="9" y="8" width="2" height="2" fill="#12121f"/><rect x="6" y="11" width="4" height="1" fill="#12121f"/></svg></div>
+              <div class="seat-info"><div class="seat-name">大熊</div><div class="seat-stack">180</div></div>
+              <div class="seat-bet">2</div>
+              <div class="seat-dealer">D</div>
+            </div>
+            <div class="seat seat--c" data-state="allin">
+              <div class="seat-av"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect width="16" height="16" fill="#1e1e33"/><rect x="4" y="5" width="8" height="7" fill="#4cd964"/><rect x="5" y="6" width="2" height="2" fill="#b6f5c4"/><rect x="6" y="8" width="1" height="1" fill="#12121f"/><rect x="9" y="8" width="1" height="1" fill="#12121f"/><rect x="7" y="10" width="3" height="1" fill="#12121f"/></svg></div>
+              <div class="seat-info"><div class="seat-name">豆子</div><div class="seat-stack">96</div></div>
+            </div>
+            <div class="seat seat--d is-turn" data-state="active">
+              <div class="seat-av"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect width="16" height="16" fill="#1f2b3a"/><rect x="2" y="6" width="10" height="6" fill="#3a9a5c"/><rect x="4" y="8" width="3" height="2" fill="#2a7a45"/><rect x="8" y="8" width="2" height="2" fill="#2a7a45"/><rect x="12" y="8" width="2" height="3" fill="#6cc98a"/><rect x="12" y="9" width="1" height="1" fill="#12121f"/><rect x="2" y="12" width="3" height="1" fill="#6cc98a"/><rect x="9" y="12" width="3" height="1" fill="#6cc98a"/></svg></div>
+              <div class="seat-info"><div class="seat-name">乌龟</div><div class="seat-stack">320</div></div>
+              <div class="seat-bet">24</div>
+            </div>
+            <div class="seat seat--e" data-state="folded">
+              <div class="seat-av"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect width="16" height="16" fill="#3b3b6e"/><rect x="4" y="6" width="8" height="6" fill="#f2f2f2"/><rect x="6" y="3" width="2" height="3" fill="#ef7d57"/><rect x="9" y="3" width="2" height="2" fill="#ef7d57"/><rect x="12" y="8" width="3" height="2" fill="#ffcd75"/><rect x="8" y="7" width="1" height="1" fill="#12121f"/><rect x="5" y="12" width="1" height="2" fill="#ffcd75"/><rect x="9" y="12" width="1" height="2" fill="#ffcd75"/></svg></div>
+              <div class="seat-info"><div class="seat-name">菜鸡</div><div class="seat-stack">150</div></div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">A</span><span class="c-suit">♦</span></div>
+            <div class="card card--lg"><span class="c-rank">7</span><span class="c-suit">♠</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">HAND</div>
+            <div class="strength js-strength">高牌 A</div>
+            <div class="stack-line">STACK <span class="js-stack">240</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">24</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">48</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入</span>
+            <span class="raise-amount js-raise-amt">48</span>
+            <span class="raise-pot">底池 <span class="js-pot-final">144</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="30" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">1/2</button>
+            <button class="chip js-quick" type="button" data-q="three">2/3</button>
+            <button class="chip js-quick" type="button" data-q="pot">底池</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">GAME OVER</div>
+            <div class="result-sub js-result-sub">底池 144</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">下一手</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 04 · 深色</span>
+    <h3>像素街机 Pixel Arcade</h3>
+    <p>8-bit 硬边、4 像素硬阴影、有限调色板。头像不是图库素材，而是手绘的像素 sprite；按钮按下去会真的"沉"一格，把操作感做成街机手感。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 05 装饰艺术 ══════════════ -->
+<section class="phone" id="s-deco">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-deco"
+         data-pot="5400" data-stack="31800" data-tocall="1000"
+         data-strength="高牌 Q" data-final="顺子 · Q 高" data-river="J" data-river-suit="♠">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">☰</button>
+        <div class="room">
+          <div class="room-name">私局沙龙</div>
+          <div class="room-meta">盲注 50 / 100 · 第 8 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">5,400</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card is-red"><span class="c-rank">A</span><span class="c-suit">♥</span></div>
+              <div class="card is-red"><span class="c-rank">9</span><span class="c-suit">♦</span></div>
+              <div class="card"><span class="c-rank">4</span><span class="c-suit">♣</span></div>
+              <div class="card"><span class="c-rank">8</span><span class="c-suit">♠</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded">
+              <div class="seat-av">沈</div>
+              <div class="seat-info"><div class="seat-name">沈先生</div><div class="seat-stack">42,000</div></div>
+            </div>
+            <div class="seat seat--b" data-state="active">
+              <div class="seat-av"><img src="assets/avatars/white.webp" alt="" draggable="false"></div>
+              <div class="seat-info"><div class="seat-name">白小姐</div><div class="seat-stack">68,500</div></div>
+              <div class="seat-bet">100</div>
+              <div class="seat-dealer">D</div>
+            </div>
+            <div class="seat seat--c" data-state="active">
+              <div class="seat-av">陆</div>
+              <div class="seat-info"><div class="seat-name">陆先生</div><div class="seat-stack">31,200</div></div>
+              <div class="seat-bet">1,000</div>
+            </div>
+            <div class="seat seat--d is-turn" data-state="active">
+              <div class="seat-av">何</div>
+              <div class="seat-info"><div class="seat-name">何小姐</div><div class="seat-stack">55,000</div></div>
+              <div class="seat-bet">1,000</div>
+            </div>
+            <div class="seat seat--e" data-state="folded">
+              <div class="seat-av">秦</div>
+              <div class="seat-info"><div class="seat-name">秦先生</div><div class="seat-stack">19,800</div></div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">Q</span><span class="c-suit">♠</span></div>
+            <div class="card card--lg"><span class="c-rank">10</span><span class="c-suit">♠</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力</div>
+            <div class="strength js-strength">高牌 Q</div>
+            <div class="stack-line">筹码 <span class="js-stack">31,800</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">1,000</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">2,000</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入</span>
+            <span class="raise-amount js-raise-amt">2,000</span>
+            <span class="raise-pot">底池 <span class="js-pot-final">7,400</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="32" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">½ 池</button>
+            <button class="chip js-quick" type="button" data-q="three">⅔ 池</button>
+            <button class="chip js-quick" type="button" data-q="pot">底池</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">本手结束</div>
+            <div class="result-sub js-result-sub">底池 7,400</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">下一手</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 05 · 浅色</span>
+    <h3>装饰艺术 Art Deco</h3>
+    <p>象牙白纸面、烫金双线框、扇形放射。底池是一只金框徽章，牌面是细高衬线加扇形饰纹；整体严格对称，像一份印好的私人邀请函。</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 06 包豪斯 ══════════════ -->
+<section class="phone" id="s-bauhaus">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-bauhaus"
+         data-pot="640" data-stack="3120" data-tocall="80"
+         data-strength="一对 K" data-final="两对 K 与 9" data-river="9" data-river-suit="♥">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">☰</button>
+        <div class="room">
+          <div class="room-name">几何社</div>
+          <div class="room-meta">盲注 2 / 4 · 第 3 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">640</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">K</span><span class="c-suit">♣</span></div>
+              <div class="card"><span class="c-rank">9</span><span class="c-suit">♠</span></div>
+              <div class="card is-red"><span class="c-rank">4</span><span class="c-suit">♥</span></div>
+              <div class="card is-red"><span class="c-rank">6</span><span class="c-suit">♦</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">●</div><div class="seat-info"><div class="seat-name">圆</div><div class="seat-stack">2,100</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">■</div><div class="seat-info"><div class="seat-name">方</div><div class="seat-stack">1,860</div></div><div class="seat-bet">40</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">▲</div><div class="seat-info"><div class="seat-name">三角</div><div class="seat-stack">4,020</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">◆</div><div class="seat-info"><div class="seat-name">菱形</div><div class="seat-stack">3,120</div></div><div class="seat-bet">80</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">✦</div><div class="seat-info"><div class="seat-name">星</div><div class="seat-stack">900</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">K</span><span class="c-suit">♠</span></div>
+                <div class="card card--lg is-red"><span class="c-rank">9</span><span class="c-suit">♥</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力</div>
+            <div class="strength js-strength">一对 K</div>
+            <div class="stack-line">筹码 <span class="js-stack">3120</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">80</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">160</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入</span>
+            <span class="raise-amount js-raise-amt">160</span>
+            <span class="raise-pot">底池将变 <span class="js-pot-final">800</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">½ 池</button>
+            <button class="chip js-quick" type="button" data-q="three">⅔ 池</button>
+            <button class="chip js-quick" type="button" data-q="pot">底池</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">本手结束</div>
+            <div class="result-sub js-result-sub">底池 800</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">下一手</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 06 · 浅色</span>
+    <h3>包豪斯 Bauhaus</h3>
+    <p>米白纸面、纯黑粗线与三原色。形状本身就是信息：圆、方、三角分座，底池是红黄相撞的方块，整屏没有一个柔和的圆角。</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 07 立体玩具 ══════════════ -->
+<section class="phone" id="s-toy">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-toy"
+         data-pot="96" data-stack="1240" data-tocall="20"
+         data-strength="一对 9" data-final="顺子 · 8 高" data-river="8" data-river-suit="♥">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">糖果工坊</div>
+          <div class="room-meta">盲注 5 / 10 · 第 21 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">POT</span>
+          <span class="pot js-pot">96</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card is-red"><span class="c-rank">4</span><span class="c-suit">♥</span></div>
+              <div class="card"><span class="c-rank">5</span><span class="c-suit">♠</span></div>
+              <div class="card"><span class="c-rank">6</span><span class="c-suit">♣</span></div>
+              <div class="card is-red"><span class="c-rank">7</span><span class="c-suit">♦</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">棉</div><div class="seat-info"><div class="seat-name">棉花糖</div><div class="seat-stack">640</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">麻</div><div class="seat-info"><div class="seat-name">麻薯</div><div class="seat-stack">1,120</div></div><div class="seat-bet">10</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">泡</div><div class="seat-info"><div class="seat-name">泡芙</div><div class="seat-stack">2,800</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">曲</div><div class="seat-info"><div class="seat-name">曲奇</div><div class="seat-stack">1,240</div></div><div class="seat-bet">20</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">冰</div><div class="seat-info"><div class="seat-name">冰激凌</div><div class="seat-stack">380</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">9</span><span class="c-suit">♦</span></div>
+                <div class="card card--lg is-red"><span class="c-rank">9</span><span class="c-suit">♥</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力</div>
+            <div class="strength js-strength">一对 9</div>
+            <div class="stack-line">筹码 <span class="js-stack">1240</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">20</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">40</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入</span>
+            <span class="raise-amount js-raise-amt">40</span>
+            <span class="raise-pot">底池将变 <span class="js-pot-final">136</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">½</button>
+            <button class="chip js-quick" type="button" data-q="three">⅔</button>
+            <button class="chip js-quick" type="button" data-q="pot">底池</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">这局结束</div>
+            <div class="result-sub js-result-sub">底池 136</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">再来一局</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 07 · 深色</span>
+    <h3>立体玩具 Toy 3D</h3>
+    <p>深青底上的糖果塑料：牌有厚度、筹码是圆柱，按钮按下会陷下去。三个高饱和糖果色轮着上，好玩但一点不幼稚。</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 08 绘本插画 ══════════════ -->
+<section class="phone" id="s-story">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-story"
+         data-pot="220" data-stack="860" data-tocall="30"
+         data-strength="对子 8" data-final="三条 8" data-river="8" data-river-suit="♦">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">☰</button>
+        <div class="room">
+          <div class="room-name">森林木屋</div>
+          <div class="room-meta">盲注 1 / 2 · 第 9 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">220</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">8</span><span class="c-suit">♠</span></div>
+              <div class="card is-red"><span class="c-rank">5</span><span class="c-suit">♥</span></div>
+              <div class="card"><span class="c-rank">3</span><span class="c-suit">♣</span></div>
+              <div class="card is-red"><span class="c-rank">9</span><span class="c-suit">♦</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av"><svg class="av-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 10.5 L5.6 3.2 L9.6 7.2 Z" fill="#e2873a" stroke="#4a3520" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M19.4 10.5 L18.4 3.2 L14.4 7.2 Z" fill="#e2873a" stroke="#4a3520" stroke-width="1.4" stroke-linejoin="round"/><ellipse cx="12" cy="13.6" rx="8.2" ry="7" fill="#e2873a" stroke="#4a3520" stroke-width="1.5"/><circle cx="9.3" cy="12.4" r="1.2" fill="#3a2a1a"/><circle cx="14.7" cy="12.4" r="1.2" fill="#3a2a1a"/><ellipse cx="12" cy="15.8" rx="1.4" ry="1.05" fill="#3a2a1a"/><path d="M9.4 18.2 q2.6 1.5 5.2 0" stroke="#3a2a1a" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></div><div class="seat-info"><div class="seat-name">小狐狸</div><div class="seat-stack">520</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av"><svg class="av-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.1" cy="5.6" r="3.4" fill="#a97a4e" stroke="#4a3520" stroke-width="1.4"/>
+            <circle cx="17.9" cy="5.6" r="3.4" fill="#a97a4e" stroke="#4a3520" stroke-width="1.4"/><ellipse cx="12" cy="13.6" rx="8.2" ry="7" fill="#a97a4e" stroke="#4a3520" stroke-width="1.5"/><circle cx="9.3" cy="12.4" r="1.2" fill="#3a2a1a"/><circle cx="14.7" cy="12.4" r="1.2" fill="#3a2a1a"/><ellipse cx="12" cy="15.8" rx="1.4" ry="1.05" fill="#3a2a1a"/><path d="M9.4 18.2 q2.6 1.5 5.2 0" stroke="#3a2a1a" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></div><div class="seat-info"><div class="seat-name">小熊</div><div class="seat-stack">1,410</div></div><div class="seat-bet">5</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av"><svg class="av-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8 L5 2.5 M5 5.5 L2.6 3.6 M5 2.5 L6.8 1.2" stroke="#6b4a26" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+             <path d="M17.5 8 L19 2.5 M19 5.5 L21.4 3.6 M19 2.5 L17.2 1.2" stroke="#6b4a26" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="12" cy="13.6" rx="8.2" ry="7" fill="#d9a86a" stroke="#4a3520" stroke-width="1.5"/><circle cx="9.3" cy="12.4" r="1.2" fill="#3a2a1a"/><circle cx="14.7" cy="12.4" r="1.2" fill="#3a2a1a"/><ellipse cx="12" cy="15.8" rx="1.4" ry="1.05" fill="#3a2a1a"/><path d="M9.4 18.2 q2.6 1.5 5.2 0" stroke="#3a2a1a" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></div><div class="seat-info"><div class="seat-name">小鹿</div><div class="seat-stack">2,200</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av"><svg class="av-svg" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="8" cy="4.6" rx="2.3" ry="5.1" fill="#f0e6d8" stroke="#4a3520" stroke-width="1.4"/>
+           <ellipse cx="16" cy="4.6" rx="2.3" ry="5.1" fill="#f0e6d8" stroke="#4a3520" stroke-width="1.4"/><ellipse cx="12" cy="13.6" rx="8.2" ry="7" fill="#f0e6d8" stroke="#4a3520" stroke-width="1.5"/><circle cx="9.3" cy="12.4" r="1.2" fill="#3a2a1a"/><circle cx="14.7" cy="12.4" r="1.2" fill="#3a2a1a"/><ellipse cx="12" cy="15.8" rx="1.4" ry="1.05" fill="#3a2a1a"/><path d="M9.4 18.2 q2.6 1.5 5.2 0" stroke="#3a2a1a" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></div><div class="seat-info"><div class="seat-name">小兔</div><div class="seat-stack">860</div></div><div class="seat-bet">30</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av"><svg class="av-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 10.5 L5.6 3.2 L9.6 7.2 Z" fill="#9aa0a8" stroke="#4a3520" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M19.4 10.5 L18.4 3.2 L14.4 7.2 Z" fill="#9aa0a8" stroke="#4a3520" stroke-width="1.4" stroke-linejoin="round"/><ellipse cx="12" cy="13.6" rx="8.2" ry="7" fill="#9aa0a8" stroke="#4a3520" stroke-width="1.5"/><circle cx="9.3" cy="12.4" r="1.2" fill="#3a2a1a"/><circle cx="14.7" cy="12.4" r="1.2" fill="#3a2a1a"/><ellipse cx="12" cy="15.8" rx="1.4" ry="1.05" fill="#3a2a1a"/><path d="M9.4 18.2 q2.6 1.5 5.2 0" stroke="#3a2a1a" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></div><div class="seat-info"><div class="seat-name">小猫</div><div class="seat-stack">300</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">8</span><span class="c-suit">♥</span></div>
+                <div class="card card--lg"><span class="c-rank">K</span><span class="c-suit">♣</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力</div>
+            <div class="strength js-strength">对子 8</div>
+            <div class="stack-line">筹码 <span class="js-stack">860</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">不要这张</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">30</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">60</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">这一轮</span>
+            <span class="raise-amount js-raise-amt">60</span>
+            <span class="raise-pot">底池会变成 <span class="js-pot-final">280</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">一半</button>
+            <button class="chip js-quick" type="button" data-q="three">三分之二</button>
+            <button class="chip js-quick" type="button" data-q="pot">全下</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">这一局结束啦</div>
+            <div class="result-sub js-result-sub">底池 280</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">再来一局</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 08 · 浅色</span>
+    <h3>绘本插画 Storybook</h3>
+    <p>奶油纸与水彩晕染，座位是五只手绘小动物，牌面像贴纸。信息密度最低的一套，但所有数字依然一眼可读。</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 09 雕版蚀刻 ══════════════ -->
+<section class="phone" id="s-engraved">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-engraved"
+         data-pot="3300" data-stack="14200" data-tocall="300"
+         data-strength="一对 10" data-final="一对 10 · 9 踢脚" data-river="9" data-river-suit="♦">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">⁂</button>
+        <div class="room">
+          <div class="room-name">票据所</div>
+          <div class="room-meta">盲注 25 / 50 · 第 44 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">3300</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">10</span><span class="c-suit">♣</span></div>
+              <div class="card"><span class="c-rank">5</span><span class="c-suit">♠</span></div>
+              <div class="card is-red"><span class="c-rank">3</span><span class="c-suit">♥</span></div>
+              <div class="card is-red"><span class="c-rank">2</span><span class="c-suit">♦</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">甲</div><div class="seat-info"><div class="seat-name">甲字号</div><div class="seat-stack">1,860</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">乙</div><div class="seat-info"><div class="seat-name">乙字号</div><div class="seat-stack">9,400</div></div><div class="seat-bet">150</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">丙</div><div class="seat-info"><div class="seat-name">丙字号</div><div class="seat-stack">4,200</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">丁</div><div class="seat-info"><div class="seat-name">丁字号</div><div class="seat-stack">14,200</div></div><div class="seat-bet">300</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">戊</div><div class="seat-info"><div class="seat-name">戊字号</div><div class="seat-stack">2,700</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">10</span><span class="c-suit">♥</span></div>
+                <div class="card card--lg"><span class="c-rank">K</span><span class="c-suit">♣</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力</div>
+            <div class="strength js-strength">一对 10</div>
+            <div class="stack-line">筹码 <span class="js-stack">14200</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">300</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">600</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入</span>
+            <span class="raise-amount js-raise-amt">600</span>
+            <span class="raise-pot">底池将变 <span class="js-pot-final">3900</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">½ 池</button>
+            <button class="chip js-quick" type="button" data-q="three">⅔ 池</button>
+            <button class="chip js-quick" type="button" data-q="pot">底池</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">本券终了</div>
+            <div class="result-sub js-result-sub">底池 3900</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">下一张</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 09 · 浅色</span>
+    <h3>雕版蚀刻 Engraved</h3>
+    <p>羊皮纸与棕褐墨线，底纹是机刻花纹，席位以甲乙丙丁编号，像一张会呼吸的老票据。</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 10 漆器大漆 ══════════════ -->
+<section class="phone" id="s-lacquer">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-lacquer"
+         data-pot="8600" data-stack="42000" data-tocall="800"
+         data-strength="一对 9" data-final="顺子 · J 高" data-river="7" data-river-suit="♥">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">紫檀私局</div>
+          <div class="room-meta">盲注 50 / 100 · 第 8 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">8600</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card is-red"><span class="c-rank">9</span><span class="c-suit">♥</span></div>
+              <div class="card"><span class="c-rank">10</span><span class="c-suit">♣</span></div>
+              <div class="card"><span class="c-rank">J</span><span class="c-suit">♠</span></div>
+              <div class="card is-red"><span class="c-rank">8</span><span class="c-suit">♦</span></div>
+              <div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">青</div><div class="seat-info"><div class="seat-name">青竹</div><div class="seat-stack">28,000</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">松</div><div class="seat-info"><div class="seat-name">松柏</div><div class="seat-stack">52,000</div></div><div class="seat-bet">2,000</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">寒</div><div class="seat-info"><div class="seat-name">寒山</div><div class="seat-stack">41,200</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">听</div><div class="seat-info"><div class="seat-name">听雨</div><div class="seat-stack">42,000</div></div><div class="seat-bet">800</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">观</div><div class="seat-info"><div class="seat-name">观云</div><div class="seat-stack">18,600</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">9</span><span class="c-suit">♠</span></div>
+                <div class="card card--lg is-red"><span class="c-rank">10</span><span class="c-suit">♥</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌力</div>
+            <div class="strength js-strength">一对 9</div>
+            <div class="stack-line">筹码 <span class="js-stack">42000</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">弃牌</button>
+          <button class="btn btn--primary js-call" type="button">跟注 <span class="js-call-amt">800</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加注 <span class="js-raise-amt">1600</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">本轮投入</span>
+            <span class="raise-amount js-raise-amt">1600</span>
+            <span class="raise-pot">底池将变 <span class="js-pot-final">10200</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">½ 池</button>
+            <button class="chip js-quick" type="button" data-q="three">⅔ 池</button>
+            <button class="chip js-quick" type="button" data-q="pot">底池</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">本局终</div>
+            <div class="result-sub js-result-sub">底池 10200</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">续局</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 10 · 深色</span>
+    <h3>漆器大漆 Lacquer</h3>
+    <p>朱漆与黑檀，描金细线，席位名牌像嵌金漆牌。底池用一方朱印压住，是全套里最沉的一笔。</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 11 水墨留白 Ink Wash ══════════════ -->
+<section class="phone" id="s-ink">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-ink"
+         data-pot="1280" data-stack="9600" data-tocall="120"
+         data-strength="三条 8" data-final="三条 8 · K 踢脚" data-river="K" data-river-suit="♠">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">墨池小馆</div>
+          <div class="room-meta">盲注 10 / 20 · 第 12 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">1,280</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">牌河</div>
+            <div class="board-cards js-board">
+              <div class="card is-red"><span class="c-rank">8</span><span class="c-suit">♥</span></div><div class="card"><span class="c-rank">4</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">2</span><span class="c-suit">♦</span></div><div class="card"><span class="c-rank">8</span><span class="c-suit">♠</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">砚</div><div class="seat-info"><div class="seat-name">砚台</div><div class="seat-stack">3,120</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">墨</div><div class="seat-info"><div class="seat-name">墨锭</div><div class="seat-stack">6,400</div></div><div class="seat-bet">320</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">笔</div><div class="seat-info"><div class="seat-name">笔洗</div><div class="seat-stack">5,200</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">纸</div><div class="seat-info"><div class="seat-name">宣纸</div><div class="seat-stack">9,600</div></div><div class="seat-bet">120</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">印</div><div class="seat-info"><div class="seat-name">印章</div><div class="seat-stack">1,800</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">8</span><span class="c-suit">♣</span></div>
+            <div class="card card--lg is-red"><span class="c-rank">6</span><span class="c-suit">♥</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">手气</div>
+            <div class="strength js-strength">三条 8</div>
+            <div class="stack-line">筹码 <span class="js-stack">9600</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">收手</button>
+          <button class="btn btn--primary js-call" type="button">跟 <span class="js-call-amt">120</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">添 <span class="js-raise-amt">240</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">拟投入</span>
+            <span class="raise-amount js-raise-amt">240</span>
+            <span class="raise-pot">池将成 <span class="js-pot-final">1,520</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">半池</button>
+            <button class="chip js-quick" type="button" data-q="three">三分</button>
+            <button class="chip js-quick" type="button" data-q="pot">满池</button>
+            <button class="chip js-quick" type="button" data-q="all">尽出</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">此局终</div>
+            <div class="result-sub js-result-sub">底池 1,520</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">再起一局</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 11 · 浅色</span>
+    <h3>水墨留白 Ink Wash</h3>
+    <p>宣纸、淡墨、朱砂印。桌面是一笔晕开的墨，数字用毛笔写，底池落一枚朱文方印。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 12 孟菲斯 Memphis ══════════════ -->
+<section class="phone" id="s-memphis">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-memphis"
+         data-pot="720" data-stack="4800" data-tocall="40"
+         data-strength="一对 A" data-final="两对 A 与 K" data-river="6" data-river-suit="♣">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">弹跳机房</div>
+          <div class="room-meta">盲注 5 / 10 · 第 3 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">720</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">BOARD</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">A</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">8</span><span class="c-suit">♦</span></div><div class="card is-red"><span class="c-rank">3</span><span class="c-suit">♥</span></div><div class="card"><span class="c-rank">K</span><span class="c-suit">♠</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">柠</div><div class="seat-info"><div class="seat-name">青柠</div><div class="seat-stack">1,260</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">芒</div><div class="seat-info"><div class="seat-name">芒果</div><div class="seat-stack">4,800</div></div><div class="seat-bet">120</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="active"><div class="seat-av">桃</div><div class="seat-info"><div class="seat-name">蜜桃</div><div class="seat-stack">3,310</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">葡</div><div class="seat-info"><div class="seat-name">葡萄</div><div class="seat-stack">4,800</div></div><div class="seat-bet">40</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">汽</div><div class="seat-info"><div class="seat-name">汽水</div><div class="seat-stack">940</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">A</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg is-red"><span class="c-rank">Q</span><span class="c-suit">♦</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">POWER</div>
+            <div class="strength js-strength">一对 A</div>
+            <div class="stack-line">筹码 <span class="js-stack">4800</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">OUT</button>
+          <button class="btn btn--primary js-call" type="button">CALL <span class="js-call-amt">40</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">RAISE <span class="js-raise-amt">80</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">PUT IN</span>
+            <span class="raise-amount js-raise-amt">80</span>
+            <span class="raise-pot">POOL <span class="js-pot-final">800</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">1/2</button>
+            <button class="chip js-quick" type="button" data-q="three">2/3</button>
+            <button class="chip js-quick" type="button" data-q="pot">POT</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">GAME OVER</div>
+            <div class="result-sub js-result-sub">底池 800</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">AGAIN</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 12 · 深色</span>
+    <h3>孟菲斯 Memphis</h3>
+    <p>黑底撞上酸粉酸青，八十年代的 squiggle 波浪与散落几何件。字体笨拙得像贴纸。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 13 波普艺术 Pop Art ══════════════ -->
+<section class="phone" id="s-pop">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-pop"
+         data-pot="3600" data-stack="18500" data-tocall="300"
+         data-strength="一对 Q" data-final="三条 Q" data-river="Q" data-river-suit="♣">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">砰！俱乐部</div>
+          <div class="room-meta">盲注 25 / 50 · 第 21 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">3,600</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">Q</span><span class="c-suit">♠</span></div><div class="card is-red"><span class="c-rank">7</span><span class="c-suit">♥</span></div><div class="card"><span class="c-rank">2</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">9</span><span class="c-suit">♦</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">P</div><div class="seat-info"><div class="seat-name">POP</div><div class="seat-stack">4,200</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">B</div><div class="seat-info"><div class="seat-name">BANG</div><div class="seat-stack">18,500</div></div><div class="seat-bet">900</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="active"><div class="seat-av">Z</div><div class="seat-info"><div class="seat-name">ZAP</div><div class="seat-stack">11,800</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">P</div><div class="seat-info"><div class="seat-name">POW</div><div class="seat-stack">18,500</div></div><div class="seat-bet">300</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">B</div><div class="seat-info"><div class="seat-name">BAM</div><div class="seat-stack">2,600</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">Q</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg"><span class="c-rank">9</span><span class="c-suit">♠</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">威力</div>
+            <div class="strength js-strength">一对 Q</div>
+            <div class="stack-line">筹码 <span class="js-stack">18500</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">闪开</button>
+          <button class="btn btn--primary js-call" type="button">跟上 <span class="js-call-amt">300</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">加把 <span class="js-raise-amt">600</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">追加</span>
+            <span class="raise-amount js-raise-amt">600</span>
+            <span class="raise-pot">底池变 <span class="js-pot-final">4,200</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">半池</button>
+            <button class="chip js-quick" type="button" data-q="three">三分</button>
+            <button class="chip js-quick" type="button" data-q="pot">满池</button>
+            <button class="chip js-quick" type="button" data-q="all">全押</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">砰！</div>
+            <div class="result-sub js-result-sub">底池 4,200</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">再来</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 13 · 浅色</span>
+    <h3>波普艺术 Pop Art</h3>
+    <p>漫画分格与 Ben-Day 网点，粗黑描边撞上玫瑰红和钴蓝。每个按钮都像一记爆炸气泡。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 14 构成主义 Constructivism ══════════════ -->
+<section class="phone" id="s-construct">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-construct"
+         data-pot="12600" data-stack="68000" data-tocall="1000"
+         data-strength="一对 10" data-final="三条 10" data-river="10" data-river-suit="♠">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">第三车间</div>
+          <div class="room-meta">盲注 100 / 200 · 第 7 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">12,600</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">ОБЩИЕ</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">10</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">6</span><span class="c-suit">♦</span></div><div class="card"><span class="c-rank">2</span><span class="c-suit">♠</span></div><div class="card is-red"><span class="c-rank">K</span><span class="c-suit">♥</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">厂</div><div class="seat-info"><div class="seat-name">工厂</div><div class="seat-stack">21,400</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">间</div><div class="seat-info"><div class="seat-name">车间</div><div class="seat-stack">68,000</div></div><div class="seat-bet">2,400</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">锅</div><div class="seat-info"><div class="seat-name">锅炉</div><div class="seat-stack">41,000</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">砧</div><div class="seat-info"><div class="seat-name">铁砧</div><div class="seat-stack">68,000</div></div><div class="seat-bet">1,000</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">轮</div><div class="seat-info"><div class="seat-name">齿轮</div><div class="seat-stack">12,600</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">10</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg"><span class="c-rank">5</span><span class="c-suit">♣</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">СИЛА</div>
+            <div class="strength js-strength">一对 10</div>
+            <div class="stack-line">筹码 <span class="js-stack">68000</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">ВЫХОД</button>
+          <button class="btn btn--primary js-call" type="button">В РАЗ <span class="js-call-amt">1,000</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">ПОДЪЁМ <span class="js-raise-amt">2,000</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">ВКЛАД</span>
+            <span class="raise-amount js-raise-amt">2,000</span>
+            <span class="raise-pot">БАНК <span class="js-pot-final">14,600</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">1/2</button>
+            <button class="chip js-quick" type="button" data-q="three">2/3</button>
+            <button class="chip js-quick" type="button" data-q="pot">БАНК</button>
+            <button class="chip js-quick" type="button" data-q="all">ВСЁ</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">КОНЕЦ</div>
+            <div class="result-sub js-result-sub">底池 14,600</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">ДАЛЬШЕ</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 14 · 浅色</span>
+    <h3>构成主义 Constructivism</h3>
+    <p>红黑斜向切分，粗黑斜体与几何块堆叠。二十年代的宣传画语言，用在牌桌上毫不客气。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 15 终端命令行 Terminal ══════════════ -->
+<section class="phone" id="s-term">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-term"
+         data-pot="2450" data-stack="15000" data-tocall="250"
+         data-strength="一对 7" data-final="三条 2" data-river="2" data-river-suit="♥">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">node_7</div>
+          <div class="room-meta">BLIND 25/50 · ROUND 04</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">2,450</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">COMMUNITY</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">7</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">3</span><span class="c-suit">♦</span></div><div class="card is-red"><span class="c-rank">9</span><span class="c-suit">♥</span></div><div class="card"><span class="c-rank">2</span><span class="c-suit">♠</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">01</div><div class="seat-info"><div class="seat-name">node_01</div><div class="seat-stack">4,200</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">02</div><div class="seat-info"><div class="seat-name">node_02</div><div class="seat-stack">15,000</div></div><div class="seat-bet">600</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="active"><div class="seat-av">03</div><div class="seat-info"><div class="seat-name">node_03</div><div class="seat-stack">9,800</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">04</div><div class="seat-info"><div class="seat-name">node_04</div><div class="seat-stack">15,000</div></div><div class="seat-bet">250</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">05</div><div class="seat-info"><div class="seat-name">node_05</div><div class="seat-stack">1,600</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">7</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg"><span class="c-rank">K</span><span class="c-suit">♠</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">HAND</div>
+            <div class="strength js-strength">一对 7</div>
+            <div class="stack-line">筹码 <span class="js-stack">15000</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">FOLD</button>
+          <button class="btn btn--primary js-call" type="button">CALL <span class="js-call-amt">250</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">RAISE <span class="js-raise-amt">500</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">BET</span>
+            <span class="raise-amount js-raise-amt">500</span>
+            <span class="raise-pot">POT <span class="js-pot-final">2,950</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">1/2</button>
+            <button class="chip js-quick" type="button" data-q="three">2/3</button>
+            <button class="chip js-quick" type="button" data-q="pot">POT</button>
+            <button class="chip js-quick" type="button" data-q="all">MAX</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">SESSION END</div>
+            <div class="result-sub js-result-sub">底池 2,950</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">NEXT HAND</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 15 · 深色</span>
+    <h3>终端命令行 Terminal</h3>
+    <p>纯黑磷光绿，等宽字体与 ASCII 边框。整张牌桌就是一次 tty 会话，光标还在闪。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 16 赛博朋克 Cyberpunk ══════════════ -->
+<section class="phone" id="s-cyber">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-cyber"
+         data-pot="18900" data-stack="92000" data-tocall="900"
+         data-strength="一对 A" data-final="三条 A" data-river="A" data-river-suit="♦">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">零区协议</div>
+          <div class="room-meta">盲注 100 / 200 · 第 9 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">18,900</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">COMMUNITY</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">A</span><span class="c-suit">♠</span></div><div class="card is-red"><span class="c-rank">5</span><span class="c-suit">♥</span></div><div class="card is-red"><span class="c-rank">J</span><span class="c-suit">♦</span></div><div class="card"><span class="c-rank">8</span><span class="c-suit">♣</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">N</div><div class="seat-info"><div class="seat-name">NEON</div><div class="seat-stack">28,000</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">G</div><div class="seat-info"><div class="seat-name">GHOST</div><div class="seat-stack">92,000</div></div><div class="seat-bet">2,400</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">R</div><div class="seat-info"><div class="seat-name">ROOK</div><div class="seat-stack">61,000</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">V</div><div class="seat-info"><div class="seat-name">VEX</div><div class="seat-stack">92,000</div></div><div class="seat-bet">900</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av"><img src="assets/avatars/k.webp" alt="" draggable="false"></div><div class="seat-info"><div class="seat-name">KILO</div><div class="seat-stack">15,400</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">A</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg"><span class="c-rank">8</span><span class="c-suit">♠</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">STRENGTH</div>
+            <div class="strength js-strength">一对 A</div>
+            <div class="stack-line">筹码 <span class="js-stack">92000</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">DROP</button>
+          <button class="btn btn--primary js-call" type="button">MATCH <span class="js-call-amt">900</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">OVERRIDE <span class="js-raise-amt">1,800</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">INJECT</span>
+            <span class="raise-amount js-raise-amt">1,800</span>
+            <span class="raise-pot">POOL <span class="js-pot-final">20,700</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">50%</button>
+            <button class="chip js-quick" type="button" data-q="three">66%</button>
+            <button class="chip js-quick" type="button" data-q="pot">MAX</button>
+            <button class="chip js-quick" type="button" data-q="all">ALL-IN</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">CONNECTION LOST</div>
+            <div class="result-sub js-result-sub">底池 20,700</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">RECONNECT</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 16 · 深色</span>
+    <h3>赛博朋克 Cyberpunk</h3>
+    <p>酸性青与品红压在近黑的底上，文字带故障错位。数字跳得像信号不稳，越看越像在偷数据。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 17 复古录像带 CRT ══════════════ -->
+<section class="phone" id="s-crt">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-crt"
+         data-pot="940" data-stack="6200" data-tocall="60"
+         data-strength="一对 9" data-final="三条 9" data-river="9" data-river-suit="♠">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">VHS 频道 03</div>
+          <div class="room-meta">录制中 · 第 16 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">940</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">TAPE</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">9</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">4</span><span class="c-suit">♥</span></div><div class="card"><span class="c-rank">6</span><span class="c-suit">♠</span></div><div class="card is-red"><span class="c-rank">J</span><span class="c-suit">♦</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">1</div><div class="seat-info"><div class="seat-name">CH-01</div><div class="seat-stack">1,100</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">2</div><div class="seat-info"><div class="seat-name">CH-02</div><div class="seat-stack">6,200</div></div><div class="seat-bet">180</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="active"><div class="seat-av">3</div><div class="seat-info"><div class="seat-name">CH-03</div><div class="seat-stack">3,400</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">4</div><div class="seat-info"><div class="seat-name">CH-04</div><div class="seat-stack">6,200</div></div><div class="seat-bet">60</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">5</div><div class="seat-info"><div class="seat-name">CH-05</div><div class="seat-stack">900</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">9</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg is-red"><span class="c-rank">7</span><span class="c-suit">♦</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">SIGNAL</div>
+            <div class="strength js-strength">一对 9</div>
+            <div class="stack-line">筹码 <span class="js-stack">6200</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">EJECT</button>
+          <button class="btn btn--primary js-call" type="button">PLAY <span class="js-call-amt">60</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">REWIND <span class="js-raise-amt">120</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">TRACK</span>
+            <span class="raise-amount js-raise-amt">120</span>
+            <span class="raise-pot">POOL <span class="js-pot-final">1,060</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">1/2</button>
+            <button class="chip js-quick" type="button" data-q="three">2/3</button>
+            <button class="chip js-quick" type="button" data-q="pot">POT</button>
+            <button class="chip js-quick" type="button" data-q="all">SP</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">END OF TAPE</div>
+            <div class="result-sub js-result-sub">底池 1,060</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">REWIND</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 17 · 深色</span>
+    <h3>复古录像带 CRT</h3>
+    <p>扫描线、红青通道错位、一角卷带的噪点。整屏像八十年代末电视上录下来的一段牌局。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 18 蒸汽朋克 Steampunk ══════════════ -->
+<section class="phone" id="s-steam">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-steam"
+         data-pot="7300" data-stack="38000" data-tocall="700"
+         data-strength="一对 8" data-final="两对 8 与 K" data-river="K" data-river-suit="♠">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">第七锅炉</div>
+          <div class="room-meta">盲注 50 / 100 · 第 11 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">7,300</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">牌桌</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">8</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">8</span><span class="c-suit">♦</span></div><div class="card"><span class="c-rank">3</span><span class="c-suit">♠</span></div><div class="card is-red"><span class="c-rank">K</span><span class="c-suit">♥</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">炉</div><div class="seat-info"><div class="seat-name">锅炉</div><div class="seat-stack">9,600</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">塞</div><div class="seat-info"><div class="seat-name">活塞</div><div class="seat-stack">38,000</div></div><div class="seat-bet">1,800</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="allin"><div class="seat-av">轮</div><div class="seat-info"><div class="seat-name">齿轮</div><div class="seat-stack">24,500</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">阀</div><div class="seat-info"><div class="seat-name">阀门</div><div class="seat-stack">38,000</div></div><div class="seat-bet">700</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">表</div><div class="seat-info"><div class="seat-name">压力表</div><div class="seat-stack">5,200</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">8</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg"><span class="c-rank">4</span><span class="c-suit">♣</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">牌面</div>
+            <div class="strength js-strength">一对 8</div>
+            <div class="stack-line">筹码 <span class="js-stack">38000</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">退汽</button>
+          <button class="btn btn--primary js-call" type="button">跟进 <span class="js-call-amt">700</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">增压 <span class="js-raise-amt">1,400</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">投入</span>
+            <span class="raise-amount js-raise-amt">1,400</span>
+            <span class="raise-pot">底池 <span class="js-pot-final">8,700</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">半池</button>
+            <button class="chip js-quick" type="button" data-q="three">三分</button>
+            <button class="chip js-quick" type="button" data-q="pot">满池</button>
+            <button class="chip js-quick" type="button" data-q="all">全开</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">停机</div>
+            <div class="result-sub js-result-sub">底池 8,700</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">再启</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 18 · 深色</span>
+    <h3>蒸汽朋克 Steampunk</h3>
+    <p>黄铜、皮革与铆钉，桌面是一只嵌齿轮的圆盘。数字像仪表刻度，底池是一段压力读数。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 19 陶土黏土 Clay ══════════════ -->
+<section class="phone" id="s-clay">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-clay"
+         data-pot="480" data-stack="2600" data-tocall="30"
+         data-strength="一对 6" data-final="三条 6" data-river="6" data-river-suit="♦">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">手作小窑</div>
+          <div class="room-meta">盲注 5 / 10 · 第 2 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">480</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">公共牌</div>
+            <div class="board-cards js-board">
+              <div class="card is-red"><span class="c-rank">6</span><span class="c-suit">♥</span></div><div class="card"><span class="c-rank">2</span><span class="c-suit">♣</span></div><div class="card is-red"><span class="c-rank">9</span><span class="c-suit">♦</span></div><div class="card"><span class="c-rank">5</span><span class="c-suit">♠</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">团</div><div class="seat-info"><div class="seat-name">面团</div><div class="seat-stack">700</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">土</div><div class="seat-info"><div class="seat-name">陶土</div><div class="seat-stack">2,600</div></div><div class="seat-bet">90</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="active"><div class="seat-av">塑</div><div class="seat-info"><div class="seat-name">捏塑</div><div class="seat-stack">1,800</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">釉</div><div class="seat-info"><div class="seat-name">釉料</div><div class="seat-stack">2,600</div></div><div class="seat-bet">30</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">窑</div><div class="seat-info"><div class="seat-name">窑烧</div><div class="seat-stack">400</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg"><span class="c-rank">6</span><span class="c-suit">♠</span></div>
+            <div class="card card--lg is-red"><span class="c-rank">7</span><span class="c-suit">♥</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">手感</div>
+            <div class="strength js-strength">一对 6</div>
+            <div class="stack-line">筹码 <span class="js-stack">2600</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">放下</button>
+          <button class="btn btn--primary js-call" type="button">跟上 <span class="js-call-amt">30</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">捏大 <span class="js-raise-amt">60</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">揉进去</span>
+            <span class="raise-amount js-raise-amt">60</span>
+            <span class="raise-pot">泥池 <span class="js-pot-final">540</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">半池</button>
+            <button class="chip js-quick" type="button" data-q="three">三分</button>
+            <button class="chip js-quick" type="button" data-q="pot">满池</button>
+            <button class="chip js-quick" type="button" data-q="all">全捏</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">烧完了</div>
+            <div class="result-sub js-result-sub">底池 540</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">再揉一炉</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 19 · 浅色</span>
+    <h3>陶土黏土 Clay</h3>
+    <p>奶油色的手捏质感，圆角厚得像能捏出指纹。按钮按下去会陷一小块，筹码是一颗颗小圆饼。</p>
+  </div>
+</section>
+
+<!-- ══════════════ 20 禅意留白 Zen ══════════════ -->
+<section class="phone" id="s-zen">
+  <div class="phone-frame"><div class="screen">
+    <div class="app s-zen"
+         data-pot="1600" data-stack="24000" data-tocall="200"
+         data-strength="一对 5" data-final="三条 5" data-river="5" data-river-suit="♦">
+      <div class="deco" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+        <div class="room">
+          <div class="room-name">一炷香</div>
+          <div class="room-meta">盲注 20 / 40 · 第 1 回合</div>
+        </div>
+        <div class="pot-box">
+          <span class="pot-label">底池</span>
+          <span class="pot js-pot">1,600</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="table">
+          <div class="board">
+            <div class="board-label">牌</div>
+            <div class="board-cards js-board">
+              <div class="card"><span class="c-rank">5</span><span class="c-suit">♠</span></div><div class="card is-red"><span class="c-rank">9</span><span class="c-suit">♥</span></div><div class="card is-red"><span class="c-rank">2</span><span class="c-suit">♦</span></div><div class="card"><span class="c-rank">8</span><span class="c-suit">♣</span></div><div class="card card--empty"></div>
+            </div>
+          </div>
+
+          <div class="seats">
+            <div class="seat seat--a" data-state="folded"><div class="seat-av">静</div><div class="seat-info"><div class="seat-name">静</div><div class="seat-stack">6,400</div></div></div>
+            <div class="seat seat--b" data-state="active"><div class="seat-av">观</div><div class="seat-info"><div class="seat-name">观</div><div class="seat-stack">24,000</div></div><div class="seat-bet">400</div><div class="seat-dealer">D</div></div>
+            <div class="seat seat--c" data-state="active"><div class="seat-av">止</div><div class="seat-info"><div class="seat-name">止</div><div class="seat-stack">18,000</div></div></div>
+            <div class="seat seat--d is-turn" data-state="active"><div class="seat-av">安</div><div class="seat-info"><div class="seat-name">安</div><div class="seat-stack">24,000</div></div><div class="seat-bet">200</div></div>
+            <div class="seat seat--e" data-state="folded"><div class="seat-av">闲</div><div class="seat-info"><div class="seat-name">闲</div><div class="seat-stack">4,200</div></div></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="actions">
+        <div class="hero">
+          <div class="hand">
+            <div class="card card--lg is-red"><span class="c-rank">5</span><span class="c-suit">♥</span></div>
+            <div class="card card--lg"><span class="c-rank">K</span><span class="c-suit">♠</span></div>
+          </div>
+          <div class="hand-meta">
+            <div class="strength-label">势</div>
+            <div class="strength js-strength">一对 5</div>
+            <div class="stack-line">筹码 <span class="js-stack">24000</span></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"></circle><circle class="timer-fg js-timer" cx="22" cy="22" r="19"></circle></svg>
+            <span class="timer-num js-timer-num">15</span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost js-fold" type="button">收</button>
+          <button class="btn btn--primary js-call" type="button">随 <span class="js-call-amt">200</span></button>
+          <button class="btn btn--alt js-raise-btn" type="button">进 <span class="js-raise-amt">400</span></button>
+        </div>
+        <div class="raise-panel">
+          <div class="raise-head">
+            <span class="raise-label">添</span>
+            <span class="raise-amount js-raise-amt">400</span>
+            <span class="raise-pot">成池 <span class="js-pot-final">2,000</span></span>
+          </div>
+          <input class="raise-range js-raise-range" type="range" min="0" max="100" value="45" aria-label="加注额">
+          <div class="quick-bets">
+            <button class="chip js-quick" type="button" data-q="half">半</button>
+            <button class="chip js-quick" type="button" data-q="three">三分</button>
+            <button class="chip js-quick" type="button" data-q="pot">满</button>
+            <button class="chip js-quick" type="button" data-q="all">尽</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="result-main">
+            <div class="result-title">此局散</div>
+            <div class="result-sub js-result-sub">底池 2,000</div>
+          </div>
+          <button class="btn btn--primary js-next" type="button">再来一局</button>
+        </div>
+      </footer>
+
+      <div class="toast js-toast"></div>
+    </div>
+  </div></div>
+  <div class="caption">
+    <span class="cap-tag">风格 20 · 浅色</span>
+    <h3>禅意留白 Zen</h3>
+    <p>只剩一个圆相和一条细线，其余全是留白。数字小到要凑近看，像抄在经卷上的注脚。</p>
+  </div>
+</section>
+
+</main>
+
+<script src="js/game.js"></script>
+</body>
+</html>

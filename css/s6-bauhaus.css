@@ -1,0 +1,160 @@
+/* ============================================================
+   S6 · 包豪斯 Bauhaus
+   米白纸 + 纯黑粗线 + 三原色。形状本身就是信息，零圆角。
+   ============================================================ */
+
+.s-bauhaus {
+  --bg: #efebe0;
+  --ink: #16160f;
+  --muted: rgba(22, 22, 15, 0.55);
+  --panel: #16160f;
+  --line: #16160f;
+  --accent: #d8352a;
+  --accent-ink: #f7f4ea;
+  --accent-soft: #f2c230;
+  --card-bg: #f7f4ea;
+  --card-ink: #16160f;
+  --suit-red: #d8352a;
+  --card-shadow: 3px 3px 0 #16160f;
+  --radius-card: 0;
+  --radius-av: 0;
+  --radius-seat: 0;
+  --radius-btn: 0;
+  --radius-chip: 0;
+  --radius-sm: 0;
+  --font-ui: "Archivo", "Noto Sans SC", sans-serif;
+  --font-display: "Archivo Black", "Noto Sans SC", sans-serif;
+  --font-num: "Archivo Black", "Noto Sans SC", sans-serif;
+  --font-card: "Archivo Black", "Noto Sans SC", sans-serif;
+  --seat-bg: #f7f4ea;
+  --seat-line: #16160f;
+  --seat-shadow: 3px 3px 0 #16160f;
+  --av-bg: #16160f;
+  --av-ink: #f7f4ea;
+  --bet-bg: #f2c230;
+  --bet-ink: #16160f;
+  --bet-dot: #d8352a;
+  --bet-dot-ring: #16160f;
+  --dealer-bg: #d8352a;
+  --dealer-ink: #f7f4ea;
+  --danger: #d8352a;
+  --turn-line: #d8352a;
+  --turn-shadow: 4px 4px 0 #d8352a;
+  --timer-track: rgba(22, 22, 15, 0.22);
+  --timer-fg: #d8352a;
+  --actions-bg: #f7f4ea;
+  --btn-bg: #f7f4ea;
+  --btn-ink: #16160f;
+  --track: #c6bfac;
+  --thumb: #d8352a;
+  --thumb-ring: #16160f;
+  --chip-bg: #f7f4ea;
+  --chip-ink: #16160f;
+  --toast-bg: #16160f;
+  --toast-ink: #f7f4ea;
+  --result-bg: #16160f;
+  --result-ink: #f7f4ea;
+  --result-line: #16160f;
+}
+
+/* 桌面：一只大蓝圆，圆内叠一枚米白圆 */
+.s-bauhaus .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 404px;
+  height: 404px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #1f4e9c;
+}
+.s-bauhaus .table::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 14px;
+  width: 164px;
+  height: 164px;
+  border-radius: 100% 0 0 0;
+  background: #d8352a;
+}
+
+/* 黑方块压在蓝圆左下，黄色三角压在右下 —— 几何形互相咬合 */
+.s-bauhaus .stage::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  bottom: 22px;
+  width: 86px;
+  height: 86px;
+  background: #16160f;
+  z-index: 1;
+  pointer-events: none;
+}
+.s-bauhaus .stage::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  bottom: 18px;
+  width: 144px;
+  height: 144px;
+  background: #f2c230;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+.s-bauhaus .stage { z-index: 1; }
+
+.s-bauhaus .topbar {
+  border-bottom: 4px solid #16160f;
+  padding-bottom: 9px;
+}
+.s-bauhaus .room-name,
+.s-bauhaus .pot,
+.s-bauhaus .strength,
+.s-bauhaus .raise-amount {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+.s-bauhaus .pot { color: #d8352a; font-size: 24px; }
+.s-bauhaus .pot-label { font-weight: 700; letter-spacing: 0.24em; color: #16160f; }
+.s-bauhaus .icon-btn { background: #16160f; color: #f7f4ea; }
+.s-bauhaus .board-label { font-weight: 700; color: rgba(247, 244, 234, 0.85); letter-spacing: 0.3em; }
+
+/* 牌：纸片 + 黑边 */
+.s-bauhaus .card {
+  background: #f7f4ea;
+  color: #16160f;
+  box-shadow: 3px 3px 0 #16160f;
+}
+.s-bauhaus .card.is-red { color: #d8352a; }
+.s-bauhaus .card--lg { box-shadow: 4px 4px 0 #16160f; }
+.s-bauhaus .card--empty { background: transparent; color: inherit; box-shadow: none; border: 2px dashed rgba(22, 22, 15, 0.5); }
+
+/* 席位：三原色头像 */
+.s-bauhaus .seat { padding: 5px 12px 5px 5px; }
+.s-bauhaus .seat-av { font-size: 15px; }
+.s-bauhaus .seat--a .seat-av { background: #d8352a; color: #f7f4ea; }
+.s-bauhaus .seat--b .seat-av { background: #1f4e9c; color: #f7f4ea; }
+.s-bauhaus .seat--c .seat-av { background: #f2c230; color: #16160f; }
+.s-bauhaus .seat--d .seat-av { background: #16160f; color: #f7f4ea; }
+.s-bauhaus .seat--e .seat-av { background: #6d7a45; color: #f7f4ea; }
+.s-bauhaus .seat.is-turn { animation: none; box-shadow: 4px 4px 0 #d8352a; }
+.s-bauhaus .seat-bet { border-radius: 0; box-shadow: 2px 2px 0 #16160f; }
+.s-bauhaus .seat-dealer { border-radius: 0; }
+.s-bauhaus .seat-stack { font-weight: 700; color: rgba(22, 22, 15, 0.7); }
+
+.s-bauhaus .actions { border-top: 4px solid #16160f; }
+.s-bauhaus .btn { box-shadow: 3px 3px 0 #16160f; }
+.s-bauhaus .btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 #16160f; }
+.s-bauhaus .btn--primary { background: #16160f; color: #f7f4ea; }
+.s-bauhaus .btn--alt { background: #f2c230; color: #16160f; }
+.s-bauhaus .btn--ghost { background: #f7f4ea; color: #16160f; box-shadow: inset 0 0 0 3px #16160f; }
+.s-bauhaus .btn--ghost:active { transform: none; box-shadow: inset 0 0 0 3px #16160f; }
+.s-bauhaus .chip { box-shadow: inset 0 0 0 2px #16160f; }
+.s-bauhaus .raise-range { background: #c6bfac; border-radius: 0; height: 6px; }
+.s-bauhaus .raise-range::-webkit-slider-thumb { background: #d8352a; border-radius: 0; border: 2px solid #16160f; }
+.s-bauhaus .raise-range::-moz-range-thumb { background: #d8352a; border-radius: 0; border: 2px solid #16160f; }
+.s-bauhaus .toast { border-radius: 0; }
+.s-bauhaus .result { border-radius: 0; box-shadow: 4px 4px 0 #d8352a; }
+.s-bauhaus .result .btn { background: #f2c230; color: #16160f; }

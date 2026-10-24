@@ -1,0 +1,165 @@
+/* ============================================================
+   S10 · 漆器大漆 Lacquer
+   朱漆与黑檀，描金细线，席位名牌像嵌金漆牌
+   ============================================================ */
+
+.s-lacquer {
+  --bg: #24100c;
+  --ink: #f3e7d3;
+  --muted: rgba(243, 231, 211, 0.55);
+  --panel: rgba(243, 231, 211, 0.08);
+  --line: rgba(212, 175, 92, 0.3);
+  --accent: #c0392b;
+  --accent-ink: #fdf3df;
+  --accent-soft: rgba(212, 175, 92, 0.18);
+  --card-bg: #14100e;
+  --card-ink: #e8d3a2;
+  --suit-red: #d4553f;
+  --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  --radius-card: 2px;
+  --radius-av: 2px;
+  --radius-seat: 2px;
+  --radius-btn: 2px;
+  --radius-chip: 2px;
+  --radius-sm: 2px;
+  --font-ui: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --font-display: "Ma Shan Zheng", "Noto Serif SC", serif;
+  --font-num: "Noto Serif SC", Georgia, serif;
+  --font-card: "Noto Serif SC", Georgia, serif;
+  --seat-bg: linear-gradient(180deg, rgba(38, 16, 12, 0.96), rgba(18, 8, 6, 0.97));
+  --seat-line: rgba(212, 175, 92, 0.42);
+  --seat-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  --av-bg: transparent;
+  --av-ink: #d4af5c;
+  --bet-bg: rgba(212, 175, 92, 0.14);
+  --bet-ink: #e8d3a2;
+  --bet-dot: #c0392b;
+  --bet-dot-ring: rgba(212, 175, 92, 0.6);
+  --dealer-bg: #d4af5c;
+  --dealer-ink: #24100c;
+  --danger: #d4553f;
+  --turn-line: #d4af5c;
+  --turn-shadow: 0 0 0 1px rgba(212, 175, 92, 0.8), 0 0 22px rgba(212, 175, 92, 0.25);
+  --timer-track: rgba(212, 175, 92, 0.2);
+  --timer-fg: #d4af5c;
+  --actions-bg: linear-gradient(180deg, #2c130e 0%, #1b0b08 100%);
+  --btn-bg: rgba(243, 231, 211, 0.08);
+  --btn-ink: #f3e7d3;
+  --track: rgba(212, 175, 92, 0.22);
+  --thumb: #d4af5c;
+  --thumb-ring: #24100c;
+  --chip-bg: rgba(243, 231, 211, 0.06);
+  --chip-ink: rgba(243, 231, 211, 0.85);
+  --toast-bg: #d4af5c;
+  --toast-ink: #24100c;
+  --result-bg: linear-gradient(180deg, #f4e9d4, #e4d3b0);
+  --result-ink: #24100c;
+  --result-line: rgba(212, 175, 92, 0.7);
+}
+
+/* 大漆面：朱漆渐层 + 金线 */
+.s-lacquer {
+  background-color: #24100c;
+  background-image:
+    radial-gradient(100% 60% at 50% 6%, rgba(192, 57, 43, 0.42) 0%, transparent 62%),
+    repeating-linear-gradient(90deg, rgba(212, 175, 92, 0.045) 0 1px, transparent 1px 26px),
+    linear-gradient(180deg, #3a150f 0%, #24100c 46%, #160806 100%);
+}
+
+/* 漆盘：一方描金圆 */
+.s-lacquer .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 468px;
+  height: 468px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 34%, rgba(192, 57, 43, 0.5) 0%, rgba(58, 21, 15, 0.85) 62%, rgba(22, 8, 6, 0.96) 100%);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 92, 0.55),
+    0 0 0 7px rgba(22, 8, 6, 0.7),
+    0 0 0 8px rgba(212, 175, 92, 0.32),
+    inset 0 0 80px rgba(0, 0, 0, 0.55);
+}
+.s-lacquer .deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.s-lacquer .deco::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 396px;
+  height: 396px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 92, 0.26);
+}
+.s-lacquer .deco::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 330px;
+  height: 330px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 92, 0.18);
+}
+.s-lacquer .stage { z-index: 1; }
+
+.s-lacquer .topbar { border-bottom: 1px solid rgba(212, 175, 92, 0.28); padding-bottom: 10px; }
+.s-lacquer .room-name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #f0d9a6;
+}
+.s-lacquer .room-meta { letter-spacing: 0.1em; }
+.s-lacquer .pot { color: #d4af5c; font-size: 24px; }
+.s-lacquer .pot-label { color: rgba(212, 175, 92, 0.7); }
+.s-lacquer .icon-btn { background: rgba(212, 175, 92, 0.12); box-shadow: inset 0 0 0 1px rgba(212, 175, 92, 0.4); color: #e8d3a2; }
+.s-lacquer .board-label { color: rgba(212, 175, 92, 0.72); letter-spacing: 0.3em; }
+
+/* 牌：黑漆嵌金 */
+.s-lacquer .card {
+  border: 1px solid rgba(212, 175, 92, 0.5);
+  box-shadow: inset 0 0 0 3px rgba(20, 16, 14, 0.9), inset 0 0 0 4px rgba(212, 175, 92, 0.22), 0 4px 14px rgba(0, 0, 0, 0.6);
+}
+.s-lacquer .card--lg { box-shadow: inset 0 0 0 3px rgba(20, 16, 14, 0.9), inset 0 0 0 4px rgba(212, 175, 92, 0.28), 0 8px 20px rgba(0, 0, 0, 0.6); }
+.s-lacquer .card--empty { background: transparent; box-shadow: none; border: 1px dashed rgba(212, 175, 92, 0.4); }
+.s-lacquer .c-rank { color: #f0d9a6; }
+.s-lacquer .card.is-red .c-rank,
+.s-lacquer .card.is-red .c-suit { color: #e0705c; }
+
+/* 席位：嵌金漆牌 */
+.s-lacquer .seat { padding: 5px 14px 5px 5px; }
+.s-lacquer .seat-av {
+  background: rgba(212, 175, 92, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(212, 175, 92, 0.55);
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: #e8d3a2;
+}
+.s-lacquer .seat-name { font-weight: 600; letter-spacing: 0.08em; }
+.s-lacquer .seat-stack { letter-spacing: 0.04em; }
+.s-lacquer .seat.is-turn { animation: none; }
+.s-lacquer .seat.is-turn .seat-av { box-shadow: inset 0 0 0 1px #d4af5c, 0 0 12px rgba(212, 175, 92, 0.5); }
+.s-lacquer .seat-bet { border: 1px solid rgba(212, 175, 92, 0.4); }
+.s-lacquer .seat-dealer { border-radius: 1px; }
+
+.s-lacquer .actions { border-top: 1px solid rgba(212, 175, 92, 0.28); }
+.s-lacquer .btn { letter-spacing: 0.1em; }
+.s-lacquer .btn--primary { background: linear-gradient(180deg, #c0392b, #8e2418); color: #fdf3df; box-shadow: inset 0 1px 0 rgba(255, 220, 180, 0.22); }
+.s-lacquer .btn--alt { background: rgba(212, 175, 92, 0.16); color: #e8d3a2; box-shadow: inset 0 0 0 1px rgba(212, 175, 92, 0.45); }
+.s-lacquer .btn--ghost { background: transparent; color: rgba(243, 231, 211, 0.72); box-shadow: inset 0 0 0 1px rgba(212, 175, 92, 0.35); }
+.s-lacquer .chip { box-shadow: inset 0 0 0 1px rgba(212, 175, 92, 0.28); letter-spacing: 0.06em; }
+.s-lacquer .raise-range { border-radius: 0; height: 2px; }
+.s-lacquer .raise-range::-webkit-slider-thumb { border-radius: 50%; background: #d4af5c; border-color: #24100c; }
+.s-lacquer .raise-range::-moz-range-thumb { border-radius: 50%; background: #d4af5c; border-color: #24100c; }
+.s-lacquer .raise-amount { color: #d4af5c; }
+.s-lacquer .toast { border-radius: 2px; }
+.s-lacquer .result { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); }
+.s-lacquer .result .btn { background: #2c130e; color: #e8d3a2; box-shadow: inset 0 0 0 1px rgba(212, 175, 92, 0.5); }

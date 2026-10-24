@@ -1,0 +1,322 @@
+/* ============================================================
+   S13 · 波普艺术 Pop Art
+   亮黄底 + 米白牌面 + Ben-Day 网点，粗黑描边与爆炸气泡，漫画封面感
+   装饰原则：网点只铺在背景与桌沿，牌面区域保持干净以免吃掉点数花色
+   ============================================================ */
+
+.s-pop {
+  --bg: #ffd400;
+  --ink: #141414;
+  --muted: rgba(20, 20, 20, 0.62);
+  --panel: #fff8e7;
+  --line: #141414;
+  --accent: #e63946;
+  --accent-ink: #fff8e7;
+  --accent-soft: #1d4ed8;
+  --card-bg: #fff8e7;
+  --card-ink: #141414;
+  --suit-red: #e63946;
+  --card-shadow: 4px 4px 0 #141414;
+  --radius-card: 4px;
+  --radius-av: 50%;
+  --radius-seat: 12px;
+  --radius-btn: 10px;
+  --radius-chip: 8px;
+  --radius-sm: 8px;
+  --font-ui: "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --font-display: "Luckiest Guy", "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --font-num: "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --font-card: "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --seat-bg: #fff8e7;
+  --seat-line: #141414;
+  --seat-shadow: 4px 4px 0 #141414;
+  --av-bg: #fff8e7;
+  --av-ink: #141414;
+  --bet-bg: #1d4ed8;
+  --bet-ink: #fff8e7;
+  --bet-dot: #ffd400;
+  --bet-dot-ring: #141414;
+  --dealer-bg: #e63946;
+  --dealer-ink: #fff8e7;
+  --danger: #e63946;
+  --turn-line: #e63946;
+  --turn-shadow: 0 0 0 3px #e63946, 4px 4px 0 #e63946;
+  --timer-track: rgba(20, 20, 20, 0.22);
+  --timer-fg: #e63946;
+  --actions-bg: #ffd400;
+  --btn-bg: #141414;
+  --btn-ink: #fff8e7;
+  --track: rgba(20, 20, 20, 0.3);
+  --thumb: #e63946;
+  --thumb-ring: #fff8e7;
+  --chip-bg: #fff8e7;
+  --chip-ink: #141414;
+  --toast-bg: #141414;
+  --toast-ink: #ffd400;
+  --result-bg: #fff8e7;
+  --result-ink: #141414;
+  --result-line: #141414;
+}
+
+.s-pop { background-color: #ffd400; }
+
+/* deco：整屏 Ben-Day 网点，模拟漫画印刷的粗糙网点纸 */
+.s-pop .deco {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* 自己裁切溢出的网点圆，免得负偏移把 app 的 scrollHeight 顶高 */
+  overflow: hidden;
+  background-image:
+    radial-gradient(circle, rgba(20, 20, 20, 0.22) 1.4px, transparent 1.5px);
+  background-size: 7px 7px;
+}
+
+/* 左上角一块玫瑰红网点圆，像漫画格里的特写 */
+.s-pop .deco::before {
+  content: "";
+  position: absolute;
+  left: -58px;
+  top: -64px;
+  width: 172px;
+  height: 172px;
+  border-radius: 50%;
+  background-image:
+    radial-gradient(circle, rgba(230, 57, 70, 0.85) 2.2px, transparent 2.4px);
+  background-size: 9px 9px;
+}
+
+/* 右下角一块钴蓝网点圆，与红圆形成对角呼应 */
+.s-pop .deco::after {
+  content: "";
+  position: absolute;
+  right: -64px;
+  bottom: -70px;
+  width: 186px;
+  height: 186px;
+  border-radius: 50%;
+  background-image:
+    radial-gradient(circle, rgba(29, 78, 216, 0.8) 2.4px, transparent 2.6px);
+  background-size: 10px 10px;
+}
+
+/* 桌面：米白圆盘，外圈钴蓝网点带 + 一圈黑描边 */
+.s-pop .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 356px;
+  height: 356px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #fff8e7;
+  border: 4px solid #141414;
+  box-shadow: 6px 6px 0 #141414;
+  background-image:
+    radial-gradient(circle, rgba(20, 20, 20, 0.06) 1.2px, transparent 1.3px);
+  background-size: 7px 7px;
+}
+.s-pop .table::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 412px;
+  height: 412px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 3px solid #141414;
+  /* 第一层是米白遮罩，把网点压成外圈一条带，桌心保持干净 */
+  background-image:
+    radial-gradient(circle 180px at 50% 50%, #fff8e7 0 179px, transparent 180px),
+    radial-gradient(circle, rgba(29, 78, 216, 0.55) 1.8px, transparent 1.9px);
+  background-size: 100% 100%, 9px 9px;
+  pointer-events: none;
+}
+.s-pop .stage {
+  z-index: 1;
+  box-shadow: inset 0 0 0 4px #141414;
+}
+
+/* 顶栏：漫画分格线 */
+.s-pop .topbar {
+  border-bottom: 4px solid #141414;
+  padding-bottom: 9px;
+}
+
+/* 标题斜着摆，模拟漫画封面的大字 */
+.s-pop .room-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1;
+  color: #141414;
+  transform: rotate(-3deg);
+  transform-origin: left center;
+  text-shadow: 2px 2px 0 #fff8e7, 3px 3px 0 #e63946;
+}
+.s-pop .room-meta { margin-top: 12px; color: rgba(20, 20, 20, 0.66); letter-spacing: 0.06em; }
+.s-pop .pot {
+  font-family: var(--font-display);
+  font-size: 27px;
+  color: #e63946;
+  text-shadow: 2px 2px 0 #141414;
+}
+.s-pop .pot-label { color: #141414; font-family: var(--font-ui); }
+.s-pop .icon-btn {
+  background: #fff8e7;
+  color: #141414;
+  border: 3px solid #141414;
+  box-shadow: 3px 3px 0 #141414;
+}
+.s-pop .icon-btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 #141414; }
+
+/* 公共牌区 */
+.s-pop .board-label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: #1d4ed8;
+  letter-spacing: 0.14em;
+  text-shadow: 1px 1px 0 #fff8e7;
+}
+
+/* 牌：米白 + 粗黑描边 + 硬阴影，点数花色全靠黑红两色对抗 */
+.s-pop .card {
+  border: 3px solid #141414;
+  box-shadow: var(--card-shadow);
+  background: var(--card-bg);
+}
+.s-pop .card--lg { border-width: 4px; box-shadow: 5px 5px 0 #141414; }
+.s-pop .card--empty {
+  background: transparent;
+  border: 3px dashed #141414;
+  box-shadow: none;
+}
+.s-pop .card.is-red { color: var(--suit-red); }
+
+/* 席位：白底黑框圆形头像，名字全大写 */
+.s-pop .seat {
+  padding: 5px 13px 5px 6px;
+  border: 3px solid #141414;
+  background: var(--seat-bg);
+  box-shadow: 4px 4px 0 #141414;
+}
+.s-pop .seat-av {
+  border: 3px solid #141414;
+  background: #fff8e7;
+  color: #141414;
+  font-family: var(--font-ui);
+}
+.s-pop .seat--b .seat-av { background: #1d4ed8; color: #fff8e7; }
+.s-pop .seat--d .seat-av { background: #e63946; color: #fff8e7; }
+.s-pop .seat-name {
+  color: #141414;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-family: var(--font-ui);
+}
+.s-pop .seat-stack { color: rgba(20, 20, 20, 0.62); }
+.s-pop .seat.is-turn { animation: none; border-color: #e63946; }
+.s-pop .seat.is-turn .seat-av { box-shadow: 0 0 0 3px #e63946; }
+.s-pop .seat-bet {
+  border: 3px solid #141414;
+  background: var(--bet-bg);
+  color: var(--bet-ink);
+  box-shadow: 2px 2px 0 #141414;
+}
+.s-pop .seat-dealer { border: 2px solid #141414; background: var(--dealer-bg); color: var(--dealer-ink); }
+
+/* 行动区：另一格漫画分格 */
+.s-pop .actions {
+  border-top: 4px solid #141414;
+  background: #ffd400;
+}
+.s-pop .strength-label { color: #141414; font-family: var(--font-ui); }
+.s-pop .strength {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: #e63946;
+  text-shadow: 1px 1px 0 #fff8e7;
+}
+.s-pop .stack-line { color: rgba(20, 20, 20, 0.66); }
+.s-pop .stack-line .js-stack { color: #1d4ed8; }
+.s-pop .timer-num { color: #141414; }
+
+/* 按钮：粗黑描边 + 硬阴影，按下时硬位移 */
+.s-pop .btn {
+  border: 3px solid #141414;
+  box-shadow: 4px 4px 0 #141414;
+  font-family: var(--font-ui);
+  letter-spacing: 0.04em;
+}
+.s-pop .btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #141414; }
+.s-pop .btn--primary { background: #e63946; color: #fff8e7; }
+.s-pop .btn--ghost {
+  background: #fff8e7;
+  color: #141414;
+  border-color: #141414;
+}
+
+/* 加注按钮做成一记爆炸气泡：形状画在伪元素里，文字不被裁掉 */
+.s-pop .btn--alt {
+  position: relative;
+  background: transparent;
+  color: #fff8e7;
+  border: 0;
+  box-shadow: none;
+  padding: 16px 12px;
+}
+.s-pop .btn--alt::before {
+  content: "";
+  position: absolute;
+  inset: -9px -5px;
+  z-index: -1;
+  background: #1d4ed8;
+  clip-path: polygon(
+    50% 0%, 61% 14%, 76% 5%, 79% 22%, 95% 19%, 89% 36%, 100% 45%,
+    88% 57%, 96% 71%, 80% 73%, 77% 89%, 62% 82%, 54% 100%, 42% 86%,
+    28% 94%, 26% 78%, 9% 77%, 15% 60%, 0% 52%, 12% 40%, 4% 24%,
+    21% 24%, 25% 7%, 39% 16%
+  );
+  filter:
+    drop-shadow(2px 0 0 #141414) drop-shadow(-2px 0 0 #141414)
+    drop-shadow(0 2px 0 #141414) drop-shadow(0 -2px 0 #141414)
+    drop-shadow(4px 4px 0 #141414);
+}
+.s-pop .btn--alt:active { transform: translate(3px, 3px); }
+
+/* 快捷额度与滑杆 */
+.s-pop .chip {
+  border: 3px solid #141414;
+  box-shadow: 2px 2px 0 #141414;
+  background: #fff8e7;
+  color: #141414;
+}
+.s-pop .chip:active { transform: translate(2px, 2px); box-shadow: 0 0 0 #141414; }
+.s-pop .raise-amount { color: #e63946; font-family: var(--font-display); }
+.s-pop .raise-range { background: #141414; height: 7px; border-radius: 0; }
+.s-pop .raise-range::-webkit-slider-thumb {
+  background: #e63946;
+  border: 3px solid #141414;
+  border-radius: 0;
+}
+.s-pop .raise-range::-moz-range-thumb {
+  background: #e63946;
+  border: 3px solid #141414;
+  border-radius: 0;
+}
+
+/* 提示条与结算条 */
+.s-pop .toast {
+  border: 3px solid #141414;
+  box-shadow: 4px 4px 0 #141414;
+  font-family: var(--font-ui);
+}
+.s-pop .result {
+  border: 4px solid #141414;
+  box-shadow: 5px 5px 0 #141414;
+  background: #fff8e7;
+}
+.s-pop .result-title { font-family: var(--font-display); color: #e63946; }
+.s-pop .result .btn { background: #e63946; color: #fff8e7; }

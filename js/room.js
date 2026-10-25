@@ -102,6 +102,14 @@
     copy: app.querySelector(".js-copy"),
     rebuy: app.querySelector(".js-rebuy"),
     stand: app.querySelector(".js-stand"),
+    vote: app.querySelector(".js-vote"),
+    voteName: app.querySelector(".js-vote-name"),
+    voteCount: app.querySelector(".js-vote-count"),
+    voteMsg: app.querySelector(".js-vote-msg"),
+    voteYes: app.querySelector(".js-vote-yes"),
+    voteNo: app.querySelector(".js-vote-no"),
+    settle: app.querySelector(".js-settle"),
+    settleList: app.querySelector(".js-settle-list"),
     toast: app.querySelector(".js-toast"),
     stickers: app.querySelector(".js-stickers"),
     menu: app.querySelector(".js-menu"),
@@ -139,6 +147,9 @@
   var turnKey = "";
   var raiseTo = 0;
   var currentStyle = "s-felt";
+  var voteLeftSec = 0;       // 重新买入表决的剩余秒数（本地倒计时）
+  var voteLeftAt = 0;
+  var voteKey = "";          // 表决状态指纹，变了才重画
   var toastTimer = null;
   var lastToastId = 0;
   var stickerLive = [];
@@ -671,7 +682,9 @@
     if (S.phase === "handover" || S.phase === "lobby") cls += " is-done";
     else if (myTurn) { /* 完整行动 UI */ }
     else cls += " is-waiting";
-    if (S.phase !== "lobby") {
+    // 台面样式只在「牌局进行中」跟着状态变：
+    // 手间/结算期把台面固定住，不要因为弃牌或出局突然整块变灰。
+    if (streets()) {
       if (S.you.seat < 0 || (me && me.out)) cls += " is-out";
       else if (me && me.folded) cls += " is-outofhand";
     }
@@ -697,9 +710,13 @@
     var me = myPlayer();
     var isOver = S.phase === "handover";
     var isLobby = S.phase === "lobby";
+    var req = S.rebuyReq || null;
     if (!isOver && !isLobby) {
       els.next.classList.add("is-hidden");
       els.rebuy.classList.add("is-hidden");
+      els.stand.classList.add("is-hidden");
+      els.vote.classList.add("is-hidden");
+      els.settle.classList.add("is-hidden");
       return;
     }
 
@@ -735,9 +752,17 @@
       }
     }
 
-    els.rebuy.classList.toggle("is-hidden", !(isOver && S.you.rebuyOk));
-    // 去围观：坐着且在手间/未开局时可用；围观后点空位随时回来
-    els.stand.classList.toggle("is-hidden", !(isOver && S.you.seat >= 0));
+    // 重新买入：现在是「申请 + 全员同意」，所以按钮有三种状态
+    if (req && req.mine) {
+      els.rebuy.textContent = "撤回申请";
+      els.rebuy.classList.remove("is-hidden");
+    } else {
+      els.rebuy.textContent = "重新买入";
+      // 别人已经在申请了，就不能再发起第二条
+      els.rebuy.classList.toggle("is-hidden", !(isOver && S.you.rebuyOk && !req));
+    }
+    // 去围观：坐着就能用（大厅阶段、手间都行）；牌局进行中不行
+    els.stand.classList.toggle("is-hidden", !(S.you.seat >= 0 && (isOver || isLobby)));
 
     // 下一手 / 开始牌局：庄家专属
     var hostLabel = isLobby ? "开始牌局" : "下一手";
@@ -750,6 +775,91 @@
       els.next.disabled = true;
       els.next.classList.remove("is-hidden");
     }
+  }
+
+  /* ---------------- 重新买入表决 ----------------
+     筹码打光的人点「重新买入」只是提出申请，
+     要在场所有人都点头才真的加筹码。 */
+
+  function renderVote() {
+    var req = S.rebuyReq;
+    if (!req) {
+      els.vote.classList.add("is-hidden");
+      voteKey = "";
+      return;
+    }
+    var key = [req.seat, req.yes, req.need, req.myVote, req.mine].join(":");
+    if (key !== voteKey) {
+      voteKey = key;
+      voteLeftSec = req.left || 0;
+      voteLeftAt = Date.now();
+      paintVote(req);
+    }
+    els.vote.classList.remove("is-hidden");
+  }
+
+  function paintVote(req) {
+    els.voteName.textContent = req.name + " 申请重新买入";
+    els.voteCount.textContent = "同意 " + req.yes + "/" + req.need;
+
+    var msg = "";
+    var canVote = false;
+    if (req.mine) {
+      msg = "等待其他人同意，全员点头才生效";
+    } else if (req.myVote === 1) {
+      msg = "你已同意，等其他人表态";
+    } else if (req.myVote === -1) {
+      msg = "你已拒绝，这次申请作废";
+    } else if (S.you.seat < 0) {
+      msg = "围观者不参与表决";
+    } else {
+      msg = "需要在场所有人同意才生效";
+      canVote = true;
+    }
+    els.voteMsg.textContent = msg;
+    els.voteYes.classList.toggle("is-hidden", !canVote);
+    els.voteNo.classList.toggle("is-hidden", !canVote);
+  }
+
+  /* 表决倒计时：服务器给的是快照，这里本地走秒，免得一直停在旧数字 */
+  function tickVote() {
+    if (!S || !S.rebuyReq || els.vote.classList.contains("is-hidden")) return;
+    var left = Math.max(0, voteLeftSec - (Date.now() - voteLeftAt) / 1000);
+    els.voteCount.textContent = "同意 " + S.rebuyReq.yes + "/" + S.rebuyReq.need
+      + " · 剩 " + Math.ceil(left) + " 秒";
+  }
+
+  /* ---------------- 摊牌牌型明细 ----------------
+     摊牌比大小，光有一句「阿信 两对 K/8」不够看，
+     这里把每个人的底牌和牌型列出来，赢家高亮。 */
+
+  function renderSettle() {
+    var r = S.result;
+    var show = (r && r.showdown) || [];
+    if (!show.length) {
+      els.settle.classList.add("is-hidden");
+      els.settleList.innerHTML = "";
+      return;
+    }
+    var winners = (r && r.winners) || [];
+    var html = "";
+    for (var i = 0; i < show.length; i++) {
+      var row = show[i];
+      var win = winners.filter(function (w) { return w.seat === row.seat; })[0];
+      var cards = (row.hole || []).map(function (c) {
+        return cardHTML(c, " card--mini");
+      }).join("");
+      html += '<div class="settle-row' + (win ? " is-winner" : "") + '">'
+        + '<div class="settle-cards">' + cards + '</div>'
+        + '<div class="settle-info">'
+        + '<span class="settle-name">' + escapeHTML(row.name) + (row.seat === S.you.seat ? "（你）" : "") + '</span>'
+        + '<span class="settle-label">' + escapeHTML(row.label || "") + '</span>'
+        + '</div>'
+        + '<span class="settle-amt">' + (win ? "+" + fmt(win.amount) : "—") + '</span>'
+        + '</div>';
+    }
+    els.settleList.innerHTML = html;
+    els.settle.classList.remove("is-hidden");
   }
 
   function resultSub(r) {
@@ -814,6 +924,8 @@
     renderHero();
     renderActions();
     renderResult();
+    renderVote();
+    renderSettle();
     renderRoster();
   }
 
@@ -869,6 +981,7 @@
 
   function tick() {
     if (!S) return;
+    tickVote();
     // 顶栏升盲倒计时
     if (S.blindLeft != null) {
       var bLeft = Math.max(0, S.blindLeft - (Date.now() - stateAt) / 1000);
@@ -1242,6 +1355,8 @@
     els.next.addEventListener("click", function () { if (S.you.host) send({ t: "start" }); });
     els.rebuy.addEventListener("click", function () { send({ t: "rebuy" }); });
     els.stand.addEventListener("click", function () { send({ t: "stand" }); });
+    if (els.voteYes) els.voteYes.addEventListener("click", function () { send({ t: "rebuy_vote", vote: true }); });
+    if (els.voteNo) els.voteNo.addEventListener("click", function () { send({ t: "rebuy_vote", vote: false }); });
     els.copy.addEventListener("click", function () {
       copyText(shareText(), "已复制，粘贴到微信群里吧");
     });

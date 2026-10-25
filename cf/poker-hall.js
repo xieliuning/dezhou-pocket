@@ -24,6 +24,7 @@ const LOBBY_DROP_MS = 60 * 1000;      // 围观/大厅掉线宽限
 const ROOM_IDLE_MS = 30 * 60 * 1000;  // 无人房间保留时长
 const OFFLINE_DROP_MS = 5 * 60 * 1000;// 牌局中掉线座位保留时长
 const HOST_OFFLINE_MS = 90 * 1000;    // 庄家掉线多久后转移庄家
+const REBUY_VOTE_MS = 60 * 1000;      // 重新买入申请的有效期
 const SEAT_COUNT = 9;
 const SB_MIN = 10, SB_MAX = 1000;
 const STACK_MIN = 100, STACK_MAX = 100000;
@@ -157,6 +158,7 @@ export class PokerHall extends DurableObject {
       case "start": return this.hostStart(room, ws);
       case "act": return this.playerAct(room, ws, msg);
       case "rebuy": return this.playerRebuy(room, ws);
+      case "rebuy_vote": return this.playerRebuyVote(room, ws, msg);
       case "sit": return this.playerSit(room, ws, msg);
       case "stand": return this.playerStand(room, ws);
       case "sticker": return this.relaySticker(room, ws, msg);
@@ -228,6 +230,7 @@ export class PokerHall extends DurableObject {
     for (const room of this.rooms.values()) {
       if (room.turnEndsAt) next = Math.min(next, room.turnEndsAt);
       if (room.blindEndsAt) next = Math.min(next, room.blindEndsAt);
+      if (room.rebuyReq) next = Math.min(next, room.rebuyReq.deadline);
     }
     if (this.nextSweepAt) next = Math.min(next, this.nextSweepAt);
     if (!Number.isFinite(next)) {
@@ -256,6 +259,10 @@ export class PokerHall extends DurableObject {
       if (room.blindEndsAt && now >= room.blindEndsAt) {
         room.blindEndsAt = 0;
         this.onBlindUp(room);
+        this.persist(room);
+      }
+      if (room.rebuyReq && now >= room.rebuyReq.deadline) {
+        this.dropRebuyReq(room, room.rebuyReq.name + " 的重新买入申请超时作废");
         this.persist(room);
       }
     }
@@ -374,6 +381,7 @@ export class PokerHall extends DurableObject {
       blindEndsAt: 0,
       toastSeq: 0,
       lastToast: null,
+      rebuyReq: null,        // 待表决的重新买入申请
       lastActivity: Date.now()
     };
     this.rooms.set(room.code, room);
@@ -562,6 +570,59 @@ export class PokerHall extends DurableObject {
     this.broadcast(room);
   }
 
+  /* ---------------- 重新买入（申请 + 在场全员同意） ---------------- */
+
+  /* 有资格表决的人：当前在线且坐着的人。掉线的人不阻塞表决。 */
+  rebuyVoters(room) {
+    const out = [];
+    for (let i = 0; i < room.seats.length; i++) {
+      const p = room.seats[i];
+      if (p && this.isOnline(p)) out.push(i);
+    }
+    return out;
+  }
+
+  /* 结束一条申请（通过 / 被拒 / 撤回 / 超时） */
+  dropRebuyReq(room, msg) {
+    room.rebuyReq = null;
+    if (msg) this.toast(room, msg);
+    this.persist(room);
+    this.broadcast(room);
+  }
+
+  /* 表决结果落地：通过就发筹码，被拒或超时就作废 */
+  settleRebuy(room) {
+    const req = room.rebuyReq;
+    if (!req) return;
+    const voters = this.rebuyVoters(room);
+
+    // 申请人自己不在场了（掉线/离桌）→ 申请作废
+    if (voters.indexOf(req.seat) < 0) {
+      this.dropRebuyReq(room, null);
+      return;
+    }
+    // 有人明确拒绝 → 直接否掉
+    for (const s of voters) {
+      if (req.votes[s] === false) {
+        this.dropRebuyReq(room, req.name + " 的重新买入没有通过");
+        return;
+      }
+    }
+    let yes = 0;
+    for (const s of voters) if (req.votes[s] === true) yes++;
+    if (yes >= voters.length && voters.length > 0) {
+      const p = room.table.players[req.seat];
+      p.stack = room.cfg.stack;
+      p.out = false;        // 关键：重买后不再是出局状态，台面样式恢复正常
+      p.folded = false;
+      this.dropRebuyReq(room, req.name + " 重新买入 " + room.cfg.stack + "，全员同意");
+      return;
+    }
+    this.persist(room);
+    this.broadcast(room);
+  }
+
+  /* 发起申请：点「重新买入」只是提出申请，要在场所有人点头才真的加筹码 */
   playerRebuy(room, ws) {
     const t = room.table;
     const person = this.personByConn(room, ws);
@@ -572,10 +633,43 @@ export class PokerHall extends DurableObject {
     if (t.phase !== "handover" || p.stack >= t.cfg.bb) {
       return this.send(ws, { t: "err", msg: "筹码还够，不用买入" });
     }
-    p.stack = room.cfg.stack;
-    this.toast(room, person.name + " 重新买入 " + room.cfg.stack);
+    // 已经有一条申请：自己再点一次 = 撤回
+    if (room.rebuyReq && room.rebuyReq.seat === seat) {
+      this.dropRebuyReq(room, person.name + " 撤回了重新买入申请");
+      return;
+    }
+    if (room.rebuyReq) {
+      return this.send(ws, { t: "err", msg: "已经有一条重新买入申请在等人表态了" });
+    }
+    room.rebuyReq = {
+      seat: seat,
+      name: person.name,
+      at: Date.now(),
+      votes: {},                            // seat -> true(同意) / false(拒绝)
+      deadline: Date.now() + REBUY_VOTE_MS
+    };
+    room.rebuyReq.votes[seat] = true;      // 申请人自己算同意
+    this.toast(room, person.name + " 申请重新买入 " + room.cfg.stack + "，等待其他人同意");
     this.persist(room);
-    this.broadcast(room);
+    this.settleRebuy(room);                // 场上只有他一个人 → 直接通过
+  }
+
+  /* 表态：同意 / 拒绝 */
+  playerRebuyVote(room, ws, msg) {
+    const req = room.rebuyReq;
+    if (!req) return this.send(ws, { t: "err", msg: "当前没有待表决的申请" });
+    const person = this.personByConn(room, ws);
+    if (!person) return this.send(ws, { t: "err", msg: "先加入房间" });
+    const seat = this.seatOf(room, person);
+    if (seat < 0) return this.send(ws, { t: "err", msg: "围观者不参与表决" });
+    if (seat === req.seat) return this.send(ws, { t: "err", msg: "这是你自己的申请" });
+    if (this.rebuyVoters(room).indexOf(seat) < 0) return this.send(ws, { t: "err", msg: "你现在不在线" });
+    const yes = msg.vote !== false;
+    if (req.votes[seat] === yes) return;   // 重复表态忽略
+    req.votes[seat] = yes;
+    this.toast(room, person.name + (yes ? " 同意" : " 拒绝") + " " + req.name + " 的重新买入");
+    this.persist(room);
+    this.settleRebuy(room);
   }
 
   /* 表情：服务端只转发，动画各端本地播放 */
@@ -601,6 +695,8 @@ export class PokerHall extends DurableObject {
         const online = room.people.find((p) => this.isOnline(p));
         room.hostToken = online ? online.token : (room.people[0] ? room.people[0].token : null);
       }
+      // 申请人走了 → 他的重新买入申请作废
+      if (room.rebuyReq) { this.settleRebuy(room); return; }
     }
     this.persist(room);
     this.broadcast(room);          // 立刻告诉其他人：座位空出来了
@@ -688,6 +784,26 @@ export class PokerHall extends DurableObject {
       rebuyOk: !!(t && mySeat >= 0 && t.phase === "handover" && t.players[mySeat].stack < t.cfg.bb)
     };
 
+    // 待表决的重新买入申请：按视角裁剪，客户端直接拿来渲染
+    let rebuyReq = null;
+    if (room.rebuyReq) {
+      const voters = this.rebuyVoters(room);
+      let yes = 0;
+      for (const s of voters) if (room.rebuyReq.votes[s] === true) yes++;
+      const myVote = mySeat >= 0 && room.rebuyReq.votes[mySeat] !== undefined
+        ? (room.rebuyReq.votes[mySeat] === true ? 1 : -1) : 0;
+      rebuyReq = {
+        seat: room.rebuyReq.seat,
+        name: room.rebuyReq.name,
+        amount: room.cfg.stack,
+        need: voters.length,
+        yes: yes,
+        mine: room.rebuyReq.seat === mySeat,
+        myVote: myVote,
+        left: Math.max(0, Math.ceil((room.rebuyReq.deadline - Date.now()) / 1000))
+      };
+    }
+
     return {
       t: "state",
       code: room.code,
@@ -707,6 +823,7 @@ export class PokerHall extends DurableObject {
         ? { type: t.result.type, pot: t.result.pot, winners: t.result.winners, showdown: show }
         : null,
       spectators: room.people.filter((p) => this.seatOf(room, p) < 0).length,
+      rebuyReq: rebuyReq,
       canStart: this.isHost(room, viewer) && (!t
         ? this.seatedCount(room) >= 2
         : t.phase === "handover" && Poker.alive(t).length >= 2),

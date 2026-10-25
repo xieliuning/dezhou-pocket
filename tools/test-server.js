@@ -216,8 +216,17 @@ async function main() {
         const loserSeat = loser.lastState.you.seat;
         assert(a.lastState.seats[loserSeat].stack === 0, "出局者筹码为 0");
         loser.send({ t: "rebuy" });
+        await loser.waitState((s) => s.rebuyReq && s.rebuyReq.mine, "重新买入申请已发出", 4000);
+        assert(loser.lastState.rebuyReq.need === 2, "重新买入需要场上 2 人（含申请人）同意");
+        await sleep(250);
+        assert(loser.lastState.seats[loserSeat].stack === 0, "没人同意前不加筹码");
+        // 其他在场的人点头后才真的加筹码
+        const other = loser === a ? b : a;
+        other.send({ t: "rebuy_vote", vote: true });
         await loser.waitState((s) => s.seats[loserSeat].stack === 2000, "重新买入", 4000);
-        assert(loser.lastState.seats[loserSeat].stack === 2000, "买入后筹码回到 2,000");
+        assert(loser.lastState.seats[loserSeat].stack === 2000, "全员同意后筹码回到 2,000");
+        assert(loser.lastState.rebuyReq === null, "申请通过后申请状态清除");
+        assert(loser.lastState.seats[loserSeat].out === false, "重新买入后不再是出局状态（台面样式恢复正常）");
       }
     }
     assert(busted, "全下对博触发了淘汰与重新买入");
@@ -295,11 +304,109 @@ async function main() {
     assert(g.lastState.seats[g.lastState.you.seat].host === true, "庄家身份立刻转给在场的人");
     assert(g.lastState.you.host === true, "在场的人可以开局（canStart 前提）");
 
+    /* ---- 11. 重新买入：申请 + 在场全员同意 ---- */
+    console.log("[11] 重新买入表决");
+    const va = makeClient("庄A");
+    await va.connect();
+    va.send({ t: "create", name: "庄A", sb: 10, stack: 100 });
+    await va.waitState((s) => s.you.seat >= 0 && s.you.host, "庄A入座", 4000);
+    const room11 = va.joined.code;
+    const vb = makeClient("客B");
+    await vb.connect();
+    vb.send({ t: "join", code: room11, name: "客B", avatar: 1 });
+    await vb.waitState((s) => s.you.seat >= 0, "客B入座", 4000);
+    const vc = makeClient("客C");
+    await vc.connect();
+    vc.send({ t: "join", code: room11, name: "客C", avatar: 2 });
+    await vc.waitState((s) => s.you.seat >= 0, "客C入座", 4000);
+    const vd = makeClient("围观D");
+    await vd.connect();
+    vd.send({ t: "join", code: room11, name: "围观D", avatar: 3 });
+    await vd.waitState((s) => s.you.seat >= 0, "围观D入座", 4000);
+    vd.send({ t: "stand" });                       // 变成纯围观者
+    await vd.waitState((s) => s.you.seat === -1, "围观D起立", 4000);
+    assert(occupied(vd.lastState) === 3, "3 人入座，围观者不占座");
+
+    va.send({ t: "start" });
+    await va.waitState((s) => s.phase === "preflop", "开局", 4000);
+
+    // 三个人全部全下，打到摊牌
+    const allIn = (c, L) => (L.canRaise ? { type: "raise", to: L.maxTo } : { type: L.canCheck ? "check" : "call" });
+    const t0 = Date.now();
+    for (;;) {
+      if (Date.now() - t0 > 20000) throw new Error("全下对局超时");
+      const act = [va, vb, vc].find((c) => c.lastState && c.lastState.you.legal && inStreets(c.lastState));
+      if (act) {
+        const L = act.lastState.you.legal;
+        act.send({ t: "act", type: allIn(act, L).type, to: allIn(act, L).to });
+        await sleep(120);
+        continue;
+      }
+      if (va.lastState && va.lastState.phase === "handover") break;
+      await sleep(120);
+    }
+    const bustedList = [vb, vc].filter((c) => c.lastState.seats[c.lastState.you.seat].stack === 0);
+    assert(bustedList.length >= 1, "全下对局后有人出局");
+    const X = bustedList[0];
+    const XSeat = X.lastState.you.seat;
+    const others = [va, vb, vc].filter((c) => c !== X);
+    assert(X.lastState.you.rebuyOk === true, "筹码打光的人可以申请重新买入");
+
+    // 1) 发起申请：只是申请，筹码没动
+    X.send({ t: "rebuy" });
+    await X.waitState((s) => s.rebuyReq && s.rebuyReq.mine, "申请已发出", 4000);
+    assert(X.lastState.rebuyReq.need === 3, "需要场上 3 人同意（申请人算一票）");
+    assert(X.lastState.rebuyReq.myVote === 1, "申请人自动算同意");
+    assert(X.lastState.seats[XSeat].stack === 0, "没人同意前不加筹码");
+    assert(others[0].lastState.rebuyReq && others[0].lastState.rebuyReq.mine === false,
+      "其他在场玩家也能看到这条申请");
+
+    // 2) 围观者不参与表决
+    vd.send({ t: "rebuy_vote", vote: true });
+    await sleep(400);
+    assert(vd.errs.some((m) => m.includes("围观者")), "围观者表决被拒绝");
+
+    // 3) 申请人可以撤回
+    X.send({ t: "rebuy" });
+    await X.waitState((s) => !s.rebuyReq, "撤回申请", 4000);
+    assert(X.lastState.rebuyReq === null, "撤回后申请消失");
+
+    // 4) 有人拒绝 → 整条申请作废
+    X.send({ t: "rebuy" });
+    await X.waitState((s) => s.rebuyReq && s.rebuyReq.mine, "再次申请", 4000);
+    others[0].send({ t: "rebuy_vote", vote: false });
+    await X.waitState((s) => !s.rebuyReq, "拒绝后申请作废", 4000);
+    assert(X.lastState.seats[XSeat].stack === 0, "被拒绝不加筹码");
+
+    // 5) 全员同意才真的加筹码
+    X.send({ t: "rebuy" });
+    await X.waitState((s) => s.rebuyReq && s.rebuyReq.mine, "第三次申请", 4000);
+    others[0].send({ t: "rebuy_vote", vote: true });
+    await sleep(300);
+    assert(X.lastState.rebuyReq.yes === 2, "同意数 2/3");
+    assert(X.lastState.seats[XSeat].stack === 0, "还有人没表态时仍然不加筹码");
+    others[1].send({ t: "rebuy_vote", vote: true });
+    await X.waitState((s) => s.seats[XSeat].stack === 100, "全员同意后加筹码", 4000);
+    assert(X.lastState.seats[XSeat].stack === 100, "重新买入 100 筹码");
+    assert(X.lastState.rebuyReq === null, "通过后申请清除");
+    assert(X.lastState.seats[XSeat].out === false, "重买后不再是出局状态（台面样式恢复正常）");
+    assert(X.lastState.you.rebuyOk === false, "筹码够了就不再显示重新买入");
+
+    /* ---- 12. lobby 阶段可以起立去围观 ---- */
+    console.log("[12] lobby 阶段去围观");
+    const vl = makeClient("庄L");
+    await vl.connect();
+    vl.send({ t: "create", name: "庄L", sb: 20, stack: 60000 });
+    await vl.waitState((s) => s.you.seat >= 0 && s.phase === "lobby", "庄L入座", 4000);
+    vl.send({ t: "stand" });
+    await vl.waitState((s) => s.you.seat === -1 && s.phase === "lobby", "lobby 阶段起立去围观", 4000);
+    assert(vl.lastState.you.seat === -1, "lobby 阶段也能去围观");
+    assert(vl.lastState.spectators >= 1, "围观人数统计正确");
+
     console.log("\n结果：" + passed + " 通过，" + failed + " 失败");
   } finally {
     server.kill();
   }
   process.exit(failed ? 1 : 0);
 }
-
 main().catch((e) => { console.error("测试异常：", e.message); process.exit(2); });

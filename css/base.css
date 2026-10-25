@@ -802,6 +802,140 @@ button.seat-av { cursor: pointer; }
 }
 .result .btn { flex: 0 0 auto; padding: 10px 16px; }
 
+/* ---- 联机结算区（多了表决与牌型明细，改成竖向排布）----
+   原来结算条是一行：标题 + 四个按钮。手机上放不下，
+   按钮被挤到屏幕外，结算时什么也点不着。 */
+.result:has(.result-btns) {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.result-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.result-btns .btn {
+  flex: 1 1 auto;
+  min-width: 92px;
+  padding: 11px 12px;
+}
+
+/* ---- 重新买入表决 ----
+   表决区画在结算条里，配色必须跟着结算条走（--result-*）：
+   结算条在多数皮肤里是浅色的，而 --ink 是桌面上的浅色字，
+   混用会导致赢家那行白字压在浅底上，看不清。 */
+.vote {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid var(--result-line);
+}
+.vote-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.vote-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--result-ink);
+}
+.vote-count {
+  font-size: 11px;
+  color: var(--result-ink);
+  opacity: 0.72;
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.vote-msg {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--result-ink);
+  opacity: 0.8;
+}
+.vote-btns { display: flex; gap: 8px; }
+.vote-btns .btn {
+  flex: 1 1 auto;
+  padding: 10px 12px;
+}
+
+/* ---- 摊牌牌型明细 ---- */
+.settle {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid var(--result-line);
+}
+.settle-head {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--result-ink);
+  opacity: 0.6;
+}
+.settle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.settle-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid var(--result-line);
+}
+/* 赢家：描边 + 左侧色条。不用底色，避免深浅皮打架 */
+.settle-row.is-winner {
+  border-color: var(--result-ink);
+  box-shadow: inset 3px 0 0 var(--result-ink);
+}
+.settle-cards { display: flex; gap: 3px; flex: 0 0 auto; }
+.settle-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.settle-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--result-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.settle-label {
+  font-size: 11px;
+  color: var(--result-ink);
+  opacity: 0.72;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.settle-amt {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  color: var(--result-ink);
+  opacity: 0.6;
+}
+.settle-row.is-winner .settle-amt { opacity: 1; font-weight: 800; }
+
 .app.is-folded .hero { opacity: 0.4; filter: grayscale(1); }
 .app.is-folded .btn--primary,
 .app.is-folded .btn--alt { opacity: 0.35; }

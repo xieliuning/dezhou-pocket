@@ -31,6 +31,7 @@ const LOBBY_DROP_MS = 60 * 1000;      // 围观/大厅掉线宽限
 const ROOM_IDLE_MS = 30 * 60 * 1000;  // 无人房间保留时长
 const OFFLINE_DROP_MS = 5 * 60 * 1000;// 牌局中掉线座位保留时长
 const HOST_OFFLINE_MS = 90 * 1000;    // 庄家掉线多久后转移庄家
+const REBUY_VOTE_MS = 60 * 1000;      // 重新买入申请的有效期
 const SEAT_COUNT = 9;
 const MAX_MESSAGE = 1 << 20;
 
@@ -105,6 +106,8 @@ function createRoom(conn, msg) {
     blindTimer: null,
     toastSeq: 0,
     lastToast: null,
+    rebuyReq: null,        // 待表决的重新买入申请：{ seat, name, at, votes, deadline }
+    rebuyTimer: null,      // 申请超时的定时器
     lastActivity: Date.now()
   };
   rooms.set(room.code, room);
@@ -258,6 +261,7 @@ function onMessage(conn, raw) {
     case "start": return hostStart(room, conn);
     case "act": return playerAct(room, conn, msg);
     case "rebuy": return playerRebuy(room, conn);
+    case "rebuy_vote": return playerRebuyVote(room, conn, msg);
     case "sit": return playerSit(room, conn, msg);
     case "stand": return playerStand(room, conn);
     case "sticker": return relaySticker(room, conn, msg);
@@ -346,6 +350,58 @@ function playerAct(room, conn, msg) {
   broadcast(room);
 }
 
+/* ---------------- 重新买入（申请 + 在场全员同意） ---------------- */
+
+/* 有资格表决的人：当前在线且坐着的人。掉线的人不阻塞表决。 */
+function rebuyVoters(room) {
+  const out = [];
+  for (let i = 0; i < room.seats.length; i++) {
+    const p = room.seats[i];
+    if (p && p.conn && !p.conn.closed) out.push(i);
+  }
+  return out;
+}
+
+/* 表决结果落地：通过就发筹码，被拒或超时就作废 */
+function settleRebuy(room) {
+  const req = room.rebuyReq;
+  if (!req) return;
+  const voters = rebuyVoters(room);
+
+  // 申请人自己不在场了（掉线/离桌）→ 申请作废
+  if (voters.indexOf(req.seat) < 0) {
+    dropRebuyReq(room, null);
+    return;
+  }
+  // 有人明确拒绝 → 直接否掉
+  for (const s of voters) {
+    if (req.votes[s] === false) {
+      dropRebuyReq(room, req.name + " 的重新买入没有通过");
+      return;
+    }
+  }
+  let yes = 0;
+  for (const s of voters) if (req.votes[s] === true) yes++;
+  if (yes >= voters.length && voters.length > 0) {
+    const p = room.table.players[req.seat];
+    p.stack = room.cfg.stack;
+    p.out = false;        // 关键：重买后不再是出局状态，台面样式恢复正常
+    p.folded = false;
+    dropRebuyReq(room, req.name + " 重新买入 " + room.cfg.stack + "，全员同意");
+    return;
+  }
+  broadcast(room);
+}
+
+/* 结束一条申请（通过 / 被拒 / 撤回 / 超时） */
+function dropRebuyReq(room, msg) {
+  if (room.rebuyTimer) { clearTimeout(room.rebuyTimer); room.rebuyTimer = null; }
+  room.rebuyReq = null;
+  if (msg) toast(room, msg);
+  broadcast(room);
+}
+
+/* 发起申请：点「重新买入」只是提出申请，要在场所有人点头才真的加筹码 */
 function playerRebuy(room, conn) {
   const t = room.table;
   const person = personByConn(room, conn);
@@ -356,9 +412,46 @@ function playerRebuy(room, conn) {
   if (t.phase !== "handover" || p.stack >= t.cfg.bb) {
     return send(conn, { t: "err", msg: "筹码还够，不用买入" });
   }
-  p.stack = room.cfg.stack;
-  toast(room, person.name + " 重新买入 " + room.cfg.stack);
-  broadcast(room);
+  // 已经有一条申请：自己再点一次 = 撤回
+  if (room.rebuyReq && room.rebuyReq.seat === seat) {
+    dropRebuyReq(room, person.name + " 撤回了重新买入申请");
+    return;
+  }
+  if (room.rebuyReq) {
+    return send(conn, { t: "err", msg: "已经有一条重新买入申请在等人表态了" });
+  }
+  room.rebuyReq = {
+    seat: seat,
+    name: person.name,
+    at: Date.now(),
+    votes: {},                            // seat -> true(同意) / false(拒绝)
+    deadline: Date.now() + REBUY_VOTE_MS
+  };
+  room.rebuyReq.votes[seat] = true;      // 申请人自己算同意
+  room.rebuyTimer = setTimeout(function () {
+    if (room.rebuyReq && room.rebuyReq.seat === seat) {
+      dropRebuyReq(room, person.name + " 的重新买入申请超时作废");
+    }
+  }, REBUY_VOTE_MS + 200);
+  toast(room, person.name + " 申请重新买入 " + room.cfg.stack + "，等待其他人同意");
+  settleRebuy(room);                      // 场上只有他一个人 → 直接通过
+}
+
+/* 表态：同意 / 拒绝 */
+function playerRebuyVote(room, conn, msg) {
+  const req = room.rebuyReq;
+  if (!req) return send(conn, { t: "err", msg: "当前没有待表决的申请" });
+  const person = personByConn(room, conn);
+  if (!person) return send(conn, { t: "err", msg: "先加入房间" });
+  const seat = seatOf(room, person);
+  if (seat < 0) return send(conn, { t: "err", msg: "围观者不参与表决" });
+  if (seat === req.seat) return send(conn, { t: "err", msg: "这是你自己的申请" });
+  if (rebuyVoters(room).indexOf(seat) < 0) return send(conn, { t: "err", msg: "你现在不在线" });
+  const yes = msg.vote !== false;
+  if (req.votes[seat] === yes) return;   // 重复表态忽略
+  req.votes[seat] = yes;
+  toast(room, person.name + (yes ? " 同意" : " 拒绝") + " " + req.name + " 的重新买入");
+  settleRebuy(room);
 }
 
 function playerSit(room, conn, msg) {
@@ -391,6 +484,8 @@ function leaveRoom(room, conn) {
       const online = room.people.find((p) => p.conn && !p.conn.closed);
       room.hostToken = online ? online.token : (room.people[0] ? room.people[0].token : null);
     }
+    // 申请人走了 → 他的重新买入申请作废
+    if (room.rebuyReq) { settleRebuy(room); return conn.close(); }
     broadcast(room);          // 立刻告诉其他人：座位空出来了
   }
   conn.close();
@@ -545,6 +640,26 @@ function buildState(room, conn) {
     rebuyOk: !!(t && mySeat >= 0 && t.phase === "handover" && t.players[mySeat].stack < t.cfg.bb)
   };
 
+  // 待表决的重新买入申请：按视角裁剪，客户端直接拿来渲染
+  let rebuyReq = null;
+  if (room.rebuyReq) {
+    const voters = rebuyVoters(room);
+    let yes = 0;
+    for (const s of voters) if (room.rebuyReq.votes[s] === true) yes++;
+    const myVote = mySeat >= 0 && room.rebuyReq.votes[mySeat] !== undefined
+      ? (room.rebuyReq.votes[mySeat] === true ? 1 : -1) : 0;
+    rebuyReq = {
+      seat: room.rebuyReq.seat,
+      name: room.rebuyReq.name,
+      amount: room.cfg.stack,
+      need: voters.length,
+      yes: yes,
+      mine: room.rebuyReq.seat === mySeat,
+      myVote: myVote,
+      left: Math.max(0, Math.ceil((room.rebuyReq.deadline - Date.now()) / 1000))
+    };
+  }
+
   return {
     t: "state",
     code: room.code,
@@ -564,6 +679,7 @@ function buildState(room, conn) {
       ? { type: t.result.type, pot: t.result.pot, winners: t.result.winners, showdown: show }
       : null,
     spectators: room.people.filter((p) => seatOf(room, p) < 0).length,
+    rebuyReq: rebuyReq,
     canStart: isHost(room, viewer) && (!t
       ? seatedCount(room) >= 2
       : t.phase === "handover" && Poker.alive(t).length >= 2),

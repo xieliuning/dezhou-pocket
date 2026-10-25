@@ -126,6 +126,7 @@
         <div class="deco" aria-hidden="true"></div>
 
         <header class="topbar">
+          <button class="icon-btn js-back" type="button" aria-label="返回大厅" title="返回大厅">←</button>
           <button class="icon-btn js-menu" type="button" aria-label="切换界面风格" title="切换界面风格">☰</button>
           <div class="room">
             <div class="room-name js-room">房间 ····</div>
@@ -192,10 +193,32 @@
               <div class="result-title js-result-title">等待连接</div>
               <div class="result-sub js-result-sub"></div>
             </div>
-            <button class="btn btn--ghost js-rebuy is-hidden" type="button">重新买入</button>
-            <button class="btn btn--ghost js-stand is-hidden" type="button">去围观</button>
-            <button class="btn btn--ghost js-copy" type="button">复制战绩</button>
-            <button class="btn btn--primary js-next" type="button">开始牌局</button>
+
+            <!-- 重新买入表决：要全场同意才生效 -->
+            <div class="vote js-vote is-hidden">
+              <div class="vote-head">
+                <span class="vote-name js-vote-name"></span>
+                <span class="vote-count js-vote-count"></span>
+              </div>
+              <div class="vote-msg js-vote-msg"></div>
+              <div class="vote-btns">
+                <button class="btn btn--primary js-vote-yes" type="button">同意</button>
+                <button class="btn btn--ghost js-vote-no" type="button">拒绝</button>
+              </div>
+            </div>
+
+            <!-- 摊牌牌型：每个人的底牌与牌型 -->
+            <div class="settle js-settle is-hidden">
+              <div class="settle-head">摊牌牌型</div>
+              <div class="settle-list js-settle-list"></div>
+            </div>
+
+            <div class="result-btns">
+              <button class="btn btn--ghost js-rebuy is-hidden" type="button">重新买入</button>
+              <button class="btn btn--ghost js-stand is-hidden" type="button">去围观</button>
+              <button class="btn btn--ghost js-copy" type="button">复制战绩</button>
+              <button class="btn btn--primary js-next" type="button">开始牌局</button>
+            </div>
           </div>
         </footer>
 

@@ -105,6 +105,7 @@
     toast: app.querySelector(".js-toast"),
     stickers: app.querySelector(".js-stickers"),
     menu: app.querySelector(".js-menu"),
+    back: app.querySelector(".js-back"),
     picker: document.querySelector(ROOM_SCOPE + ".js-picker"),
     pickerGrid: document.querySelector(ROOM_SCOPE + ".js-picker-grid"),
     pickerClose: document.querySelector(ROOM_SCOPE + ".js-picker-close"),
@@ -128,6 +129,7 @@
   var code = "";
   var token = "";
   var left = false;          // 主动退出，不再重连
+  var leaving = false;       // 正在返回大厅：断线回调不要自动重连，等我们重开一条
   var retryDelay = 1500;
   var pendingJoin = null;    // 连接建立后要发的第一条消息
   var lastServerMsgAt = 0;   // 客户端 watchdog：太久没有服务器消息就重连
@@ -222,6 +224,7 @@
 
   function connect() {
     if (left) return;
+    if (ws && (ws.readyState === 0 || ws.readyState === 1)) return;   // 已经连上/正在连，别开第二条
     try { ws = new WebSocket(wsUrl()); } catch (e) { return scheduleReconnect(); }
     ws.onopen = function () {
       retryDelay = 1500;
@@ -257,6 +260,14 @@
     };
     ws.onclose = function () {
       if (left) return;
+      if (leaving) {                     // 主动返回大厅：关掉旧连接后重开一条干净的
+        leaving = false;
+        proxyTried = false;
+        viaProxy = false;
+        ws = null;
+        connect();
+        return;
+      }
       if (reconnecting) {          // 服务器地址变更触发的重连，不算断线
         reconnecting = false;
         scheduleReconnect();
@@ -325,6 +336,77 @@
     lobbyEl.hidden = true;
     gamewrapEl.hidden = false;
     applyStyle(currentStyle, false);
+    pushRoomUrl(code);
+  }
+
+  /* ---------- 返回大厅 ---------- */
+
+  /* 地址栏带上 ?room=房间号：既是邀请链接，也让手机上的「返回」手势能退回大厅 */
+  function pushRoomUrl(roomCode) {
+    try {
+      var q = new URLSearchParams(location.search);
+      q.set("room", roomCode);
+      history.pushState({ room: roomCode }, "", location.pathname + "?" + q.toString());
+    } catch (e) { /* ignore */ }
+  }
+
+  function cleanRoomUrl() {
+    try {
+      var q = new URLSearchParams(location.search);
+      if (!q.get("room")) return;
+      q.delete("room");
+      var s = q.toString();
+      history.replaceState(null, "", location.pathname + (s ? "?" + s : ""));
+    } catch (e) { /* ignore */ }
+  }
+
+  /* 离开这张桌子回大厅。
+     先发 leave 让服务端立刻释放座位（否则会留一个离线幽灵占着位置），
+     再清掉本地令牌、切回大厅。 */
+  function backToLobby() {
+    leaving = true;
+    if (ws && ws.readyState === 1) send({ t: "leave" });
+    try {
+      if (code) sessionStorage.removeItem("holdem.token." + code);
+      sessionStorage.removeItem("holdem.lastCode");
+    } catch (e) { /* ignore */ }
+    S = null;
+    code = "";
+    token = "";
+    pendingJoin = null;
+    layoutKey = "";
+    boardKey = "";
+    holeKey = "";
+    turnKey = "";
+    els.seats.innerHTML = "";
+    lobbyEl.hidden = false;
+    gamewrapEl.hidden = true;
+    lobbyEls.err.hidden = true;
+    lobbyEls.code.value = "";
+    cleanRoomUrl();
+    if (ws) { try { ws.close(); } catch (e) { /* ignore */ } }
+    // 万一 close 事件不来（连接本来就断了），兜底重开一条
+    setTimeout(function () {
+      if (!leaving) return;
+      leaving = false;
+      ws = null;
+      connect();
+    }, 900);
+  }
+
+  /* 手机键盘弹起时，把大厅底部的「创建房间 / 加入房间」整行抬到键盘上沿，
+     否则按钮正好被键盘盖住，看着像点不动。 */
+  function bindKeyboardSafeActions() {
+    var row = document.querySelector(".lobby-actions");
+    var vv = window.visualViewport;
+    if (!row || !vv) return;
+    var sync = function () {
+      var overlap = Math.max(0, (window.innerHeight || 0) - vv.height - vv.offsetTop);
+      row.style.transform = overlap > 0 ? "translateY(" + (-overlap) + "px)" : "";
+    };
+    vv.addEventListener("resize", sync);
+    vv.addEventListener("scroll", sync);
+    sync();
   }
 
   function onErr(msg) {
@@ -1157,6 +1239,12 @@
 
     els.openPicker.addEventListener("click", function () { els.picker.classList.add("is-open"); });
     els.menu.addEventListener("click", function () { els.picker.classList.add("is-open"); });
+    // 顶栏返回：离开牌桌回大厅
+    if (els.back) els.back.addEventListener("click", backToLobby);
+    // 手机上的返回手势/键盘：同样是退回大厅
+    window.addEventListener("popstate", function () {
+      if (!gamewrapEl.hidden) backToLobby();
+    });
     els.pickerClose.addEventListener("click", function () { els.picker.classList.remove("is-open"); });
     els.picker.addEventListener("click", function (e) {
       if (e.target === els.picker) els.picker.classList.remove("is-open");
@@ -1214,6 +1302,7 @@
   initLobby();
   buildPicker();
   bind();
+  bindKeyboardSafeActions();
   els.timer.style.strokeDashoffset = RING;
   connect();
 })();

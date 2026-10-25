@@ -596,8 +596,14 @@ export class PokerHall extends DurableObject {
       if (seat >= 0) this.freeSeat(room, seat, null);
       const i = room.people.indexOf(person);
       if (i >= 0) room.people.splice(i, 1);
+      // 庄家走了就立刻换人，别等定时清扫，否则牌桌会卡在「没人能开局」
+      if (room.hostToken === person.token) {
+        const online = room.people.find((p) => this.isOnline(p));
+        room.hostToken = online ? online.token : (room.people[0] ? room.people[0].token : null);
+      }
     }
     this.persist(room);
+    this.broadcast(room);          // 立刻告诉其他人：座位空出来了
     try { ws.close(); } catch (e) { /* ignore */ }
   }
 

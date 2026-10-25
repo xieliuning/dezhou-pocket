@@ -275,6 +275,26 @@ async function main() {
     await sleep(400);
     assert(c4.errs.some((m) => m.includes("初始筹码")), "初始筹码越界被拒绝");
 
+    /* ---- 10. 离开房间：座位释放 + 庄家立刻转移 ---- */
+    console.log("[10] 离开房间");
+    const h = makeClient("庄家");
+    await h.connect();
+    h.send({ t: "create", name: "庄家", sb: 20, stack: 60000 });
+    await h.waitState((s) => s.you.seat >= 0 && s.you.host, "庄家入座", 4000);
+    const room10 = h.joined.code;
+    const g = makeClient("客人");
+    await g.connect();
+    g.send({ t: "join", code: room10, name: "客人", avatar: 2 });
+    await g.waitState((s) => s.you.seat >= 0 && occupied(s) === 2, "客人入座", 4000);
+    assert(g.lastState.seats[h.lastState.you.seat].host === true, "庄家标记在庄家身上");
+
+    h.send({ t: "leave" });
+    await sleep(500);
+    await g.waitState((s) => occupied(s) === 1, "庄家离开后座位立刻释放", 4000);
+    assert(g.lastState.seats[h.joined.seat].occupied === false, "庄家座位变空位");
+    assert(g.lastState.seats[g.lastState.you.seat].host === true, "庄家身份立刻转给在场的人");
+    assert(g.lastState.you.host === true, "在场的人可以开局（canStart 前提）");
+
     console.log("\n结果：" + passed + " 通过，" + failed + " 失败");
   } finally {
     server.kill();

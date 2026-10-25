@@ -386,6 +386,12 @@ function leaveRoom(room, conn) {
     const seat = seatOf(room, person);
     if (seat >= 0) freeSeat(room, seat, null);
     room.people.splice(room.people.indexOf(person), 1);
+    // 庄家走了就立刻换人，别等定时清扫，否则牌桌会卡在「没人能开局」
+    if (room.hostToken === person.token) {
+      const online = room.people.find((p) => p.conn && !p.conn.closed);
+      room.hostToken = online ? online.token : (room.people[0] ? room.people[0].token : null);
+    }
+    broadcast(room);          // 立刻告诉其他人：座位空出来了
   }
   conn.close();
 }

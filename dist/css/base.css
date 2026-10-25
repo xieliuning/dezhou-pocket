@@ -228,6 +228,12 @@ body {
   background: var(--panel);
   cursor: pointer;
 }
+/* 返回大厅的箭头：比 ☰ 大一点，手机上好点中 */
+.icon-btn.js-back {
+  font-size: 19px;
+  line-height: 1;
+  padding-bottom: 2px;
+}
 
 .room { flex: 1; min-width: 0; }
 .room-name {

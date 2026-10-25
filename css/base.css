@@ -562,6 +562,12 @@ button.seat-av { cursor: pointer; }
   color: var(--accent-ink);
   box-shadow: var(--seat-shadow);
 }
+/* 点空位后的等待态：告诉玩家「点到了，已经提交，在等服务器回话」 */
+.seat.is-pending {
+  opacity: 0.5;
+  filter: saturate(0.5);
+}
+
 /* 你的位置在牌桌最下沿，下注筹码往上弹，免得压出桌外 */
 .seat--me .seat-bet {
   top: auto;

@@ -324,6 +324,7 @@
   }
 
   function onErr(msg) {
+    clearSeatPending();
     if (!lobbyEl.hidden) {
       lobbyEls.err.textContent = msg.msg || "出错了";
       lobbyEls.err.hidden = false;
@@ -348,6 +349,7 @@
     stateAt = Date.now();
     lobbyEl.hidden = true;
     gamewrapEl.hidden = false;
+    clearSeatPending();
     if (state.toast && state.toast.id && state.toast.id !== lastToastId) {
       lastToastId = state.toast.id;
       toast(state.toast.msg);
@@ -399,6 +401,20 @@
 
   function seatEl(seat) {
     return els.seats.querySelector('[data-seat="' + seat + '"]');
+  }
+
+  /* 点空位后先给个即时反馈（变灰 = 已提交，等服务器回话）。
+     手机上网络一来一回有延迟，没这个反馈用户会以为没点上，连点好几次。
+     服务端广播新状态或返回错误后自动撤销。 */
+  function markSeatPending(seat) {
+    clearSeatPending();
+    var el = seatEl(seat);
+    if (el) el.classList.add("is-pending");
+  }
+
+  function clearSeatPending() {
+    var list = els.seats.querySelectorAll(".seat.is-pending");
+    for (var i = 0; i < list.length; i++) list[i].classList.remove("is-pending");
   }
 
   function renderSeats() {
@@ -1127,16 +1143,19 @@
     });
     // 点座位：空位 → 入座/换座；有人的头像 → 扔表情
     els.seats.addEventListener("click", function (e) {
-      var av = e.target.closest ? e.target.closest(".seat-av") : null;
-      if (!av) return;
-      var seatElm = av.closest(".seat");
+      var seatElm = e.target.closest ? e.target.closest(".seat") : null;
       if (!seatElm || !S) return;
       var seat = Number(seatElm.dataset.seat);
       if (!Number.isInteger(seat)) return;
-      if (av.classList.contains("seat-av--empty")) {
+
+      var emptyAv = seatElm.querySelector(".seat-av--empty");
+      if (emptyAv) {
         send({ t: "sit", seat: seat });
+        markSeatPending(seat);
         return;
       }
+      var av = e.target.closest(".seat-av");
+      if (!av) return;
       if (seat === S.you.seat) return;
       send({ t: "sticker", to: seat });
     });

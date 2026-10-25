@@ -359,24 +359,30 @@
     return ANCHORS8[clamp(rel - 1, 0, 7)];
   }
 
+  /* 座位：9 个位置。
+     rel=0 是「你的位置」，固定钉在牌桌底部正中，入座后这里直接显示你自己；
+     rel=1..8 是另外 8 个位置，顺时针绕桌排开。
+     观战时 rel=0 显示「点此入座」，点它就是坐 0 号位。 */
   function buildSeats() {
-    var watching = S.you.seat < 0;                 // 观战：把 0 号位放底部
-    var base = watching ? 0 : S.you.seat;
+    var mySeat = S.you.seat;                     // -1 = 观战
+    var base = mySeat < 0 ? 0 : mySeat;
     var html = "";
-    for (var rel = 1; rel <= 8; rel++) {
+    for (var rel = 0; rel <= 8; rel++) {
       var seat = (base + rel) % 9;
       var p = S.seats[seat];
-      var anchor = anchorFor(rel);
+      var anchor = rel === 0 ? "me" : anchorFor(rel);
       var empty = !p.occupied;
+      var mine = !empty && !!p.me;
       var av = empty
         ? '<button class="seat-av seat-av--empty" type="button" aria-label="空座位 · 点此入座">＋</button>'
-        : '<button class="seat-av" type="button" aria-label="' + escapeHTML(p.name) + ' · 轻点扔表情">'
+        : '<button class="seat-av" type="button" aria-label="' + escapeHTML(p.name) + (mine ? " · 你" : " · 轻点扔表情") + '">'
           + '<img src="assets/avatars/' + AVATAR_FILES[p.avatar % 10] + '" alt="" draggable="false">'
           + '</button>';
-      html += '<div class="seat seat--' + anchor + '" data-seat="' + seat + '" data-state="' + (empty ? "empty" : "active") + '">'
+      html += '<div class="seat seat--' + anchor + '" data-seat="' + seat + '" data-state="' + (empty ? "empty" : "active") + (mine ? " is-me" : "") + '">'
         + av
         + '<div class="seat-info"><div class="seat-name">' + (empty ? "空位" : "") + '</div>'
         + '<div class="seat-stack">—</div></div>'
+        + (mine ? '<span class="seat-you">你</span>' : '')
         + '<div class="seat-bet is-hidden"></div>'
         + '<div class="seat-dealer is-hidden">D</div>'
         + '<div class="seat-cards is-hidden"></div>'
@@ -397,7 +403,6 @@
 
     for (var i = 0; i < 9; i++) {
       var p = S.seats[i];
-      if (p.me) continue;
       var seat = p.seat;
       var el = seatEl(seat);
       if (!el) continue;
@@ -445,7 +450,9 @@
 
       var cards = el.querySelector(".seat-cards");
       var row = showCards ? showdown.filter(function (x) { return x.seat === seat && !x.folded; })[0] : null;
-      var shown = row && row.hole && row.hole.length ? row.hole : (p.hole && p.hole.length ? p.hole : null);
+      // 自己的底牌由底部手牌区展示，座位格里不重复画
+      var shown = p.me ? null
+        : (row && row.hole && row.hole.length ? row.hole : (p.hole && p.hole.length ? p.hole : null));
       if (shown && shown.length) {
         cards.innerHTML = shown.map(function (c) { return cardHTML(c, " card--mini"); }).join("");
         cards.classList.remove("is-hidden");

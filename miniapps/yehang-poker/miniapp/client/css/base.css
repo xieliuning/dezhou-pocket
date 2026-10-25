@@ -518,21 +518,20 @@ button.seat-av { cursor: pointer; }
 .seat--g { top: 28%; right: 0; }
 .seat--h { top: calc(50% + 66px); right: 0; }
 
-/* 「你的位置」：固定钉在牌桌底部正中。
-   入座后这里直接显示玩家本人（头像 + 名字 + 筹码），
-   观战时这里是一个「点此入座」的入口。
-   位置固定的好处：点击入座后，座位不会因为视角重排而「消失」。 */
-.seat--me {
+/* 0 号位：牌桌底部正中。
+   各皮肤的桌布形状不一样，这里只给一个保底位置，
+   运行时 syncBottomSeat() 会按桌布下沿把它贴到桌沿内侧。 */
+.seat--bottom {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
 }
 /* 底座居中用的是 translateX，turn-breathe 动画也会改 transform，
    所以这里把位移放在 translate 里统一管理，避免互相覆盖 */
-.seat--me.is-turn {
-  animation: turn-breathe-me 2.4s ease-in-out infinite;
+.seat--bottom.is-turn {
+  animation: turn-breathe-bottom 2.4s ease-in-out infinite;
 }
-@keyframes turn-breathe-me {
+@keyframes turn-breathe-bottom {
   0%, 100% { transform: translateX(-50%); }
   50% { transform: translateX(-50%) translateY(-2px); }
 }
@@ -569,7 +568,7 @@ button.seat-av { cursor: pointer; }
 }
 
 /* 你的位置在牌桌最下沿，下注筹码往上弹，免得压出桌外 */
-.seat--me .seat-bet {
+.seat--bottom .seat-bet {
   top: auto;
   bottom: 100%;
   left: 50%;

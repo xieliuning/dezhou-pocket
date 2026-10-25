@@ -156,6 +156,10 @@
   animation: none;
 }
 .s-mono .seat--e { grid-column: auto; }
+/* 单色皮肤是竖排名单，「你」标记本来绝对定位在牌桌右下角，
+   跑到名单中间的桌面上很难看，这里改成给自己那行描一道红边 */
+.s-mono .seat-you { display: none; }
+.s-mono .seat.is-me { box-shadow: inset 3px 0 0 #c8321c; }
 .s-mono .seat.is-turn { animation: none; }
 .s-mono .seat.is-turn .seat-name { color: #c8321c; }
 .s-mono .seat.is-turn::before {

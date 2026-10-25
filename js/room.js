@@ -46,8 +46,11 @@
     { key: "s-zen",       no: "20", name: "禅意留白", a: "#f6f3ec", b: "#8a8f7e" }
   ];
 
-  /* 九人桌固定布局：对手按相对座位序 1–8 落到 a–h 锚点（自己永远在底部） */
-  var ANCHORS8 = ["a", "b", "c", "d", "e", "f", "g", "h"];
+  /* 九个座位在牌桌上的固定位置（绝对锚点，不随自己换座而重排）。
+     0 号在牌桌底部正中，1–8 顺时针绕桌排开。
+     用固定锚点而不是「按自己的座位重排」：
+     点哪个空位，头像就落到哪个位置，换座时整桌不会跟着旋转。 */
+  var SEAT_SLOTS = ["bottom", "h", "g", "f", "e", "d", "c", "b", "a"];
 
   /* ---------------- DOM ---------------- */
 
@@ -78,6 +81,7 @@
     pot: app.querySelector(".js-pot"),
     board: app.querySelector(".js-board"),
     boardLabel: app.querySelector(".js-board-label"),
+    table: app.querySelector(".table"),
     seats: app.querySelector(".js-seats"),
     hand: app.querySelector(".js-hand"),
     heroPos: app.querySelector(".js-hero-pos"),
@@ -357,22 +361,14 @@
 
   /* ---------------- 渲染 ---------------- */
 
-  function anchorFor(rel) {
-    return ANCHORS8[clamp(rel - 1, 0, 7)];
-  }
-
-  /* 座位：9 个位置。
-     rel=0 是「你的位置」，固定钉在牌桌底部正中，入座后这里直接显示你自己；
-     rel=1..8 是另外 8 个位置，顺时针绕桌排开。
-     观战时 rel=0 显示「点此入座」，点它就是坐 0 号位。 */
+  /* 座位：9 个固定位置。
+     座位号与位置一一对应：0 号在牌桌底部正中，1–8 顺时针绕桌排开。
+     点哪个空位就坐到哪个位置，头像出现在被点的那个格子里。 */
   function buildSeats() {
-    var mySeat = S.you.seat;                     // -1 = 观战
-    var base = mySeat < 0 ? 0 : mySeat;
     var html = "";
-    for (var rel = 0; rel <= 8; rel++) {
-      var seat = (base + rel) % 9;
+    for (var seat = 0; seat <= 8; seat++) {
       var p = S.seats[seat];
-      var anchor = rel === 0 ? "me" : anchorFor(rel);
+      var anchor = SEAT_SLOTS[seat];
       var empty = !p.occupied;
       var mine = !empty && !!p.me;
       var av = empty
@@ -391,6 +387,35 @@
         + '</div>';
     }
     els.seats.innerHTML = html;
+    syncBottomSeat();
+  }
+
+  /* 底部正中那个座位（0 号）得坐在桌布上。
+     桌布是各皮肤自己画的（.table::before），形状大小都不一样，
+     写死 bottom 一定掉到桌布外头去，所以运行时量一次桌布下沿再定位。
+     量不到（单色/装饰风没有桌布伪元素）就沿用 CSS 里的默认值。 */
+  function syncBottomSeat() {
+    var slot = els.seats.querySelector(".seat--bottom");
+    if (!slot || !els.table) return;
+    var stage = els.seats.getBoundingClientRect();
+    var cs = window.getComputedStyle(els.table, "::before");
+    var feltH = parseFloat(cs.height);
+    var feltTop = parseFloat(cs.top);
+    if (!isFinite(feltH) || !isFinite(feltTop) || feltH <= 0) return;
+    var m = /matrix\(([^)]*)\)/.exec(cs.transform || "");
+    var ty = 0;
+    if (m) {
+      var parts = m[1].split(",");
+      ty = parseFloat(parts[5]) || 0;
+    }
+    // 桌布下沿（与座位同一坐标系：.table 与 .seats 都是舞台铺满）
+    var feltBottom = feltTop + ty + feltH;
+    var chipH = slot.offsetHeight || 40;
+    var center = feltBottom - chipH / 2 - 6;      // 往里收一点，座位坐在桌沿内侧
+    var maxCenter = stage.height - chipH / 2 - 4; // 别掉出舞台
+    center = Math.max(0, Math.min(center, maxCenter));
+    slot.style.top = Math.round(center - chipH / 2) + "px";
+    slot.style.bottom = "auto";
   }
 
   function seatEl(seat) {
@@ -1100,6 +1125,7 @@
     var def = STYLES.filter(function (s) { return s.key === key; })[0] || STYLES[0];
     currentStyle = def.key;
     if (S) { renderAll(); } else { app.className = "app " + currentStyle; }
+    syncBottomSeat();                     // 换皮肤后桌布形状变了，底部座位要重新贴桌沿
     if (els.styleNow) els.styleNow.textContent = def.name;
     if (persist) {
       try { localStorage.setItem(STYLE_LS_KEY, def.key); } catch (e) { /* ignore */ }
@@ -1189,6 +1215,10 @@
       } catch (e) { /* ignore */ }
       if (ws) ws.close();
       location.reload();
+    });
+    // 屏幕尺寸变了，桌布下沿也跟着变，底部座位重新贴一次
+    window.addEventListener("resize", function () {
+      if (S) syncBottomSeat();
     });
   }
 

@@ -32,6 +32,7 @@ const https = require("https");
 const ROOT = path.resolve(__dirname, "..");
 const PORT = Number(argValue("--port") || 8080);
 const WANT_PROVIDER = argValue("--provider");
+const URL_FILE = path.join(__dirname, ".tunnel-url");   // 当前公网地址，方便随时查
 
 function argValue(flag) {
   const i = process.argv.indexOf(flag);
@@ -184,6 +185,13 @@ function startTunnel() {
   return startLocaltunnel();
 }
 
+/* 把当前公网地址写到文件，方便随时确认「现在该发哪个链接」 */
+function saveUrl(url) {
+  try {
+    fs.writeFileSync(URL_FILE, url + "\n", "utf8");
+  } catch (e) { /* ignore */ }
+}
+
 function shutdown() {
   console.log("\n正在关闭…");
   if (healthTimer) clearInterval(healthTimer);
@@ -283,6 +291,7 @@ function startHealthCheck(getUrl) {
   console.log("");
 
   let currentUrl = url;
+  saveUrl(currentUrl);
 
   // 隧道进程退出 → 自动重开
   tunnelProc.on("exit", async (code) => {
@@ -290,6 +299,7 @@ function startHealthCheck(getUrl) {
     await new Promise((r) => setTimeout(r, 3000));
     try {
       currentUrl = await startTunnel();
+      saveUrl(currentUrl);
       console.log("新的公网地址：" + currentUrl + "/room.html");
       console.log("（旧链接已失效，记得把新链接发到群里）");
     } catch (e) {

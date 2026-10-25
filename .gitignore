@@ -1,6 +1,7 @@
 # 依赖与构建产物之外，忽略本地杂物
 tools/_out/
 tools/bin/
+tools/.tunnel-url
 *.log
 .DS_Store
 Thumbs.db

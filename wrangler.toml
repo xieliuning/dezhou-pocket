@@ -1,0 +1,35 @@
+# ============================================================
+# Cloudflare Workers 部署配置（免绑卡、免费档）
+#
+#   npx wrangler login          # 首次：浏览器授权，Cloudflare 账号注册不绑卡
+#   npx wrangler deploy         # 部署
+#   npx wrangler dev            # 本地调试（自带 workerd）
+#
+# 部署完拿到 https://yehang-poker.<你的子域>.workers.dev
+#   前端和牌局服务器同源，浏览器直接连 wss://<域名>/ws
+# ============================================================
+name = "yehang-poker"
+main = "cf/worker.js"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# 牌局大厅：一个 Durable Object 装下所有房间（单线程串行，并发行动不会打架）
+[[durable_objects.bindings]]
+name = "POKER"
+class_name = "PokerHall"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["PokerHall"]
+
+# 前端静态资源（dist/）
+[assets]
+directory = "dist"
+binding = "ASSETS"
+run_worker_first = true
+
+# 开发环境本地变量（不要把密钥写在这里）
+[vars]
+
+[observability]
+enabled = true

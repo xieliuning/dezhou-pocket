@@ -18,13 +18,40 @@ node server/server.js        # 联机服务器（默认 0.0.0.0:8080）
 
 ## 部署到公网
 
-详见 [deploy/发布指南.md](deploy/发布指南.md)。最快路径：
+### 国内朋友要玩 → 本机隧道（免绑卡，10 分钟开桌）
 
-1. 把本仓库推到 GitHub
-2. 在 [zeabur.com](https://zeabur.com) 用 GitHub 登录 → 导入本仓库 → 区域选 Hong Kong
-3. 生成域名，把 `https://xxx.zeabur.app/room.html` 发到微信群里
+```bash
+node tools/tunnel.js    # 零改动、零账号：本机起隧道，电脑要开着
+```
 
-平台会自动执行 `npm start`（即 `node server/server.js`）并注入端口。
+优先用 Cloudflare 官方的 cloudflared 快速隧道，给出 `https://xxx.trycloudflare.com` 地址，
+**国内能直接打开、访客不用输密码**（把 cloudflared 放到 `tools/bin/` 即可，见
+[tools/README-cloudflared.md](tools/README-cloudflared.md)）；
+没装就退回 localtunnel（会弹一次「隧道密码」页）。
+
+### 长期稳定 → Cloudflare Workers（免绑卡，永久免费，电脑关掉也能玩）
+
+仓库自带 `wrangler.toml` 和 `cf/`，**客户端一行都不用改**：
+
+```bash
+npx wrangler login     # 浏览器授权；Cloudflare 账号注册不要绑卡
+npx wrangler deploy    # 得到 https://yehang-poker.xxx.workers.dev
+```
+
+把这个域名的 `/room.html` 发到微信群即可。前端和牌局服务器同源，房间状态落 SQLite，
+Worker 重启后房间还在；牌局逻辑跑在 Durable Objects 里，客户端协议完全没变。
+本地调试用 `npx wrangler dev`。
+
+> ⚠️ **`workers.dev` 域名在中国大陆被 DNS 污染 + SNI 拦截，打开不了**（实测）。
+> Worker 本身没问题，海外访问完全正常；国内要用的话，给它绑一个自己的域名
+> （`wrangler.toml` 里加 `routes`），或先用上面的本机隧道顶着。
+
+### 其它托管
+
+详见 [deploy/发布指南.md](deploy/发布指南.md)：Zeabur（GitHub 导入，免备案香港节点）、
+Render（自带 `render.yaml` 一键 Blueprint）、Railway、腾讯云轻量服务器等。
+
+完整对比、实测记录与踩坑说明见 **[deploy/免绑卡托管.md](deploy/免绑卡托管.md)**。
 
 ## Mini App
 

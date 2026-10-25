@@ -455,12 +455,14 @@
           <p>项目自带零依赖 Node 服务，部署一次就能一直用。</p>
         </header>
         <ol class="mlist">
-          <li>把仓库推到 GitHub（<code>dezhou-pocket</code>）。</li>
-          <li><strong>最省事：</strong>在 <code>render.com</code> 用 GitHub 登录 → <strong>New → Blueprint</strong> → 选本仓库 → Apply。仓库自带 <code>render.yaml</code>，零依赖不用构建，平台自动跑 <code>npm start</code>。</li>
+          <li><strong>今晚就想和朋友玩（免绑卡、国内能开）：</strong>在这台电脑上跑 <code>node tools/tunnel.js</code>。它会自动起牌局服务器，再拉一条 Cloudflare 官方隧道，给你一个 <code>https://xxx.trycloudflare.com</code> 地址——<strong>朋友点开就能进，不用输密码</strong>。把地址填到下面的「牌局服务器地址」，或者直接把这个链接发群里。代价：电脑要一直开着，隧道重启后地址会变。</li>
+          <li><strong>想 24 小时都在线（免绑卡）：</strong>注册 <code>dash.cloudflare.com</code> 账号（免费档不要绑卡）→ 本机跑 <code>npx wrangler login</code> 浏览器授权 → 再跑 <code>npx wrangler deploy</code> → 得到 <code>https://yehang-poker.xxx.workers.dev</code>。前端和牌局服务器同源，房间状态落盘、电脑关掉也能继续玩。<strong>注意：<code>workers.dev</code> 在中国大陆打不开（被 DNS/SNI 拦截），国内要长期用请再绑一个自己的域名。</strong></li>
+          <li><strong>最省事（要绑卡）：</strong>在 <code>render.com</code> 用 GitHub 登录 → <strong>New → Blueprint</strong> → 选本仓库 → Apply。仓库自带 <code>render.yaml</code>，零依赖不用构建，平台自动跑 <code>npm start</code>。</li>
           <li>或者在 <code>zeabur.com</code> 导入仓库，区域选 <strong>Hong Kong</strong>，同样自动执行 <code>npm start</code>。</li>
-          <li>在服务页生成域名（<code>https://xxx.onrender.com</code> 或 <code>https://xxx.zeabur.app</code>），把地址填到这里保存，朋友就能进房了。</li>
+          <li>在服务页生成域名（<code>https://xxx.onrender.com</code> / <code>https://xxx.zeabur.app</code> / <code>https://xxx.workers.dev</code>），把地址填到这里保存，朋友就能进房了。</li>
         </ol>
-        <p class="mnote">Render 免费实例空闲 15 分钟会休眠（牌局开着时客户端心跳会让它保持在线），房间数据在内存里，休眠后房间清空。长期玩建议用 Zeabur / Railway 或自己的服务器。</p>
+        <p class="mnote">Render 免费实例空闲 15 分钟会休眠（牌局开着时客户端心跳会让它保持在线），房间数据在内存里，休眠后房间清空。长期玩建议用 Zeabur / Railway、Cloudflare Workers 或自己的服务器。</p>
+        <p class="mnote"><strong>不想注册任何平台？</strong>直接 <code>node tools/tunnel.js</code> 就行，牌局服务器和隧道它都帮你起。</p>
         <p class="mnote">想在同一台电脑上先试手，也可以填 <code>http://127.0.0.1:8080</code>，前提是已经运行了 <code>node server/server.js</code>。</p>
       </section>
 

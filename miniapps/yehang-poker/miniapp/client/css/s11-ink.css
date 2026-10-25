@@ -1,0 +1,209 @@
+/* ============================================================
+   S11 · 水墨留白 Ink Wash
+   宣纸、淡墨、远山、朱砂印。桌面是一笔晕开的墨，数字用毛笔写。
+   ============================================================ */
+
+.s-ink {
+  --bg: #f2eee1;
+  --ink: #1b1a16;
+  --muted: rgba(27, 26, 22, 0.52);
+  --panel: rgba(27, 26, 22, 0.06);
+  --line: rgba(27, 26, 22, 0.22);
+  --accent: #a63a24;
+  --accent-ink: #f7f2e4;
+  --accent-soft: rgba(166, 58, 36, 0.1);
+  --card-bg: #fbf8ee;
+  --card-ink: #1b1a16;
+  --suit-red: #a63a24;
+  --card-shadow: 0 1px 2px rgba(60, 52, 38, 0.14);
+  --radius-card: 2px;
+  --radius-av: 50%;
+  --radius-seat: 2px;
+  --radius-btn: 2px;
+  --radius-chip: 2px;
+  --radius-sm: 2px;
+  --font-ui: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --font-display: "Zhi Mang Xing", "Noto Serif SC", serif;
+  --font-num: "Noto Serif SC", Georgia, serif;
+  --font-card: "Noto Serif SC", Georgia, serif;
+  --seat-bg: rgba(252, 249, 240, 0.82);
+  --seat-line: rgba(27, 26, 22, 0.22);
+  --seat-shadow: 0 2px 10px rgba(70, 60, 40, 0.12);
+  --av-bg: #1b1a16;
+  --av-ink: #f4efe1;
+  --bet-bg: rgba(27, 26, 22, 0.88);
+  --bet-ink: #f0e9d8;
+  --bet-dot: #a63a24;
+  --bet-dot-ring: rgba(247, 242, 228, 0.5);
+  --dealer-bg: #a63a24;
+  --dealer-ink: #f7f2e4;
+  --danger: #a63a24;
+  --turn-line: #a63a24;
+  --turn-shadow: 0 0 0 1px rgba(166, 58, 36, 0.5), 0 3px 12px rgba(166, 58, 36, 0.16);
+  --timer-track: rgba(27, 26, 22, 0.14);
+  --timer-fg: #1b1a16;
+  --actions-bg: #f7f3e7;
+  --btn-bg: rgba(27, 26, 22, 0.05);
+  --btn-ink: #1b1a16;
+  --track: rgba(27, 26, 22, 0.16);
+  --thumb: #a63a24;
+  --thumb-ring: #f7f3e7;
+  --chip-bg: transparent;
+  --chip-ink: rgba(27, 26, 22, 0.78);
+  --toast-bg: #1b1a16;
+  --toast-ink: #f4efe1;
+  --result-bg: #fbf8ee;
+  --result-ink: #1b1a16;
+  --result-line: rgba(27, 26, 22, 0.3);
+}
+
+/* 宣纸底：纤维噪声 + 一点点不匀的暖色 */
+.s-ink {
+  background-color: #f2eee1;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E"),
+    radial-gradient(120% 80% at 50% 8%, #f8f5ea 0%, #f2eee1 52%, #e9e3d2 100%);
+  background-blend-mode: multiply, normal;
+}
+
+/* 桌面：一笔晕开的淡墨，越靠边越淡 */
+.s-ink .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 456px;
+  height: 408px;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  border-radius: 46% 54% 52% 48% / 50% 46% 54% 50%;
+  background:
+    radial-gradient(42% 38% at 38% 40%, rgba(38, 36, 28, 0.19) 0%, rgba(38, 36, 28, 0.07) 60%, transparent 78%),
+    radial-gradient(46% 42% at 64% 58%, rgba(38, 36, 28, 0.16) 0%, rgba(38, 36, 28, 0.06) 62%, transparent 80%),
+    radial-gradient(30% 26% at 52% 30%, rgba(38, 36, 28, 0.13) 0%, transparent 70%);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+/* 远山：墨色山脊藏在雾里 */
+.s-ink .table::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 96px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 76' preserveAspectRatio='none'%3E%3Cpath d='M0 76 L26 32 L48 54 L76 18 L104 56 L134 36 L160 58 L190 30 L216 52 L240 76 Z' fill='%232b2a24' opacity='0.17'/%3E%3C/svg%3E") repeat-x bottom / 240px 76px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* 顶栏：一根墨线压住纸面 */
+.s-ink .topbar {
+  border-bottom: 1px solid rgba(27, 26, 22, 0.18);
+  padding-bottom: 10px;
+}
+.s-ink .room-name {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+.s-ink .room-meta { letter-spacing: 0.12em; }
+
+/* 底池：一方朱砂印 */
+.s-ink .pot-box {
+  border: 1.5px solid var(--accent);
+  padding: 5px 9px 6px;
+  background: rgba(166, 58, 36, 0.05);
+}
+.s-ink .pot-label {
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+}
+.s-ink .pot {
+  color: var(--accent);
+  font-size: 23px;
+  font-family: var(--font-num);
+}
+.s-ink .icon-btn {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(27, 26, 22, 0.24);
+  color: var(--ink);
+}
+.s-ink .board-label {
+  color: rgba(27, 26, 22, 0.42);
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.36em;
+}
+
+/* 牌：宣纸片，边缘只有一线墨 */
+.s-ink .card {
+  background: var(--card-bg);
+  color: var(--card-ink);
+  box-shadow: 0 1px 2px rgba(60, 52, 38, 0.14);
+  border: 1px solid rgba(27, 26, 22, 0.14);
+}
+.s-ink .card.is-red { color: var(--suit-red); }
+.s-ink .card--lg { box-shadow: 0 2px 6px rgba(60, 52, 38, 0.18); }
+.s-ink .card--empty {
+  background: transparent;
+  box-shadow: none;
+  border: 1px dashed rgba(27, 26, 22, 0.28);
+}
+
+/* 席位：一方小纸签，墨点头像 */
+.s-ink .seat { padding: 5px 11px 5px 5px; }
+.s-ink .seat-av {
+  background: var(--av-bg);
+  color: var(--av-ink);
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+.s-ink .seat-name { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.06em; }
+.s-ink .seat-stack { font-family: var(--font-num); letter-spacing: 0.04em; }
+.s-ink .seat.is-turn { box-shadow: var(--turn-shadow); }
+.s-ink .seat-bet { border-radius: 2px; }
+.s-ink .seat-dealer { border-radius: 1px; font-family: var(--font-num); }
+
+/* 行动区：素纸 + 一道朱线 */
+.s-ink .actions {
+  border-top: 1px solid rgba(27, 26, 22, 0.18);
+  box-shadow: none;
+}
+.s-ink .btn {
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(27, 26, 22, 0.32);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  letter-spacing: 0.1em;
+}
+.s-ink .btn--primary {
+  background: #1b1a16;
+  color: #f4efe1;
+  box-shadow: none;
+}
+.s-ink .btn--alt {
+  background: rgba(166, 58, 36, 0.08);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(166, 58, 36, 0.5);
+}
+.s-ink .btn--ghost { color: rgba(27, 26, 22, 0.72); }
+.s-ink .btn:active { transform: translateY(1px); }
+.s-ink .btn--primary:active,
+.s-ink .btn--alt:active { box-shadow: inset 0 0 0 1px rgba(27, 26, 22, 0.32); }
+
+.s-ink .strength { font-family: var(--font-display); font-size: 17px; letter-spacing: 0.06em; }
+.s-ink .strength-label { letter-spacing: 0.3em; color: var(--muted); }
+.s-ink .raise-amount { color: var(--accent); font-family: var(--font-num); }
+.s-ink .raise-label,
+.s-ink .raise-pot { letter-spacing: 0.14em; }
+.s-ink .chip { border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(27, 26, 22, 0.2); }
+.s-ink .raise-range { background: rgba(27, 26, 22, 0.14); height: 3px; border-radius: 2px; }
+.s-ink .raise-range::-webkit-slider-thumb { background: var(--accent); border-color: var(--thumb-ring); border-radius: 50%; }
+.s-ink .raise-range::-moz-range-thumb { background: var(--accent); border-color: var(--thumb-ring); border-radius: 50%; }
+.s-ink .toast { border-radius: 2px; }
+.s-ink .result { border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(27, 26, 22, 0.2); }
+.s-ink .result .btn { background: #1b1a16; color: #f4efe1; box-shadow: none; }

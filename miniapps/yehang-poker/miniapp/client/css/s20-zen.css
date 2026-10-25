@@ -1,0 +1,405 @@
+/* ============================================================
+   S20 · 禅意留白 Zen
+   近白纸面 + 墨色 + 一粒朱砂。全屏只画三样东西：
+   一条 1px 墨线（行动区分隔）、一个开口的圆相（圆环 ensō）、一枚朱砂点。
+   其余一律留白：无渐变、无阴影、无纹理。
+   ============================================================ */
+
+.s-zen {
+  --bg: #f7f6f1;
+  --ink: #2b2b28;
+  --muted: #9a978e;
+  --panel: transparent;
+  --line: rgba(43, 43, 40, 0.16);
+  --accent: #2b2b28;
+  --accent-ink: #f7f6f1;
+  --accent-soft: transparent;
+  --card-bg: #ffffff;
+  --card-ink: #2b2b28;
+  --suit-red: #a3402f;
+  --card-shadow: none;
+  --radius-card: 2px;
+  --radius-av: 0;
+  --radius-seat: 0;
+  --radius-btn: 0;
+  --radius-chip: 0;
+  --radius-sm: 0;
+  --font-ui: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
+  --font-display: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
+  --font-num: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
+  --font-card: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
+  --seat-bg: transparent;
+  --seat-line: transparent;
+  --seat-shadow: none;
+  --av-bg: transparent;
+  --av-ink: #2b2b28;
+  --bet-bg: transparent;
+  --bet-ink: #9a978e;
+  --bet-dot: rgba(43, 43, 40, 0.5);
+  --bet-dot-ring: transparent;
+  --dealer-bg: transparent;
+  --dealer-ink: #9a978e;
+  --danger: #a3402f;
+  --turn-line: transparent;
+  --turn-shadow: none;
+  --timer-track: rgba(43, 43, 40, 0.12);
+  --timer-fg: rgba(43, 43, 40, 0.55);
+  --actions-bg: transparent;
+  --btn-bg: transparent;
+  --btn-ink: #2b2b28;
+  --track: rgba(43, 43, 40, 0.16);
+  --thumb: #2b2b28;
+  --thumb-ring: transparent;
+  --chip-bg: transparent;
+  --chip-ink: #9a978e;
+  --toast-bg: #2b2b28;
+  --toast-ink: #f7f6f1;
+  --result-bg: transparent;
+  --result-ink: #2b2b28;
+  --result-line: rgba(43, 43, 40, 0.16);
+}
+
+/* 本风格没有装饰层，藏掉空壳以免占据 flex 布局 */
+.s-zen .deco { display: none; }
+
+/* ---------- 圆相：唯一的桌面形状，只有 1px 细墨线，不填色 ---------- */
+
+.s-zen .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 276px;
+  height: 276px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(43, 43, 40, 0.18);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* 用同底色的一块楔形把圆环切开，得到 ensō 的缺口 */
+.s-zen .table::after {
+  content: "";
+  position: absolute;
+  left: calc(50% + 80px);
+  top: calc(50% - 109px);
+  width: 36px;
+  height: 22px;
+  transform: rotate(45deg);
+  background: var(--bg);
+  pointer-events: none;
+}
+
+/* 朱砂点：整屏唯一的彩色，落在圆相缺口外侧，像一方印记 */
+.s-zen .stage::after {
+  content: "";
+  position: absolute;
+  left: calc(50% + 120px);
+  top: calc(50% - 128px);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #a3402f;
+  pointer-events: none;
+}
+
+/* ---------- 顶栏：只留字，不加任何线或块 ---------- */
+
+.s-zen .topbar {
+  padding: 16px 16px 10px;
+}
+.s-zen .room-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+}
+.s-zen .room-meta {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.s-zen .pot {
+  font-family: var(--font-num);
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.s-zen .pot-label {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.32em;
+  color: var(--muted);
+}
+.s-zen .icon-btn {
+  background: transparent;
+  border: 1px solid rgba(43, 43, 40, 0.18);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+/* ---------- 公共牌：无边框，纯白，字小而克制 ---------- */
+
+.s-zen .board-label {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+}
+.s-zen .card {
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: none;
+}
+.s-zen .card.is-red { color: #a3402f; }
+.s-zen .c-rank {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.s-zen .c-suit { font-size: 11px; }
+.s-zen .card--lg .c-rank { font-size: 18px; }
+.s-zen .card--lg .c-suit { font-size: 13px; }
+.s-zen .card--empty {
+  background: transparent;
+  border: 1px solid rgba(43, 43, 40, 0.1);
+  opacity: 1;
+}
+.s-zen .card--empty::after {
+  border: 1px solid rgba(43, 43, 40, 0.16);
+}
+
+/* ---------- 席位：无底无框，只剩一个字和一条短线 ---------- */
+
+.s-zen .seat {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 4px 12px 4px 4px;
+}
+/* 头像保留为一只 1px 细圈的空心印，身份信息不能丢 */
+.s-zen .seat-av {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(43, 43, 40, 0.24);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink);
+}
+.s-zen .seat-name {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  color: var(--ink);
+}
+/* 名字下面一条 1px 短线，代替边框 */
+.s-zen .seat-info::after {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 1px;
+  margin-top: 6px;
+  background: rgba(43, 43, 40, 0.24);
+}
+.s-zen .seat-stack {
+  font-family: var(--font-num);
+  font-size: 9.5px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+/* 轮到谁：只把字换成朱砂，不加光也不加粗框 */
+.s-zen .seat.is-turn {
+  animation: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+.s-zen .seat.is-turn .seat-name {
+  color: #a3402f;
+  font-weight: 500;
+}
+.s-zen .seat.is-turn .seat-info::after { background: #a3402f; }
+.s-zen .seat[data-state="folded"] {
+  opacity: 0.3;
+  filter: none;
+}
+.s-zen .seat[data-state="allin"] .seat-av { box-shadow: none; }
+.s-zen .seat[data-state="allin"] .seat-stack { color: #a3402f; }
+
+/* 下注：去掉药丸底色，只留一个小墨点 */
+.s-zen .seat-bet {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 300;
+  gap: 5px;
+}
+.s-zen .seat-bet::before {
+  width: 4px;
+  height: 4px;
+  box-shadow: none;
+}
+/* 庄家标记：一个小墨圈 */
+.s-zen .seat-dealer {
+  background: transparent;
+  border: 1px solid rgba(43, 43, 40, 0.24);
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 400;
+}
+
+/* ---------- 行动区：与顶栏之间只留一条 1px 细线 ---------- */
+
+.s-zen .actions {
+  border-top: 1px solid var(--line);
+  padding: 14px 16px calc(16px + env(safe-area-inset-bottom));
+}
+.s-zen .strength-label {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.34em;
+  color: var(--muted);
+}
+.s-zen .strength {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+.s-zen .stack-line {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.s-zen .stack-line .js-stack { font-weight: 400; color: var(--ink); }
+/* 计时环收到最细，存在感让给底池和按钮 */
+.s-zen .timer circle { stroke-width: 1.5; }
+.s-zen .timer-num {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* 按钮：无底色、1px 细墨框、字距拉开；主按钮是全屏唯一的重色 */
+.s-zen .btn {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(43, 43, 40, 0.24);
+  border-radius: 0;
+  padding: 15px 6px;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+}
+.s-zen .btn--primary {
+  background: #2b2b28;
+  color: #f7f6f1;
+  border-color: #2b2b28;
+  font-weight: 500;
+}
+.s-zen .btn--alt {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(43, 43, 40, 0.4);
+}
+.s-zen .btn--ghost {
+  background: transparent;
+  color: var(--muted);
+  border-color: rgba(43, 43, 40, 0.14);
+  box-shadow: none;
+}
+.s-zen .btn:active { transform: none; opacity: 0.7; }
+
+/* 加注区：滑轨也是一条细线，滑块是一枚小方墨 */
+.s-zen .raise-label {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+}
+.s-zen .raise-amount {
+  font-family: var(--font-num);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+.s-zen .raise-pot {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.s-zen .raise-range {
+  height: 1px;
+  border-radius: 0;
+  background: rgba(43, 43, 40, 0.18);
+}
+.s-zen .raise-range::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 0;
+  background: #2b2b28;
+  border: 0;
+}
+.s-zen .raise-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 0;
+  background: #2b2b28;
+  border: 0;
+}
+.s-zen .chip {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(43, 43, 40, 0.14);
+  border-radius: 0;
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  padding: 9px 2px;
+}
+
+/* ---------- 结算与提示 ---------- */
+
+.s-zen .result {
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-top: 1px solid var(--result-line);
+  border-radius: 0;
+  padding: 14px 0 0;
+}
+.s-zen .result-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+}
+.s-zen .result-sub {
+  font-family: var(--font-num);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+}
+.s-zen .result .btn {
+  padding: 12px 18px;
+  letter-spacing: 0.22em;
+}
+.s-zen .toast {
+  background: #2b2b28;
+  color: #f7f6f1;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  padding: 9px 16px;
+}

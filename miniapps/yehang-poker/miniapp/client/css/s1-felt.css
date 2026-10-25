@@ -1,0 +1,166 @@
+/* ============================================================
+   S1 · 皇家绒毡 Royal Felt
+   墨绿台呢 + 烫金 + 皮革，做旧影晕，古典衬线
+   ============================================================ */
+
+.s-felt {
+  --bg: #061711;
+  --ink: #f2ecdc;
+  --muted: rgba(242, 236, 220, 0.5);
+  --panel: rgba(242, 236, 220, 0.07);
+  --line: rgba(217, 183, 106, 0.22);
+  --accent: linear-gradient(180deg, #ecd28c 0%, #c9a24e 55%, #a9802f 100%);
+  --accent-ink: #241906;
+  --accent-soft: rgba(217, 183, 106, 0.14);
+  --card-bg: #f7f3e5;
+  --card-ink: #1b1a14;
+  --suit-red: #a8232b;
+  --card-shadow: 0 3px 9px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  --radius-card: 5px;
+  --radius-av: 50%;
+  --radius-seat: 999px;
+  --radius-btn: 12px;
+  --radius-chip: 999px;
+  --radius-sm: 999px;
+  --font-ui: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --font-display: "Playfair Display", "Noto Serif SC", Georgia, serif;
+  --font-num: "Playfair Display", "Noto Serif SC", Georgia, serif;
+  --font-card: "Playfair Display", Georgia, serif;
+  --seat-bg: linear-gradient(180deg, rgba(14, 36, 28, 0.94), rgba(5, 18, 13, 0.96));
+  --seat-line: rgba(217, 183, 106, 0.3);
+  --seat-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  --av-bg: linear-gradient(150deg, #f0d99a 0%, #c9a24e 55%, #8d6a26 100%);
+  --av-ink: #2a1d05;
+  --bet-bg: rgba(3, 14, 10, 0.82);
+  --bet-ink: #f0d99a;
+  --bet-dot: #d9b76a;
+  --bet-dot-ring: #4b3a16;
+  --dealer-bg: #f2ecdc;
+  --dealer-ink: #2a1d05;
+  --danger: #e08a6a;
+  --turn-line: rgba(217, 183, 106, 0.9);
+  --turn-shadow: 0 0 0 1px rgba(217, 183, 106, 0.55), 0 0 24px rgba(217, 183, 106, 0.32);
+  --timer-track: rgba(217, 183, 106, 0.18);
+  --timer-fg: #d9b76a;
+  --actions-bg: linear-gradient(180deg, rgba(6, 22, 16, 0.72) 0%, #04100b 45%);
+  --btn-bg: rgba(242, 236, 220, 0.08);
+  --btn-ink: #f2ecdc;
+  --track: rgba(242, 236, 220, 0.14);
+  --thumb: #f2ecdc;
+  --thumb-ring: #061711;
+  --chip-bg: rgba(242, 236, 220, 0.07);
+  --chip-ink: rgba(242, 236, 220, 0.82);
+  --toast-bg: #f2ecdc;
+  --toast-ink: #08211a;
+  --result-bg: linear-gradient(180deg, #f8f3e6, #e5dac0);
+  --result-ink: #1b1a14;
+  --result-line: rgba(176, 141, 63, 0.5);
+}
+
+/* 暗房 + 落在中央的圆形牌桌 */
+.s-felt {
+  background-color: #04120d;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
+    radial-gradient(120% 80% at 50% 18%, #0d2b20 0%, #061a12 55%, #040f0b 100%);
+  background-blend-mode: overlay, normal;
+}
+
+/* 圆桌：直径大于屏宽，边缘自然出血 */
+.s-felt .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 470px;
+  height: 470px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 32%, #2b8a64 0%, #1b6347 38%, #104530 66%, #0a2d1f 88%, #07231a 100%);
+  border: 1px solid rgba(217, 183, 106, 0.3);
+  box-shadow:
+    0 0 0 6px rgba(0, 0, 0, 0.35),
+    inset 0 0 90px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+/* 房间影晕 */
+.s-felt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(112% 74% at 50% 40%, transparent 42%, rgba(0, 0, 0, 0.58) 100%);
+}
+
+.s-felt .topbar {
+  border-bottom: 1px solid rgba(217, 183, 106, 0.16);
+  padding-bottom: 10px;
+}
+
+.s-felt .room-name,
+.s-felt .pot {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.s-felt .pot {
+  background: linear-gradient(180deg, #f6e3ae 0%, #d3ac5c 60%, #b3873a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 24px;
+}
+
+.s-felt .icon-btn {
+  background: rgba(217, 183, 106, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(217, 183, 106, 0.28);
+}
+
+.s-felt .board-label {
+  color: rgba(242, 236, 220, 0.38);
+  font-family: var(--font-display);
+  letter-spacing: 0.3em;
+}
+
+.s-felt .card {
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(27, 26, 20, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.s-felt .card--lg {
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(27, 26, 20, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.s-felt .seat-name { font-family: var(--font-ui); }
+.s-felt .seat-stack { font-family: var(--font-num); letter-spacing: 0.02em; }
+
+.s-felt .seat.is-turn .seat-av {
+  box-shadow: 0 0 0 2px rgba(217, 183, 106, 0.85), 0 0 18px rgba(217, 183, 106, 0.4);
+}
+
+.s-felt .actions {
+  box-shadow: 0 -1px 0 rgba(217, 183, 106, 0.14), 0 -24px 40px rgba(0, 0, 0, 0.4);
+}
+
+.s-felt .btn {
+  font-family: var(--font-ui);
+  letter-spacing: 0.06em;
+}
+.s-felt .btn--primary {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.s-felt .btn--ghost { box-shadow: inset 0 0 0 1px rgba(217, 183, 106, 0.32); color: rgba(242, 236, 220, 0.78); }
+.s-felt .btn--alt { color: #ecd28c; }
+
+.s-felt .raise-amount { color: #f0d99a; }
+.s-felt .chip { box-shadow: inset 0 0 0 1px rgba(217, 183, 106, 0.24); }
+.s-felt .raise-range { background: rgba(217, 183, 106, 0.2); }
+.s-felt .raise-range::-webkit-slider-thumb { background: #f0d99a; border-color: #061711; }
+.s-felt .raise-range::-moz-range-thumb { background: #f0d99a; border-color: #061711; }

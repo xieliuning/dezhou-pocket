@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "name": "yehang-poker",
+  "displayName": "夜航俱乐部 · 德州扑克",
+  "version": "1.0.0",
+  "description": "夜航俱乐部德州扑克 Mini App：连接你部署的公网牌局服务器，和朋友同桌联机对局，含二十套界面风格、AI 陪练与桌主控制台。",
+  "author": "xieliuning",
+  "icon": "icon.png",
+  "category": "Other",
+  "exampleQueries": [
+    "打开德州扑克 Mini App，和朋友开一桌。",
+    "在桌主控制台里查看房间席位并复制邀请链接。",
+    "检查牌局服务器连接状态。"
+  ],
+  "apps": [],
+  "mcpServers": [],
+  "skills": []
+}

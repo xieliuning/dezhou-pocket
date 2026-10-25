@@ -1,0 +1,160 @@
+/* ============================================================
+   S19 · 陶土黏土 Clay
+   陶土色手捏质感，圆润软阴影，指压凹痕与蓬松描边
+   ============================================================ */
+
+.s-clay {
+  --bg: #eddfcd;
+  --ink: #4b3529;
+  --muted: rgba(75, 53, 41, 0.52);
+  --panel: rgba(255, 252, 245, 0.62);
+  --line: rgba(120, 84, 62, 0.2);
+  --accent: linear-gradient(180deg, #dd8f68 0%, #c96f4a 55%, #a85535 100%);
+  --accent-ink: #fff6ec;
+  --accent-soft: rgba(201, 111, 74, 0.18);
+  --card-bg: #fdf7ee;
+  --card-ink: #4b3529;
+  --suit-red: #bf4a30;
+  --card-shadow: 0 6px 0 rgba(170, 132, 106, 0.4), 0 10px 20px rgba(120, 84, 62, 0.22), inset 0 2px 3px rgba(255, 255, 255, 0.9);
+  --radius-card: 15px;
+  --radius-av: 50%;
+  --radius-seat: 999px;
+  --radius-btn: 17px;
+  --radius-chip: 999px;
+  --radius-sm: 13px;
+  --font-ui: "Baloo 2", "Noto Sans SC", sans-serif;
+  --font-display: "Baloo 2", "Noto Sans SC", sans-serif;
+  --font-num: "Baloo 2", "Archivo", sans-serif;
+  --font-card: "Baloo 2", "Noto Sans SC", sans-serif;
+  --seat-bg: linear-gradient(180deg, rgba(255, 251, 243, 0.94), rgba(244, 231, 213, 0.94));
+  --seat-line: rgba(120, 84, 62, 0.14);
+  --seat-shadow: 0 5px 0 rgba(170, 132, 106, 0.28), 0 10px 18px rgba(120, 84, 62, 0.18);
+  --av-bg: linear-gradient(150deg, #f0b294 0%, #d3795a 100%);
+  --av-ink: #fff6ec;
+  --bet-bg: rgba(75, 53, 41, 0.9);
+  --bet-ink: #fdf7ee;
+  --bet-dot: #e8a37e;
+  --bet-dot-ring: #4b3529;
+  --dealer-bg: #4b3529;
+  --dealer-ink: #fdf7ee;
+  --danger: #bf4a30;
+  --turn-line: #c96f4a;
+  --turn-shadow: 0 0 0 2px rgba(201, 111, 74, 0.55), 0 6px 16px rgba(120, 84, 62, 0.28);
+  --timer-track: rgba(120, 84, 62, 0.16);
+  --timer-fg: #c96f4a;
+  --actions-bg: linear-gradient(180deg, rgba(250, 243, 232, 0.95), #e8d8c4 60%);
+  --btn-bg: rgba(255, 252, 245, 0.85);
+  --btn-ink: #4b3529;
+  --track: rgba(120, 84, 62, 0.16);
+  --thumb: #c96f4a;
+  --thumb-ring: #fdf7ee;
+  --chip-bg: rgba(255, 252, 245, 0.8);
+  --chip-ink: rgba(75, 53, 41, 0.78);
+  --toast-bg: #4b3529;
+  --toast-ink: #fdf7ee;
+  --result-bg: linear-gradient(180deg, #fdf7ee, #f0e2d0);
+  --result-ink: #4b3529;
+  --result-line: rgba(120, 84, 62, 0.22);
+}
+
+/* 陶土台面 + 指压凹痕 */
+.s-clay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 22%, rgba(160, 118, 92, 0.14) 0 16px, transparent 17px),
+    radial-gradient(circle at 82% 68%, rgba(160, 118, 92, 0.12) 0 22px, transparent 23px),
+    radial-gradient(circle at 68% 12%, rgba(160, 118, 92, 0.1) 0 12px, transparent 13px),
+    radial-gradient(120% 82% at 50% 34%, #f6ecdd 0%, #eddfcd 58%, #e0cfb9 100%);
+}
+
+/* 桌沿高光 */
+.s-clay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(118% 76% at 50% 40%, transparent 46%, rgba(120, 84, 62, 0.22) 100%);
+}
+
+/* 手工捏出的椭圆土盘 */
+.s-clay .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 456px;
+  height: 418px;
+  transform: translate(-50%, -50%) rotate(-1.6deg);
+  border-radius: 48% 52% 47% 53% / 50% 46% 54% 50%;
+  background:
+    radial-gradient(64% 60% at 50% 34%, #fdf3e4 0%, #f0dfc8 44%, #dcc6a8 80%, #c9ae8c 100%);
+  box-shadow:
+    0 14px 0 rgba(163, 122, 92, 0.5),
+    0 26px 40px rgba(110, 76, 54, 0.3),
+    inset 0 6px 14px rgba(255, 255, 255, 0.85),
+    inset 0 -10px 26px rgba(150, 110, 84, 0.28);
+}
+
+/* 土盘上的手抹纹 */
+.s-clay .table::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 372px;
+  height: 344px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.62;
+  background: repeating-radial-gradient(circle at 52% 46%, rgba(150, 108, 82, 0.2) 0 3px, transparent 3px 16px);
+}
+
+.s-clay .topbar { padding-bottom: 10px; }
+
+.s-clay .room-name { font-weight: 700; letter-spacing: 0.01em; }
+.s-clay .room-meta { letter-spacing: 0.04em; }
+
+.s-clay .pot {
+  font-size: 24px;
+  color: #b45a3b;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.7);
+}
+
+.s-clay .icon-btn { background: rgba(255, 252, 245, 0.8); box-shadow: 0 3px 0 rgba(170, 132, 106, 0.3); }
+
+.s-clay .board-label { color: rgba(75, 53, 41, 0.55); letter-spacing: 0.24em; }
+.s-clay .card { font-weight: 700; }
+.s-clay .card--empty { background: rgba(255, 252, 245, 0.35); }
+
+.s-clay .seat-av { box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.5); }
+.s-clay .seat-stack { color: rgba(75, 53, 41, 0.5); }
+.s-clay .seat-bet { box-shadow: 0 3px 0 rgba(120, 84, 62, 0.35); }
+.s-clay .seat-dealer { box-shadow: 0 2px 0 rgba(120, 84, 62, 0.3); }
+
+.s-clay .actions { border-top: 1px solid rgba(120, 84, 62, 0.14); }
+
+.s-clay .btn { font-weight: 700; box-shadow: 0 4px 0 rgba(170, 132, 106, 0.32); }
+.s-clay .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(170, 132, 106, 0.32); }
+.s-clay .btn--primary { background: var(--accent); color: var(--accent-ink); }
+.s-clay .btn--ghost { color: rgba(75, 53, 41, 0.6); box-shadow: inset 0 0 0 2px rgba(120, 84, 62, 0.16); }
+.s-clay .btn--alt { background: #f6e2d3; color: #b45a3b; box-shadow: 0 4px 0 rgba(170, 132, 106, 0.26); }
+
+.s-clay .raise-amount { color: #b45a3b; }
+.s-clay .raise-label { font-weight: 700; }
+.s-clay .raise-pot { color: rgba(75, 53, 41, 0.5); }
+
+.s-clay .raise-range { height: 8px; background: rgba(120, 84, 62, 0.14); }
+.s-clay .raise-range::-webkit-slider-thumb { width: 24px; height: 24px; border-width: 3px; box-shadow: 0 3px 0 rgba(170, 132, 106, 0.4); }
+.s-clay .raise-range::-moz-range-thumb { width: 24px; height: 24px; border-width: 3px; box-shadow: 0 3px 0 rgba(170, 132, 106, 0.4); }
+
+.s-clay .chip { box-shadow: 0 3px 0 rgba(170, 132, 106, 0.26); }
+.s-clay .chip:hover { background: #fff; }
+
+.s-clay .result { box-shadow: 0 6px 0 rgba(170, 132, 106, 0.28), 0 12px 22px rgba(120, 84, 62, 0.16); }
+.s-clay .toast { box-shadow: 0 6px 0 rgba(120, 84, 62, 0.25); }

@@ -26,6 +26,28 @@ node server/server.js        # 联机服务器（默认 0.0.0.0:8080）
 
 平台会自动执行 `npm start`（即 `node server/server.js`）并注入端口。
 
+## Mini App
+
+`miniapps/yehang-poker/` 是一个独立的 Mini App 包，把牌桌装进一个应用窗口，四个标签：
+
+| 标签 | 作用 |
+| --- | --- |
+| 联机牌桌 | 连公网牌局服务器，建房 / 输房间号上桌，生成邀请链接 |
+| AI 陪练 | 单机九人桌（沿用二十套风格），切走标签不消耗思考时间 |
+| 桌主控制台 | 房间号、在座 / 围观、盲注、席位、邀请链接 |
+| 服务器 | 配置牌局服务器地址并自检连通性 |
+
+Mini App 自身不跑牌局：它托管客户端页面、存服务器地址、把 `/ws` 反向代理到上游。地址写在运行时的 `dataDir/config.json`，默认 `http://127.0.0.1:8080`（与 `npm start` 一致）；按上面的指南部署到公网后，到「服务器」标签改成 `https://xxx.zeabur.app` 即可和朋友联机。
+
+```
+miniapps/yehang-poker/
+  miniapp/node/server.mjs      Node 入口（静态托管 + /api/config + /api/health + /ws 代理）
+  miniapp/node/ws-lite.js      零依赖 WebSocket 实现
+  miniapp/client/              客户端页面 + 移植过来的牌桌资产（25 CSS / 39 字体 / 32 头像）
+  miniapp/miniapp.json         Mini App 清单
+  .minimax-plugin/plugin.json  插件元信息
+```
+
 ## 自测
 
 ```bash

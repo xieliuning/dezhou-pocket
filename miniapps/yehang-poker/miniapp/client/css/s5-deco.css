@@ -1,0 +1,252 @@
+/* ============================================================
+   S5 · 装饰艺术 Art Deco
+   象牙白 + 烫金细线，扇形放射，绝对对称，高窄衬线
+   ============================================================ */
+
+.s-deco {
+  --bg: #f2ebdb;
+  --ink: #14231f;
+  --muted: #7c6b4e;
+  --panel: transparent;
+  --line: rgba(176, 141, 63, 0.42);
+  --accent: #14231f;
+  --accent-ink: #f2ebdb;
+  --accent-soft: transparent;
+  --card-bg: #fbf7ec;
+  --card-ink: #14231f;
+  --suit-red: #9d2b25;
+  --card-shadow: none;
+  --radius-card: 1px;
+  --radius-av: 1px;
+  --radius-seat: 1px;
+  --radius-btn: 1px;
+  --radius-chip: 1px;
+  --radius-sm: 1px;
+  --font-ui: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --font-display: "Bodoni Moda", "Noto Serif SC", Georgia, serif;
+  --font-num: "Bodoni Moda", "Noto Serif SC", Georgia, serif;
+  --font-card: "Bodoni Moda", "Noto Serif SC", Georgia, serif;
+  --seat-bg: rgba(251, 247, 236, 0.92);
+  --seat-line: rgba(176, 141, 63, 0.5);
+  --seat-shadow: 0 4px 14px rgba(20, 35, 31, 0.12);
+  --av-bg: #14231f;
+  --av-ink: #e8d9ae;
+  --bet-bg: #14231f;
+  --bet-ink: #e8d9ae;
+  --bet-dot: #b08d3f;
+  --bet-dot-ring: #14231f;
+  --dealer-bg: #b08d3f;
+  --dealer-ink: #14231f;
+  --danger: #9d2b25;
+  --turn-line: #b08d3f;
+  --turn-shadow: 0 0 0 1px #b08d3f, 0 4px 18px rgba(176, 141, 63, 0.28);
+  --timer-track: rgba(176, 141, 63, 0.25);
+  --timer-fg: #b08d3f;
+  --actions-bg: #f2ebdb;
+  --btn-bg: transparent;
+  --btn-ink: #14231f;
+  --track: rgba(20, 35, 31, 0.2);
+  --thumb: #b08d3f;
+  --thumb-ring: #f2ebdb;
+  --chip-bg: transparent;
+  --chip-ink: #14231f;
+  --toast-bg: #14231f;
+  --toast-ink: #e8d9ae;
+  --result-bg: #14231f;
+  --result-ink: #e8d9ae;
+  --result-line: #b08d3f;
+}
+
+.s-deco {
+  background-color: #f2ebdb;
+  background-image:
+    radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.65) 0%, transparent 60%),
+    radial-gradient(90% 50% at 50% 100%, rgba(176, 141, 63, 0.12) 0%, transparent 70%);
+}
+
+/* 双层金框 */
+.s-deco::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  z-index: 8;
+  pointer-events: none;
+  border: 1px solid rgba(176, 141, 63, 0.7);
+}
+.s-deco::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  z-index: 8;
+  pointer-events: none;
+  border: 1px solid rgba(176, 141, 63, 0.3);
+}
+
+/* 扇形放射 + 圆环 */
+.s-deco .deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.s-deco .deco::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 660px;
+  height: 660px;
+  transform: translate(-50%, -50%);
+  background: repeating-conic-gradient(from 0deg, rgba(176, 141, 63, 0.16) 0deg 2.5deg, transparent 2.5deg 9deg);
+  -webkit-mask-image: radial-gradient(circle, #000 16%, transparent 64%);
+  mask-image: radial-gradient(circle, #000 16%, transparent 64%);
+}
+.s-deco .deco::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 316px;
+  height: 316px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(176, 141, 63, 0.4);
+  box-shadow: 0 0 0 10px rgba(176, 141, 63, 0.07), 0 0 0 11px rgba(176, 141, 63, 0.22);
+}
+
+.s-deco .topbar {
+  padding: 15px 20px 11px;
+  border-bottom: 1px solid rgba(176, 141, 63, 0.45);
+}
+.s-deco .room-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+}
+.s-deco .room-meta {
+  letter-spacing: 0.18em;
+  font-size: 9.5px;
+  text-transform: uppercase;
+}
+
+/* 底池金框徽章 */
+.s-deco .pot-box {
+  position: relative;
+  padding: 5px 13px 6px;
+  border: 1px solid rgba(176, 141, 63, 0.7);
+}
+.s-deco .pot-box::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(176, 141, 63, 0.3);
+  pointer-events: none;
+}
+.s-deco .pot-label { color: #7c6b4e; }
+.s-deco .pot {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.s-deco .icon-btn {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(176, 141, 63, 0.55);
+  font-size: 13px;
+}
+
+.s-deco .board-label {
+  color: #8a7757;
+  letter-spacing: 0.34em;
+}
+
+/* 牌面：细金边 + 内嵌金框（双线是装饰艺术的招牌手法） */
+.s-deco .card {
+  position: relative;
+  border: 1px solid rgba(176, 141, 63, 0.55);
+  padding: 6px 4px;
+}
+.s-deco .card:not(.card--empty)::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(176, 141, 63, 0.3);
+  pointer-events: none;
+}
+.s-deco .c-rank { font-family: var(--font-display); font-weight: 600; font-size: 19px; }
+.s-deco .card--empty { border-style: dashed; opacity: 0.4; }
+.s-deco .card--empty::after { display: none; }
+.s-deco .card--lg { width: 54px; height: 76px; }
+
+.s-deco .seat {
+  padding: 5px 12px 5px 6px;
+  border-radius: 0;
+}
+.s-deco .seat-av {
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px rgba(176, 141, 63, 0.6);
+}
+.s-deco .seat-name { font-weight: 700; letter-spacing: 0.04em; }
+.s-deco .seat-stack { font-family: var(--font-display); }
+.s-deco .seat-bet { border-radius: 0; }
+.s-deco .seat-dealer { border-radius: 0; }
+.s-deco .seat.is-turn { animation: none; }
+
+/* 底部：完全对称的两行布局 */
+.s-deco .hero {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  row-gap: 4px;
+  align-items: center;
+}
+.s-deco .hand { grid-column: 2; grid-row: 1; justify-self: center; }
+.s-deco .hand-meta { grid-column: 2; grid-row: 2; text-align: center; }
+.s-deco .timer { grid-column: 3; grid-row: 1 / span 2; justify-self: end; }
+.s-deco .strength-label { letter-spacing: 0.26em; color: #8a7757; }
+.s-deco .strength {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.s-deco .actions {
+  border-top: 1px solid rgba(176, 141, 63, 0.45);
+  padding: 12px 20px calc(14px + env(safe-area-inset-bottom));
+  gap: 11px;
+}
+.s-deco .btn {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  padding: 14px 6px;
+}
+.s-deco .btn--primary { background: #14231f; color: #f2ebdb; }
+.s-deco .btn--ghost { color: #7c6b4e; box-shadow: inset 0 0 0 1px rgba(176, 141, 63, 0.5); }
+.s-deco .btn--alt { color: #14231f; box-shadow: inset 0 0 0 1px #14231f; }
+.s-deco .btn--alt::after {
+  content: "";
+}
+
+.s-deco .raise-head { border-bottom: 1px solid rgba(176, 141, 63, 0.35); padding-bottom: 6px; }
+.s-deco .raise-label { letter-spacing: 0.24em; text-transform: uppercase; font-size: 9.5px; }
+.s-deco .raise-amount { font-family: var(--font-display); font-size: 20px; }
+.s-deco .raise-range { height: 2px; }
+.s-deco .raise-range::-webkit-slider-thumb {
+  border-radius: 0;
+  width: 5px;
+  height: 17px;
+  background: #b08d3f;
+  border: 0;
+}
+.s-deco .raise-range::-moz-range-thumb {
+  border-radius: 0;
+  width: 5px;
+  height: 17px;
+  background: #b08d3f;
+  border: 0;
+}
+.s-deco .chip { box-shadow: inset 0 0 0 1px rgba(176, 141, 63, 0.55); letter-spacing: 0.08em; }
+.s-deco .chip:hover { background: #14231f; color: #e8d9ae; }
+.s-deco .toast { border-radius: 0; box-shadow: 0 0 0 1px #b08d3f; }
+.s-deco .result { border-radius: 0; }
+.s-deco .result .btn--primary { background: #b08d3f; color: #14231f; }

@@ -1,0 +1,289 @@
+/* ============================================================
+   room.css — 同桌联机页
+   在 base.css / play.css 之上补：顶中席位锚点、弃牌观战态、
+   联机大厅与房间侧栏列表。风格变量仍由 s*.css 提供。
+   ============================================================ */
+
+/* ---------- 顶中席位（2~5 人桌的第三个对手位等） ---------- */
+
+.seat--t { top: 1%; left: 50%; transform: translateX(-50%); }
+.seat--t .seat-bet {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 6px);
+}
+/* 顶中席位的亮牌放到右侧桌内，避免盖住自己的名字与筹码 */
+.seat--t .seat-cards { left: 100%; top: 50%; transform: translate(8px, -50%); }
+/* 纸面印刷的座位是纵向列表，亮牌保持行内右侧 */
+.s-mono .seat--t .seat-cards { left: auto; right: 0; transform: translateY(-50%); }
+
+/* 底部两角座位的亮牌朝桌外放，同样不压座位信息 */
+.seat--a .seat-cards,
+.seat--h .seat-cards { z-index: 4; }
+
+/* 自己弃牌后的观战态（牌局还在继续） */
+.app.is-outofhand .hero { opacity: 0.4; filter: grayscale(1); }
+
+/* 离线玩家 */
+.seat.is-offline { opacity: 0.55; filter: saturate(0.4); }
+.seat.is-offline .seat-name::after {
+  content: " · 离线";
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+/* 空座位：虚线框 + 加号，点击入座 */
+.seat[data-state="empty"] { border-style: dashed; }
+.seat[data-state="empty"] .seat-av--empty {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 400;
+  box-shadow: inset 0 0 0 1px var(--line);
+  cursor: pointer;
+}
+
+/* ---------- 侧栏座位列表 ---------- */
+
+.roster {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0;
+}
+
+.roster-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #141417;
+  border: 1px solid #2a2a30;
+  font-size: 12.5px;
+}
+
+.roster-row img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.roster-name { flex: 1; min-width: 0; font-weight: 600; }
+
+.roster-host,
+.roster-me {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-style: normal;
+  font-weight: 700;
+  vertical-align: 1px;
+}
+
+.roster-host { background: #c9a24e; color: #1a1408; }
+.roster-me { background: #2c2c34; color: #b9b4a8; }
+
+.roster-stack {
+  font-family: var(--font-num, inherit);
+  font-variant-numeric: tabular-nums;
+  color: #b9b4a8;
+}
+
+.roster-row.is-offline { opacity: 0.5; }
+
+.roster-row.is-empty { opacity: 0.55; border-style: dashed; }
+
+.roster-seat-no {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px dashed #3a3a44;
+  font-size: 10px;
+  color: #8d887c;
+  flex: 0 0 auto;
+}
+
+/* hidden 属性对齐：防止被 display:flex 之类的规则意外覆盖 */
+.lobby[hidden],
+.gamewrap[hidden] { display: none !important; }
+
+/* ---------- 联机大厅 ---------- */
+
+.lobby {
+  /* 按钮变量作用域：大厅在 .app 风格作用域之外，需自带一套按钮配色 */
+  --accent: #c9a24e;
+  --accent-ink: #1a1408;
+  --accent-soft: rgba(201, 162, 78, 0.16);
+  --btn-bg: #232329;
+  --btn-ink: #ece7d8;
+  --muted: #8d887c;
+  --line: #34343e;
+  --radius-btn: 12px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 18px;
+  background:
+    radial-gradient(90% 60% at 50% 0%, #16161a 0%, #08080a 62%),
+    #08080a;
+  color: #e8e5dd;
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+.lobby-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 24px 22px;
+  border-radius: 18px;
+  background: #121215;
+  border: 1px solid #26262d;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lobby-eyebrow {
+  margin: 0 0 6px;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6f6a60;
+}
+
+.lobby-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.lobby-sub {
+  margin: 8px 0 18px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #a39d90;
+}
+
+.lobby-field { margin-bottom: 14px; }
+
+.lobby-field > label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #8d887c;
+}
+
+.lobby-input {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 11px;
+  border: 1px solid #2c2c34;
+  background: #0c0c0f;
+  color: #e8e5dd;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.lobby-input:focus { border-color: #c9a24e; }
+
+.lobby-input--code {
+  letter-spacing: 0.35em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+select.lobby-input { appearance: auto; }
+
+/* 开局设置：三列参数（小盲 / 升盲时间 / 初始筹码） */
+.lobby-cfg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+.lobby-cfg-item { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.lobby-cfg-name { font-size: 11px; font-weight: 600; color: #8d887c; }
+.lobby-cfg-hint {
+  font-size: 10px;
+  color: #6f6a60;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lobby-sb-hint { color: #b9b4a8; }
+
+/* 男女头像分组 */
+.lobby-avatars { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+
+.lobby-av {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lobby-av img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.lobby-av.is-active { border-color: #c9a24e; }
+
+/* 个人游戏入口 */
+.lobby-solo {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.lobby-err {
+  margin: 0 0 12px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: rgba(192, 57, 43, 0.14);
+  border: 1px solid rgba(192, 57, 43, 0.4);
+  color: #e8907f;
+  font-size: 12px;
+}
+
+.lobby-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.lobby-actions .btn { padding-top: 13px; padding-bottom: 13px; }
+
+/* 大厅按钮三态：常态（.btn 系列自带）/ 悬停 / 按下 */
+.lobby .btn { transition: transform 0.12s ease, filter 0.2s, background 0.2s, color 0.2s; }
+.lobby .btn--primary:hover { filter: brightness(1.1); }
+.lobby .btn--primary:active { filter: brightness(0.92); transform: translateY(1px); }
+.lobby .btn--ghost:hover { background: rgba(236, 231, 216, 0.08); color: #f4efe2; }
+.lobby .btn--ghost:active { background: rgba(236, 231, 216, 0.14); transform: translateY(1px); }
+
+.lobby-note {
+  margin: 14px 0 0;
+  font-size: 11px;
+  line-height: 1.7;
+  color: #6f6a60;
+}
+
+@media (max-width: 420px) {
+  .lobby { padding: 18px 14px; align-items: flex-start; }
+  .lobby-card { padding: 20px 18px 18px; }
+  .lobby-avatars { grid-template-columns: repeat(5, 1fr); }
+  .lobby-av { max-width: 52px; margin: 0 auto; }
+}

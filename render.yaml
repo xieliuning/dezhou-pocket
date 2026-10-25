@@ -1,0 +1,22 @@
+# Render Blueprint：把牌局服务器（server/server.js）一键部署到 Render
+#
+# 用法：render.com → New → Blueprint → 选本仓库 → Apply
+# 零 npm 依赖，不需要构建步骤；平台会注入 PORT，server/server.js 直接读它。
+#
+# 免费实例的边界（重要）：
+#   · 空闲 15 分钟没有任何入站流量就休眠；活跃的 WebSocket 消息同样计入流量，
+#     所以牌局开着时不会休眠。
+#   · 休眠后再访问需约 1 分钟冷启动（平台会显示加载页）。
+#   · 房间数据在内存里：休眠 / 重启后所有房间消失，进行中的牌局作废。
+#   · 认真长期玩请把 plan 换成 starter，或改用 deploy/发布指南.md 里的
+#     Zeabur / 腾讯云 / Railway 方案。
+
+services:
+  - type: web
+    name: yehang-poker
+    runtime: node
+    plan: free
+    buildCommand: ""
+    startCommand: "npm start"
+    healthCheckPath: /room.html
+    autoDeploy: true

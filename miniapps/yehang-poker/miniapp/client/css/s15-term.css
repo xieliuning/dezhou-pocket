@@ -1,0 +1,203 @@
+/* ============================================================
+   S15 · 终端命令行 Terminal
+   纯黑磷光绿、等宽字、ASCII 框线。整张牌桌是一次 tty 会话。
+   ============================================================ */
+
+.s-term {
+  --bg: #05070a;
+  --ink: #9dffbe;
+  --muted: rgba(157, 255, 190, 0.42);
+  --panel: rgba(51, 255, 102, 0.06);
+  --line: rgba(51, 255, 102, 0.3);
+  --accent: #33ff66;
+  --accent-ink: #04150a;
+  --accent-soft: rgba(51, 255, 102, 0.1);
+  --card-bg: #06120b;
+  --card-ink: #7dff9e;
+  --suit-red: #ff5f5f;
+  --card-shadow: none;
+  --radius-card: 0;
+  --radius-av: 0;
+  --radius-seat: 0;
+  --radius-btn: 0;
+  --radius-chip: 0;
+  --radius-sm: 0;
+  --font-ui: "JetBrains Mono", "Noto Sans SC", monospace;
+  --font-display: "VT323", "JetBrains Mono", "Noto Sans SC", monospace;
+  --font-num: "JetBrains Mono", "Noto Sans SC", monospace;
+  --font-card: "VT323", "JetBrains Mono", "Noto Sans SC", monospace;
+  --seat-bg: #05070a;
+  --seat-line: rgba(51, 255, 102, 0.34);
+  --seat-shadow: none;
+  --av-bg: transparent;
+  --av-ink: #33ff66;
+  --bet-bg: #0a1d12;
+  --bet-ink: #33ff66;
+  --bet-dot: #33ff66;
+  --bet-dot-ring: #0a1d12;
+  --dealer-bg: #33ff66;
+  --dealer-ink: #04150a;
+  --danger: #ff4d4d;
+  --turn-line: #33ff66;
+  --turn-shadow: 0 0 0 1px #33ff66, 0 0 16px rgba(51, 255, 102, 0.35);
+  --timer-track: rgba(51, 255, 102, 0.18);
+  --timer-fg: #33ff66;
+  --actions-bg: #05070a;
+  --btn-bg: transparent;
+  --btn-ink: #33ff66;
+  --track: rgba(51, 255, 102, 0.2);
+  --thumb: #33ff66;
+  --thumb-ring: #05070a;
+  --chip-bg: transparent;
+  --chip-ink: #7dff9e;
+  --toast-bg: #0a1d12;
+  --toast-ink: #33ff66;
+  --result-bg: #06120b;
+  --result-ink: #33ff66;
+  --result-line: rgba(51, 255, 102, 0.45);
+}
+
+.s-term {
+  background-color: #05070a;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(51, 255, 102, 0.045) 0 1px, transparent 1px 3px),
+    radial-gradient(120% 90% at 50% 40%, rgba(51, 255, 102, 0.05) 0%, transparent 62%);
+}
+
+/* 全屏扫描线 */
+.s-term .app::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+}
+
+/* 桌面：一块带边框的终端视口 */
+.s-term .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 448px;
+  height: 430px;
+  transform: translate(-50%, -50%);
+  border-radius: 0;
+  border: 1px solid rgba(51, 255, 102, 0.28);
+  background:
+    repeating-linear-gradient(90deg, rgba(51, 255, 102, 0.05) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(0deg, rgba(51, 255, 102, 0.05) 0 1px, transparent 1px 34px),
+    radial-gradient(70% 60% at 50% 45%, rgba(51, 255, 102, 0.07), transparent 72%);
+  box-shadow: inset 0 0 60px rgba(51, 255, 102, 0.08);
+  pointer-events: none;
+}
+
+/* 光标：右下角一块在闪 */
+.s-term .stage::after {
+  content: "";
+  position: absolute;
+  right: 26px;
+  bottom: 22px;
+  width: 11px;
+  height: 18px;
+  background: #33ff66;
+  animation: term-cursor 1.1s steps(1) infinite;
+  pointer-events: none;
+}
+@keyframes term-cursor {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
+}
+
+/* 顶栏：命令行提示符 */
+.s-term .topbar {
+  border-bottom: 1px solid rgba(51, 255, 102, 0.26);
+  padding-bottom: 10px;
+}
+.s-term .room-name {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  color: #33ff66;
+  text-shadow: 0 0 12px rgba(51, 255, 102, 0.45);
+}
+.s-term .room-meta { letter-spacing: 0.1em; color: rgba(157, 255, 190, 0.4); }
+.s-term .pot-label { letter-spacing: 0.26em; color: rgba(157, 255, 190, 0.45); }
+.s-term .pot {
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: #33ff66;
+  text-shadow: 0 0 14px rgba(51, 255, 102, 0.5);
+}
+.s-term .icon-btn {
+  background: transparent;
+  color: #33ff66;
+  box-shadow: inset 0 0 0 1px rgba(51, 255, 102, 0.34);
+  border-radius: 0;
+}
+.s-term .board-label {
+  color: rgba(51, 255, 102, 0.55);
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 0.22em;
+}
+
+/* 牌：终端里的方框字符 */
+.s-term .card {
+  background: var(--card-bg);
+  color: var(--card-ink);
+  border: 1px solid rgba(51, 255, 102, 0.42);
+  box-shadow: inset 0 0 12px rgba(51, 255, 102, 0.08);
+}
+.s-term .card.is-red { color: var(--suit-red); border-color: rgba(255, 95, 95, 0.45); }
+.s-term .card--lg { border-width: 1px; box-shadow: inset 0 0 16px rgba(51, 255, 102, 0.12); }
+.s-term .card--empty { border-style: dashed; border-color: rgba(51, 255, 102, 0.28); box-shadow: none; }
+
+/* 席位：像 ls -l 的输出 */
+.s-term .seat { padding: 4px 10px 4px 4px; gap: 8px; }
+.s-term .seat-av {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(51, 255, 102, 0.4);
+  color: #33ff66;
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+.s-term .seat-name { font-family: var(--font-num); letter-spacing: 0.06em; color: #9dffbe; }
+.s-term .seat-stack { color: rgba(157, 255, 190, 0.55); }
+.s-term .seat-bet { border-radius: 0; border: 1px solid rgba(51, 255, 102, 0.3); }
+.s-term .seat-dealer { border-radius: 0; font-family: var(--font-num); }
+.s-term .seat.is-turn { animation: none; }
+
+/* 行动区 */
+.s-term .actions { border-top: 1px solid rgba(51, 255, 102, 0.26); }
+.s-term .btn {
+  border-radius: 0;
+  background: transparent;
+  color: #33ff66;
+  box-shadow: inset 0 0 0 1px rgba(51, 255, 102, 0.4);
+  letter-spacing: 0.14em;
+  font-family: var(--font-num);
+}
+.s-term .btn--primary {
+  background: #33ff66;
+  color: #04150a;
+  box-shadow: none;
+}
+.s-term .btn--alt { color: #9dffbe; box-shadow: inset 0 0 0 1px rgba(51, 255, 102, 0.28); }
+.s-term .btn--ghost { color: rgba(157, 255, 190, 0.6); }
+.s-term .btn:active { transform: none; filter: brightness(1.35); }
+
+.s-term .strength { color: #33ff66; letter-spacing: 0.06em; }
+.s-term .strength-label { letter-spacing: 0.26em; }
+.s-term .raise-amount { color: #33ff66; }
+.s-term .raise-label,
+.s-term .raise-pot { letter-spacing: 0.14em; color: rgba(157, 255, 190, 0.45); }
+.s-term .chip { border-radius: 0; box-shadow: inset 0 0 0 1px rgba(51, 255, 102, 0.26); }
+.s-term .raise-range { background: rgba(51, 255, 102, 0.18); border-radius: 0; height: 4px; }
+.s-term .raise-range::-webkit-slider-thumb { background: #33ff66; border-radius: 0; border: 1px solid #05070a; }
+.s-term .raise-range::-moz-range-thumb { background: #33ff66; border-radius: 0; border: 1px solid #05070a; }
+.s-term .toast { border-radius: 0; box-shadow: inset 0 0 0 1px rgba(51, 255, 102, 0.4); }
+.s-term .result { border-radius: 0; box-shadow: inset 0 0 0 1px rgba(51, 255, 102, 0.4); }
+.s-term .result .btn { background: #33ff66; color: #04150a; box-shadow: none; }

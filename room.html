@@ -92,6 +92,15 @@
       <input id="code" class="lobby-input lobby-input--code js-code-input" type="text" maxlength="4" placeholder="4 位数字，如 4832" autocomplete="off" inputmode="numeric">
     </div>
 
+    <div class="lobby-field">
+      <label for="server">牌局服务器地址<span class="lobby-field-note">（网页版托管在别处时才需要填）</span></label>
+      <div class="lobby-server-row">
+        <input id="server" class="lobby-input js-server-input" type="text" placeholder="如 https://xxx.zeabur.app" autocomplete="off" spellcheck="false">
+        <button class="btn btn--ghost js-server-save" type="button">应用</button>
+      </div>
+      <p class="lobby-note">当前连接：<span class="lobby-server-now js-server-now">检测中…</span></p>
+    </div>
+
     <p class="lobby-err js-lobby-err" hidden></p>
 
     <div class="lobby-actions">
@@ -235,6 +244,7 @@
   } catch (e) {}
 </script>
 <script src="js/poker.js"></script>
+<script src="js/config.js"></script>
 <script src="js/room.js"></script>
 </body>
 </html>

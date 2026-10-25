@@ -1,0 +1,182 @@
+/* ============================================================
+   S17 · 复古录像带 CRT
+   泛黄磷光屏，扫描线与跟踪噪条，色差描边，字幕式老字体
+   ============================================================ */
+
+.s-crt {
+  --bg: #0a0908;
+  --ink: #efe7d2;
+  --muted: rgba(239, 231, 210, 0.48);
+  --panel: rgba(255, 209, 102, 0.08);
+  --line: rgba(255, 209, 102, 0.26);
+  --accent: #ffd166;
+  --accent-ink: #1b1205;
+  --accent-soft: rgba(94, 233, 214, 0.16);
+  --card-bg: #17140f;
+  --card-ink: #ffeec2;
+  --suit-red: #ff5f7e;
+  --card-shadow: 0 0 0 1px rgba(255, 209, 102, 0.35), 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 0 14px rgba(255, 209, 102, 0.07);
+  --radius-card: 8px;
+  --radius-av: 4px;
+  --radius-seat: 8px;
+  --radius-btn: 4px;
+  --radius-chip: 3px;
+  --radius-sm: 3px;
+  --font-ui: "Share Tech Mono", "Noto Sans SC", monospace;
+  --font-display: "IM Fell English", "Noto Serif SC", serif;
+  --font-num: "Share Tech Mono", monospace;
+  --font-card: "Share Tech Mono", monospace;
+  --seat-bg: linear-gradient(180deg, rgba(28, 24, 18, 0.92), rgba(10, 9, 8, 0.95));
+  --seat-line: rgba(255, 209, 102, 0.28);
+  --seat-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
+  --av-bg: linear-gradient(180deg, #5a4a2c, #2a2115);
+  --av-ink: #ffe9b0;
+  --bet-bg: rgba(8, 8, 7, 0.9);
+  --bet-ink: #ffd166;
+  --bet-dot: #5ee9d6;
+  --bet-dot-ring: #123029;
+  --dealer-bg: #5ee9d6;
+  --dealer-ink: #05231f;
+  --danger: #ff5f7e;
+  --turn-line: #ffd166;
+  --turn-shadow: 0 0 0 1px rgba(255, 209, 102, 0.8), 0 0 20px rgba(255, 209, 102, 0.35);
+  --timer-track: rgba(255, 209, 102, 0.15);
+  --timer-fg: #ffd166;
+  --actions-bg: linear-gradient(180deg, rgba(14, 12, 10, 0.9), #080706 55%);
+  --btn-bg: rgba(255, 209, 102, 0.07);
+  --btn-ink: #efe7d2;
+  --track: rgba(255, 209, 102, 0.16);
+  --thumb: #ffd166;
+  --thumb-ring: #0a0908;
+  --chip-bg: rgba(255, 209, 102, 0.08);
+  --chip-ink: rgba(255, 220, 150, 0.85);
+  --toast-bg: #ffd166;
+  --toast-ink: #1b1205;
+  --result-bg: linear-gradient(180deg, #1d1810, #100d09);
+  --result-ink: #f3ead4;
+  --result-line: rgba(255, 209, 102, 0.4);
+}
+
+/* 扫描线 + 跟踪噪条 */
+.s-crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.42) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.05) 48%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.05) 52%, transparent 100%);
+  background-size: 100% 3px, 100% 220px;
+  animation: crt-roll 7s linear infinite;
+}
+
+@keyframes crt-roll {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 0, 0 220px; }
+}
+
+/* 屏幕暗角与弧面反光 */
+.s-crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  background:
+    radial-gradient(128% 88% at 50% 42%, transparent 52%, rgba(0, 0, 0, 0.72) 100%),
+    linear-gradient(122deg, rgba(255, 255, 255, 0.07) 0%, transparent 26%);
+}
+
+/* 显像管：圆角矩形 + 强内阴影做出桶形 */
+.s-crt .table::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 424px;
+  height: 402px;
+  transform: translate(-50%, -50%);
+  border-radius: 46px;
+  background:
+    radial-gradient(78% 66% at 50% 40%, rgba(255, 209, 102, 0.09) 0%, transparent 62%),
+    linear-gradient(180deg, #14120e, #0a0908);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 209, 102, 0.18),
+    inset 0 0 60px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(255, 209, 102, 0.06);
+}
+
+/* 屏幕上的横向跟踪噪线 */
+.s-crt .table::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 26%;
+  width: 380px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(94, 233, 214, 0.55), transparent);
+  box-shadow: 0 0 10px rgba(94, 233, 214, 0.4);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.s-crt .topbar { padding-bottom: 9px; }
+
+.s-crt .room-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  text-shadow: 1px 0 rgba(94, 233, 214, 0.55), -1px 0 rgba(255, 95, 126, 0.45);
+}
+
+.s-crt .room-meta { letter-spacing: 0.14em; text-transform: uppercase; font-size: 9.5px; }
+
+.s-crt .pot {
+  color: #ffd166;
+  text-shadow: 1.5px 0 rgba(94, 233, 214, 0.6), -1.5px 0 rgba(255, 95, 126, 0.5);
+}
+
+.s-crt .icon-btn { box-shadow: inset 0 0 0 1px rgba(255, 209, 102, 0.3); }
+.s-crt .board-label { color: rgba(94, 233, 214, 0.6); letter-spacing: 0.3em; }
+
+/* 色差：字左右各偏移一层红蓝 */
+.s-crt .card .c-rank {
+  text-shadow: 1px 0 rgba(94, 233, 214, 0.55), -1px 0 rgba(255, 95, 126, 0.5);
+}
+
+.s-crt .card { background: linear-gradient(175deg, #1d1913, #120f0b); }
+.s-crt .card--empty { background: rgba(255, 209, 102, 0.03); }
+
+.s-crt .seat { background: linear-gradient(180deg, rgba(30, 26, 19, 0.9), rgba(10, 9, 8, 0.94)); }
+.s-crt .seat-av { box-shadow: inset 0 0 0 1px rgba(255, 209, 102, 0.35); }
+.s-crt .seat-stack { color: rgba(255, 209, 102, 0.6); }
+.s-crt .seat-bet { box-shadow: inset 0 0 0 1px rgba(94, 233, 214, 0.35); }
+.s-crt .seat-dealer { border-radius: 2px; }
+
+.s-crt .actions { border-top: 1px solid rgba(255, 209, 102, 0.16); }
+
+.s-crt .btn { letter-spacing: 0.1em; font-family: var(--font-ui); }
+.s-crt .btn--primary {
+  background: linear-gradient(180deg, #ffdd8c, #e0a92c);
+  color: #1b1205;
+  box-shadow: 0 0 16px rgba(255, 209, 102, 0.35);
+}
+.s-crt .btn--ghost { box-shadow: inset 0 0 0 1px rgba(255, 209, 102, 0.28); color: rgba(239, 231, 210, 0.72); }
+.s-crt .btn--alt { background: rgba(94, 233, 214, 0.14); color: #9ef3e6; box-shadow: inset 0 0 0 1px rgba(94, 233, 214, 0.35); }
+
+.s-crt .raise-amount { color: #ffd166; text-shadow: 1px 0 rgba(94, 233, 214, 0.5); }
+.s-crt .raise-label { letter-spacing: 0.18em; text-transform: uppercase; }
+.s-crt .raise-pot { color: rgba(94, 233, 214, 0.55); }
+
+.s-crt .raise-range { height: 5px; }
+.s-crt .raise-range::-webkit-slider-thumb { width: 22px; height: 12px; border-radius: 2px; }
+.s-crt .raise-range::-moz-range-thumb { width: 22px; height: 12px; border-radius: 2px; }
+
+.s-crt .chip { box-shadow: inset 0 0 0 1px rgba(255, 209, 102, 0.24); letter-spacing: 0.1em; }
+.s-crt .chip:hover { background: rgba(255, 209, 102, 0.16); }
+
+.s-crt .result { box-shadow: inset 0 0 0 1px rgba(255, 209, 102, 0.28); }
+.s-crt .toast { border-radius: 3px; box-shadow: 0 0 20px rgba(255, 209, 102, 0.3); }

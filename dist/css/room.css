@@ -265,6 +265,11 @@ select.lobby-input { appearance: auto; }
 
 .lobby-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
+/* 牌局服务器地址：输入 + 应用按钮 */
+.lobby-server-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.lobby-server-row .btn { padding-top: 11px; padding-bottom: 11px; white-space: nowrap; }
+.lobby-server-now { color: #8d887c; word-break: break-all; }
+
 .lobby-actions .btn { padding-top: 13px; padding-bottom: 13px; }
 
 /* 大厅按钮三态：常态（.btn 系列自带）/ 悬停 / 按下 */

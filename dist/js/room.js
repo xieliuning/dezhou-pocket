@@ -12,6 +12,7 @@
   var STYLE_LS_KEY = "holdem.style";
   var NICK_LS_KEY = "holdem.nick";
   var AVATAR_LS_KEY = "holdem.avatar";
+  var SERVER_LS_KEY = "holdem.server";
   var STICKER_MAX = 18;
   var STICKER_EMOJI = ["\uD83D\uDCA9", "\uD83D\uDCA3"]; // 💩 💣
   var CODE_LEN = 4;
@@ -63,7 +64,10 @@
     stack: document.querySelector(".js-stack"),
     err: document.querySelector(".js-lobby-err"),
     join: document.querySelector(".js-join"),
-    create: document.querySelector(".js-create")
+    create: document.querySelector(".js-create"),
+    serverInput: document.querySelector(".js-server-input"),
+    serverSave: document.querySelector(".js-server-save"),
+    serverNow: document.querySelector(".js-server-now")
   };
 
   var els = {
@@ -118,6 +122,7 @@
   var token = "";
   var left = false;          // 主动退出，不再重连
   var retryDelay = 1500;
+  var connectedOnce = false; // 本页是否成功连上过服务器
   var pendingJoin = null;    // 连接建立后要发的第一条消息
   var lastServerMsgAt = 0;   // 客户端 watchdog：太久没有服务器消息就重连
   var myAvatar = 0;
@@ -171,18 +176,69 @@
     return S ? S.seats.filter(function (p) { return p.occupied; }).length : 0;
   }
 
+  /* ---------------- 牌局服务器地址 ----------------
+     网页版可能被托管在静态站上，而真正跑牌局的是另一台机器。
+     取值优先级：链接里的 ?server= > 本机记住的 > 页面注入的默认 > 同源（location.origin）。
+     一个地址都没配过时行为与从前完全一致：连同源的 /ws。 */
+
+  function normalizeServer(raw) {
+    var text = String(raw == null ? "" : raw).trim();
+    if (!text) return "";
+    if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(text)) {
+      var host = text.split("/")[0].split(":")[0].toLowerCase();
+      var isLocal = host === "localhost" || /^\d{1,3}(\.\d{1,3}){3}$/.test(host);
+      text = (isLocal ? "http://" : "https://") + text;
+    }
+    var u;
+    try { u = new URL(text); } catch (e) { return ""; }
+    if (u.protocol === "ws:") u.protocol = "http:";
+    else if (u.protocol === "wss:") u.protocol = "https:";
+    if (u.protocol !== "http:" && u.protocol !== "https:") return "";
+    if (!u.hostname) return "";
+    return u.origin;
+  }
+
+  function savedServer() {
+    try { return localStorage.getItem(SERVER_LS_KEY) || ""; } catch (e) { return ""; }
+  }
+
+  function urlServer() {
+    try { return new URLSearchParams(location.search).get("server") || ""; } catch (e) { return ""; }
+  }
+
+  /* 生效的牌局服务器 origin；没有配置时等于当前站点 */
+  function serverOrigin() {
+    return normalizeServer(urlServer()) || normalizeServer(savedServer()) ||
+      normalizeServer(window.YEHANG_SERVER) || location.origin;
+  }
+
+  /* 是否配了「不是当前站点」的服务器：决定邀请链接要不要带 ?server= */
+  function hasCustomServer() {
+    var o = serverOrigin();
+    return !!o && o !== location.origin;
+  }
+
+  function paintServerStatus(state) {
+    if (!lobbyEls.serverNow) return;
+    lobbyEls.serverNow.textContent = serverOrigin() + (state ? "（" + state + "）" : "");
+  }
+
   /* ---------------- 连接 ---------------- */
 
   function wsUrl() {
-    var secure = location.protocol === "https:";
-    return (secure ? "wss://" : "ws://") + location.host + "/ws";
+    var origin = serverOrigin();
+    var secure = origin.indexOf("https://") === 0;
+    return (secure ? "wss://" : "ws://") + origin.replace(/^https?:\/\//i, "") + "/ws";
   }
 
   function connect() {
     if (left) return;
+    paintServerStatus("连接中…");
     try { ws = new WebSocket(wsUrl()); } catch (e) { return scheduleReconnect(); }
     ws.onopen = function () {
       retryDelay = 1500;
+      connectedOnce = true;
+      paintServerStatus("已连接");
       if (pendingJoin) {
         var msg = pendingJoin;
         pendingJoin = null;
@@ -215,9 +271,13 @@
       if (!token) {                       // 观战或还没入座：回大厅重新加入
         lobbyEl.hidden = false;
         gamewrapEl.hidden = true;
-        lobbyEls.err.textContent = "连接断开了，请重新加入房间";
+        lobbyEls.err.textContent = connectedOnce
+          ? "连接断开了，请重新加入房间"
+          : "连不上牌局服务器 " + serverOrigin() + "，请检查地址或网络";
         lobbyEls.err.hidden = false;
+        paintServerStatus("连不上");
         if (code) lobbyEls.code.value = code;
+        scheduleReconnect();              // 后台继续重试，服务器起来后自动接上
         return;
       }
       toast("连接断开，正在重连…");
@@ -789,7 +849,10 @@
   /* ---------------- 复制战绩 / 邀请 ---------------- */
 
   function inviteLink() {
-    return location.origin + location.pathname + "?room=" + code;
+    var link = location.origin + location.pathname + "?room=" + code;
+    // 网页版与牌局服务器不同源时，邀请链接必须带上服务器地址，朋友点开才知道连哪儿
+    if (hasCustomServer()) link += "&server=" + encodeURIComponent(serverOrigin());
+    return link;
   }
 
   function shareText() {
@@ -900,6 +963,26 @@
       fromUrl = (new URLSearchParams(location.search).get("room") || "").replace(/[^0-9]/g, "").slice(0, CODE_LEN);
     } catch (e) { /* ignore */ }
     if (fromUrl) lobbyEls.code.value = fromUrl;
+
+    /* 牌局服务器地址：默认连同源；链接带 ?server= 或本机记住过就填上 */
+    if (lobbyEls.serverInput) {
+      var preset = normalizeServer(urlServer()) || "";
+      if (!preset && serverOrigin() !== location.origin) preset = serverOrigin();
+      lobbyEls.serverInput.value = preset;
+      paintServerStatus("");
+    }
+    if (lobbyEls.serverSave) {
+      lobbyEls.serverSave.addEventListener("click", function () {
+        var origin = normalizeServer(lobbyEls.serverInput.value);
+        if (!origin) {
+          lobbyEls.err.textContent = "服务器地址要写成 http:// 或 https:// 开头";
+          lobbyEls.err.hidden = false;
+          return;
+        }
+        try { localStorage.setItem(SERVER_LS_KEY, origin); } catch (e) { /* ignore */ }
+        location.reload();   // 换服务器要重连；重载会保留 ?room= 与 ?server=
+      });
+    }
 
     function requireNick() {
       var name = lobbyEls.nick.value.trim();

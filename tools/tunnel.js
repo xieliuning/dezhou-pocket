@@ -110,6 +110,20 @@ async function ensureServer() {
 let tunnelProc = null;
 let provider = "localtunnel";
 let cloudflaredBin = null;
+let cfBuf = "";            // cloudflared 的输出缓冲：健康检查失败时还要回头复查
+
+/* 从 cloudflared 输出里挑出「真正的隧道地址」。
+   cloudflared 一次会打印好几个 trycloudflare 网址（例如 metrics 的
+   api.trycloudflare.com），早先的正则会把 api 那个当公网地址，
+   于是健康检查一直探测错地址、把刚建好的隧道自己掐掉，进入重启死循环。
+   所以：优先只认「Your quick Tunnel has been created」那一行里的地址，
+   兜底匹配时也排除 api 主机名。 */
+function extractTunnelUrl(text) {
+  var m = text.match(/\|\s*(https:\/\/[a-z0-9-]+\.trycloudflare\.com)\s*\|/);
+  if (m) return m[1];
+  m = text.match(/https:\/\/(?!api\.)[a-z0-9-]+\.trycloudflare\.com/);
+  return m ? m[0] : "";
+}
 
 /* ---------- cloudflared 快速隧道 ---------- */
 function startCloudflared(bin) {
@@ -126,12 +140,15 @@ function startCloudflared(bin) {
       stdio: ["ignore", "pipe", "pipe"]
     });
     let buf = "";
+    let settled = false;
     const onData = (chunk) => {
       buf += chunk.toString();
-      const m = buf.match(/https:\/\/[a-z0-9-]+\.trycloudflare\.com/);
-      if (m) {
+      cfBuf = buf;
+      const found = extractTunnelUrl(buf);
+      if (found && !settled) {
+        settled = true;
         cleanup();
-        resolve(m[0]);
+        resolve(found);
       }
     };
     const cleanup = () => {
@@ -142,9 +159,10 @@ function startCloudflared(bin) {
     tunnelProc.stderr.on("data", onData);
     tunnelProc.on("exit", (code) => {
       cleanup();
+      if (settled) return;
       reject(new Error("cloudflared 退出，code " + code));
     });
-    setTimeout(() => { cleanup(); reject(new Error("cloudflared 启动超时（120 秒）")); }, 120000);
+    setTimeout(() => { cleanup(); if (!settled) reject(new Error("cloudflared 启动超时（120 秒）")); }, 120000);
   });
 }
 
@@ -213,10 +231,24 @@ function probe(url) {
   });
 }
 
+/* 探一下 cloudflared 自己的本地 metrics 端口：
+   它还活着 = 隧道进程本身没事，公网探不通多半是本机网络抽风，
+   这时候掐隧道没用（重开还是新地址，还可能把群里已经发出去的链接作废）。 */
+function probeLocal() {
+  return new Promise((resolve) => {
+    const req = require("http").get("http://127.0.0.1:20241/metrics", { timeout: 5000 }, (res) => {
+      res.resume();
+      resolve(res.statusCode === 200);
+    });
+    req.on("timeout", () => { req.destroy(); resolve(false); });
+    req.on("error", () => resolve(false));
+  });
+}
+
 let healthTimer = null;
 let fails = 0;
 
-function startHealthCheck(getUrl) {
+function startHealthCheck(getUrl, setUrl) {
   if (healthTimer) clearInterval(healthTimer);
   fails = 0;
   healthTimer = setInterval(async () => {
@@ -232,6 +264,20 @@ function startHealthCheck(getUrl) {
     console.warn("隧道探测失败 " + fails + "/3 次：" + url);
     if (fails < 3) return;
     fails = 0;
+    // 掐之前先回头看一眼 cloudflared 到底报了哪个地址：
+    // 抓错地址会把好端端的隧道误杀（历史上就是这么把自己掐进死循环的）
+    const again = extractTunnelUrl(cfBuf);
+    if (again && again !== url) {
+      console.log("地址实为 " + again + "，已更正，继续使用。");
+      setUrl(again);
+      saveUrl(again);
+      return;
+    }
+    // 隧道进程还活着的话，多半是本机网络不通，不是隧道死了 —— 别掐
+    if (await probeLocal()) {
+      console.warn("隧道进程本身还活着（metrics 可达），疑似本机网络不通，先不重启，等下一次探测。");
+      return;
+    }
     console.log("隧道判定失效，掐掉重开…");
     try { if (tunnelProc) tunnelProc.kill(); } catch (e) { /* ignore */ }
   }, 45000);
@@ -309,7 +355,10 @@ function startHealthCheck(getUrl) {
   });
 
   // 链路假死 → 健康检查兜底
-  startHealthCheck(() => currentUrl);
+  startHealthCheck(
+    () => currentUrl,
+    (u) => { currentUrl = u; }
+  );
 
   process.on("SIGINT", shutdown);
   process.on("SIGTERM", shutdown);
